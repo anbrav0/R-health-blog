@@ -1,0 +1,4 @@
+- source: project
+  netlify:
+    - id: 6a6e19a5-34bf-4f9f-b78a-4bb7a1778c48
+      url: 'https://gilded-parfait-f74fd5.netlify.app'
