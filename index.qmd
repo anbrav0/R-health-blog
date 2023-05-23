@@ -21,9 +21,11 @@ format:
 
 ```{r}
 #| message: false
-#| 
+
 
 library(katex)
+library(gt)
+library(gtsummary)
 library(devtools)
 library(MEPS)
 library(tidyverse)
@@ -147,6 +149,10 @@ Lets import the built in `National Health Care Survery` data set from the Medica
 ### import MEPS data set
 
 ```{r}
+#| message: false
+
+# clean 
+HC2020_clean <- read_csv("/Users/anbravo/GitHub/R-health-blog/HC2020_clean.csv")
 
 # Load data from AHRQ MEPS website
 hc2020 = read_MEPS(file = "h224")
@@ -161,14 +167,169 @@ names(hc2020_2) <- tolower(names(hc2020_2))
 hc2020_subset <- hc2020_2 |> 
   select(dupersid,obdrv20, ertot20, rthlth31, adpain42, region31, age20x, racev1x, sex, marry31x, educyr, faminc20, empst31, mcare20)
 
-# i want to save this data as a CSV for easy export in and out of R
+
+
+# cleaning names:--------------------------------------------------------------
+# dupersid = Person ID
+# obdrv20 = number of office based physician visits in 2020 
+# ertot20 = emergency rooms visits in 2020
+# rthlth31 = perceived health status 
+# adpain41 = pain level 
+# region31 = Census region: Northest, midwest, south and west 
+# age20x = Age as of Dec 2020
+# racev1x = race: white, black, American indiain, Asian, multiple races 
+# sex = sex at birth 
+# marry31x = marital status
+# educyr = year of ed when entered in MEPS
+# faminc20 = family total income 
+# empst31 = employment status 
+# mcare20 = Covered by medicare? Yes/no 
+
+# removing old names because that sub header in columns messes me up sometimes ---
+
+names(hc2020_subset) <- NULL
+
+
+new_names <- c("Person_ID",
+               "Nubr_office_visits",
+               "Nubr_emergency_visits",
+               "Health_status",
+               "Pain_Level",
+               "Region",
+               "Age_as_Dec2020",
+               "Race",
+               "Is_male",
+               "Is_married",
+               "Education_lvl",
+               "Total_fam_incom",
+               "Is_employed",
+               "Covered_by_MediCar")
+
+
+names(hc2020_subset) <- new_names
+
+
+# this data set has codes for NA, will switch to NA in R ------------------------
+
+HC2020_clean <- HC2020_clean |> 
+  mutate(Pain_Level = na_if(Pain_Level, -15)) |>
+  mutate(Health_status = na_if(Health_status, -8)) |>
+  mutate(Region = na_if(Region, -1)) |> 
+  mutate(Age_as_Dec2020 = na_if(Age_as_Dec2020, -1)) |>
+  mutate(Is_married = na_if(Is_married,-8 )) |> 
+  mutate(Is_employed = na_if(Is_employed, -15)) |> 
+  mutate(Education_lvl = na_if(Education_lvl, -15)) |> 
+  mutate(Covered_by_MediCar = na_if(Covered_by_MediCar, -1))
+  
+  
+# also, for ease of interpretation i will dichotomize some variables ------------
+
+
+ HC2020_clean <- HC2020_clean |> 
+  mutate(Is_married = ifelse(Is_married == 1, 1, 0)) |> 
+  mutate(Is_employed = ifelse(Is_employed == 1, 1, 0)) |> 
+  mutate(Is_male = ifelse(Is_male == 1 , 1, 0 )) |> 
+  mutate(Covered_by_MediCar = ifelse(Covered_by_MediCar == 1, 1, 0))
+
+
+
+# i also want to transform some variable using case when -----------------------
+
+HC2020_clean <- HC2020_clean |> 
+  mutate(Health_status = case_when(
+    Health_status == 1 ~ "Good",
+    Health_status == 2 ~ "Good",
+    Health_status == 3 ~ "Fair",
+    Health_status == 4 ~ "Fair",
+    Health_status == 5 ~ "Poor"
+    )) 
+
+# i want to write CSV this data set for later use --------------------------------
+
 write_csv(hc2020_subset,
-          file = "/Users/anbravo/GitHub/R-health-blog/code/hc2020_subset.csv")
-
-
-# cleaning names:
-
+          file = "/Users/anbravo/GitHub/R-health-blog/HC2020_clean.csv")
 
 ```
 
+let's say i want to take a sneak peak at this data set. I will use the `gtsummary` package to look at the first levels of the data set, and I just want to very simply make this data set interactive by using the `opt_interactive()` function in the `gt` package. 
+
+```{r}
+#| message: false
+
+
+
+HC2020_clean |> 
+  select(Person_ID, Nubr_office_visits, Health_status, Pain_Level, Region, Is_employed, Is_married, Is_employed) |> 
+  #head(10) |> 
+  gt() |> 
+  
+  tab_header(
+    title = "Brief view of HC 2020 data set",
+    subtitle = "2020 Data from MEPS website"
+  ) |> 
+  
+ opt_interactive(
+   use_search = TRUE,
+   use_highlight = TRUE, 
+   use_compact_mode = TRUE,
+   use_resizers = TRUE,
+   use_text_wrapping = FALSE,
+   pagination_type = "jump"
+   )
+  
+```
+
+## Some quick data exploration
+
+Remember what I said earlier about the mean and variance being the same? EDA is important because it might tell us more details about our variable of interest. For this particular question, we might be interested in the number of times an event has occurred. In this case, the number of times someone pay a visit to an office doctor. This data follows everyone for exactly one year. 
+
+- I am interested in seeing the number of physician office visits in the last year     (we can also call this our Y variable)
+- We are interested in seeing how self-perceived health status (Good, Fair, or        Poor), gender (is male, 1  = male, 0 = female), and marital status (married = 0,    not married/other categories = 0) is associated with number of doctor visits (our   X variables). 
+
+Because we are looking at count data, we might find it important to check out the mean and variance of our Y variables. In the case that our Y variable mean and variance are not the same, we might consider some sort of _transformation._ Transforming a data set can help with the normality of it. 
+
+
+### lets look at the outcome variable of interest 
+
+```{r}
+
+mean(HC2020_clean$Nubr_office_visits, na.rm = TRUE)
+
+```
+the mean of this data set is about 2.79.
+
+```{r}
+
+var(HC2020_clean$Nubr_office_visits, na.rm = TRUE)
+```
+ and the variance is about 34.59. We might need to do something with this particular data set but as an example, lets first run a Generalized Linear Model without doing any kind of transformation to the data. 
+ 
+## How to build a GLM with a Poisson Distribution
+
+The basic core functions of a GLM look something like this: `glm(counts ~ outcome + treatment, data = data_set, family = poisson()` which includes:
+
+- `counts:` would be your Y variable 
+- `data:` where your pulling the data from
+- `~:` or an equal sign 
+- `outcome + treatment:` are your X variables 
+- `family:` the link or distribution you are following 
+
+*We are interested in measuring number of visits to a doctors office as a function of perceived health, sex assigned at birth, and marital status.*
+
+```{r}
+#| code-fold: false
+
+# build first model 
+PossionModel1 <- glm(Nubr_office_visits ~ Health_status + Is_male + Is_married, 
+                     data = HC2020_clean, family = "poisson")
+
+# check summary 
+summary(PossionModel1)
+```
+ 
+this summary gives us the null deviance, which is the total sum of squares, and the residual deviance which is the sum of square errors or the unexplained deviance. We also get the AIC for this model (although AIC is more useful when comparing to other model fits) and we also get the model coefficients for Health status, sex assigned at birth, and marital status. 
+
+Additionally, this output is extremely ugly so we will feed this model into `gtsummary` in a little bit so looks a little better. 
+
+ 
 
