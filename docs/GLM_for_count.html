@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.649">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ana Bravo &amp; Tendai Gwanzura">
+<meta name="dcterms.date" content="2023-05-23">
+
+<title>How to Health Science in R - Genalized Linear Model: Using Count Data</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">How to Health Science in R</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html">About</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html">Genalized Linear Model: Using Count Data</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Genalized Linear Model: Using Count Data</h1>
+            <p class="subtitle lead">Learning how to used Generalized Linear models in R</p>
+                      </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliations</div>
+    
+      <div class="quarto-title-meta-contents">
+      Ana Bravo &amp; Tendai Gwanzura 
+    </div>
+      <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              Florida International University
+            </p>
+          <p class="affiliation">
+              Robert Stempel College of Public Health and Social Work
+            </p>
+        </div>
+      </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 23, 2023</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#libraries-used" id="toc-libraries-used" class="nav-link active" data-scroll-target="#libraries-used"> <span class="header-section-number">1</span> Libraries Used</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"> <span class="header-section-number">2</span> Introduction</a></li>
+  <li><a href="#what-is-a-glm" id="toc-what-is-a-glm" class="nav-link" data-scroll-target="#what-is-a-glm"> <span class="header-section-number">3</span> What is a GLM?</a>
+  <ul class="collapse">
+  <li><a href="#lets-start-with-a-quick-overview-of-the-simple-linear-regression" id="toc-lets-start-with-a-quick-overview-of-the-simple-linear-regression" class="nav-link" data-scroll-target="#lets-start-with-a-quick-overview-of-the-simple-linear-regression"> <span class="header-section-number">3.1</span> lets start with a quick overview of the simple linear regression</a></li>
+  <li><a href="#assumptions-of-a-linear-question" id="toc-assumptions-of-a-linear-question" class="nav-link" data-scroll-target="#assumptions-of-a-linear-question"> <span class="header-section-number">3.2</span> Assumptions of a linear question</a></li>
+  <li><a href="#lets-talk-about-the-generalized-linear-model" id="toc-lets-talk-about-the-generalized-linear-model" class="nav-link" data-scroll-target="#lets-talk-about-the-generalized-linear-model"> <span class="header-section-number">3.3</span> lets talk about the generalized linear model</a></li>
+  <li><a href="#what-is-a-poisson-regression" id="toc-what-is-a-poisson-regression" class="nav-link" data-scroll-target="#what-is-a-poisson-regression"> <span class="header-section-number">3.4</span> What is a Poisson Regression?</a></li>
+  <li><a href="#important-points-of-poisson-models" id="toc-important-points-of-poisson-models" class="nav-link" data-scroll-target="#important-points-of-poisson-models"> <span class="header-section-number">3.5</span> important points of Poisson models</a></li>
+  <li><a href="#one-last-point-before-we-move-on" id="toc-one-last-point-before-we-move-on" class="nav-link" data-scroll-target="#one-last-point-before-we-move-on"> <span class="header-section-number">3.6</span> one last point before we move on</a></li>
+  </ul></li>
+  <li><a href="#example-1-using-glm-for-count-responses---crab-data" id="toc-example-1-using-glm-for-count-responses---crab-data" class="nav-link" data-scroll-target="#example-1-using-glm-for-count-responses---crab-data"> <span class="header-section-number">4</span> Example 1: using GLM for count responses - Crab Data</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="libraries-used" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="libraries-used"><span class="header-section-number">1</span> Libraries Used</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(katex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="introduction" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="introduction"><span class="header-section-number">2</span> Introduction</h2>
+<p>In this presentation, we will be discussing how to use the Generalized Linear Model (GLM) method using count data in the R programming language. We will show how to clean and wrangle the data, show necessary columns to execute our method, discuss assumptions held, showcase the code used to run this GLM, and the interpretation of our output results.</p>
+</section>
+<section id="what-is-a-glm" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="what-is-a-glm"><span class="header-section-number">3</span> What is a GLM?</h2>
+<section id="lets-start-with-a-quick-overview-of-the-simple-linear-regression" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="lets-start-with-a-quick-overview-of-the-simple-linear-regression"><span class="header-section-number">3.1</span> lets start with a quick overview of the simple linear regression</h3>
+<p>As you know, a simple linear regression has two major components: a Y, dependent outcome and an X, which is your independent or your predictor variable. the model looks something like this:</p>
+<p><span class="math display">E(Y|X) = \beta_0 + \beta_1</span> where <span class="math inline">\beta_0</span> is your intercept and <span class="math inline">\beta_1</span> is your slope. A linear model is a function, that us used to fit a data. We often use this method to see the association, or strength in association between two variables of interest:</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load data:</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(trees)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#rename variables:</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(trees) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"DBH_in"</span>,<span class="st">"height_ft"</span>, <span class="st">"volume_ft3"</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># simple model:</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(DBH_in <span class="sc">~</span> height_ft, <span class="at">data =</span> trees)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># plot:</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>simple_trees <span class="ot">&lt;-</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="co">#data</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> trees) <span class="sc">+</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># x and y</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> height_ft, <span class="at">y =</span> DBH_in) <span class="sc">+</span> </span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="co">#labels</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Example of Simple Association - Using Trees Data"</span>,</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Height in feet"</span>,</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Diameter in inches"</span>) <span class="sc">+</span> </span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add points</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add the lm</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add a simple theme</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="co"># actual plot: </span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>simple_trees</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="GLM_for_count_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Often you will find this model writen in this form:</p>
+<p><span class="math display"> E(Y|X) = \beta_0 + \beta_1 + \varepsilon</span> where <span class="math inline">\beta_0</span> and <span class="math inline">\beta_1</span> are our coefficients that need to be estimated and $ $ used for more complex lines Our <strong>goal</strong> is to see the association between an outcome with an exposure.</p>
+</section>
+<section id="assumptions-of-a-linear-question" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="assumptions-of-a-linear-question"><span class="header-section-number">3.2</span> Assumptions of a linear question</h3>
+<p>Before diving into the generalized models, lets quickly overview the assumptions of linear regression.</p>
+<ul>
+<li>Assumption 1: for each combination of independent variable x, y is a random variable with a <span style="background-color:yellow">certain probability distribution.</span></li>
+<li>Assumption 2: Y values are statistical dependent.</li>
+<li>Assumption 3: the mean value of Y, for each specific combination of values of X, is a linear function.</li>
+<li>Assumption 4: the variance of Y, is the same for any fixed value of <span class="math inline">X_n</span></li>
+<li>Assumption 5: for any fixed combination of <span class="math inline">X_n</span>, Y is normally distributed.</li>
+</ul>
+<p>Something to note, that in the simple explanation above we are assuming our Y variable (remember one of the points we talked above above? that y holds a specific distribution!) is continuous. So lets talk about our Y variable having a count distribution.</p>
+</section>
+<section id="lets-talk-about-the-generalized-linear-model" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="lets-talk-about-the-generalized-linear-model"><span class="header-section-number">3.3</span> lets talk about the generalized linear model</h3>
+<p>the term “generalized” is a big umbrella term used to describe a large class of models. Our response variable <span class="math inline">y_i</span> is following an exponential family distribution with a mean of <span class="math inline">u_i</span> which is sometimes non-linear! However <a href="link">McCallagh and Nelder</a> considered them to be linear because our covariate affect the distribution of <span class="math inline">y_i</span> only through linear combination.</p>
+<p>there are three major components of a GLM:</p>
+<ul>
+<li>A Random component: which specifies the probability distribution of our response variable</li>
+<li>Systematic component: specifies the explanatory variable <span class="math inline">(x_1 .. x_n)</span> in our model. Or their linear combination <span class="math inline">(\beta_0 + \beta_1)</span> etc.</li>
+<li>a link function: specifies the LINK between the random and systematic components. This helps us figure out our expected values of the response is related to the linear combination of our explanatory variables. for example the link function <span class="math inline">g(u) = u</span>, which is called an identity function. this models the mean directly. Or, in the case we will talk about today the log of the mean:</li>
+</ul>
+<p><span class="math display"> log(\pmb{\mu}) = \alpha + \beta_1x_1 + ... B_nx_n + \epsilon</span></p>
+</section>
+<section id="what-is-a-poisson-regression" class="level3" data-number="3.4">
+<h3 data-number="3.4" class="anchored" data-anchor-id="what-is-a-poisson-regression"><span class="header-section-number">3.4</span> What is a Poisson Regression?</h3>
+<p>a Poisson regression models how the mean of a discrete (or we can say count too!) response variable <span class="math inline">Y</span> depends on our explanatory <span class="math inline">X</span> variables. Here is a simple look at the Poisson regression:</p>
+<p><span class="math display">  log \lambda_i = \beta_0 + \beta x_i </span> where the random component: the distribution of <span class="math inline">Y</span> is the mean of <span class="math inline">\lambda</span> and the systematic component is the explanatory variable (or your X variables, which can be continuous or categorical) that is linearly associated. Or can be transformed if non-linear, and the link function is the log link stated in the section above <code>(link the section number here?)</code></p>
+<p>An advantage of using GLM over a normal line model is the link function gives us more flexibility in modeling and this model uses the Maximum likelihood estimate. Additionally we can use different inference tools like Wald’s test for logistic and Poisson models.</p>
+</section>
+<section id="important-points-of-poisson-models" class="level3" data-number="3.5">
+<h3 data-number="3.5" class="anchored" data-anchor-id="important-points-of-poisson-models"><span class="header-section-number">3.5</span> important points of Poisson models</h3>
+<ul>
+<li>we can use this type of link function by using count data. count data can be describes at the number of devices that can access the internet, number of sex partners you have in your lifetime, and the number of individuals infected with a disease.</li>
+<li>Poisson is unimodel and skewed to the right, both the mean and the variance are the same. In other words, when the count is larger it tends to be more varied.</li>
+<li>if our mew increases the skew decreases and the distribution starts to become more bell shapped. our mean tends to look something like this:</li>
+</ul>
+<p><span class="math display">\pmb{\mu} = exp(\alpha + \beta x) = e^\alpha (e^\beta)^x </span> where one unit increase in X has a multiplicative impact on your <span class="math inline">e^\beta</span> power on the mean. (More on this a little later in the interpretation section!)</p>
+</section>
+<section id="one-last-point-before-we-move-on" class="level3" data-number="3.6">
+<h3 data-number="3.6" class="anchored" data-anchor-id="one-last-point-before-we-move-on"><span class="header-section-number">3.6</span> one last point before we move on</h3>
+<p>when your modeling count data, the link scale is linear. So the effects are additive on the link. While your response scale is nonlinear (this is on the exponent) and so the effects are <em>multiplicative.</em> makes sense? we will work out an example now!</p>
+</section>
+</section>
+<section id="example-1-using-glm-for-count-responses---crab-data" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="example-1-using-glm-for-count-responses---crab-data"><span class="header-section-number">4</span> Example 1: using GLM for count responses - Crab Data</h2>
+<p>Lets import the <code>crabs.txt</code> data from the University of Florida’s <a href="https://users.stat.ufl.edu/~aa/cat/data/">open-source data files.</a></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

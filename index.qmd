@@ -131,20 +131,18 @@ $$\pmb{\mu} = exp(\alpha + \beta x) = e^\alpha (e^\beta)^x $$ where one unit inc
 
 Like with different models in statistics, one must follow the assumptions of a regression, and yes, Poisson has them as well. The assumptions for a Poisson regression are as follows:
 
-- Your Y (dependent values) must be count values. 
-- Count values must have a positive integer (or who numbers) $(0, 1, 2, 3, ... k).$ Negative values   will not work here. 
-- explanatory variables can be continuous, dichotomous or ordinal
-- Our count variable must follow a **Poisson distribution** that is, the [mean and variance should be the same.]{style="background-color:yellow"} remember this one!
+-   Your Y (dependent values) must be count values.
+-   Count values must have a positive integer (or who numbers) $(0, 1, 2, 3, ... k).$ Negative values will not work here.
+-   explanatory variables can be continuous, dichotomous or ordinal
+-   Our count variable must follow a **Poisson distribution** that is, the [mean and variance should be the same.]{style="background-color:yellow"} remember this one!
 
-$$ \pmb{\mu} = E(X) = \lambda  $$  $$ \sigma^2 = \lambda $$
-
-
+$$ \pmb{\mu} = E(X) = \lambda  $$ $$ \sigma^2 = \lambda $$
 
 when your modeling count data, the link scale is linear. So the effects are additive on the link. While your response scale is nonlinear (this is on the exponent) and so the effects are *multiplicative.* makes sense? we will work out an example now!
 
 ## Example 1: using GLM for count responses - Using the MEPS data set for 2020
 
-Lets import the built in `National Health Care Survery` data set from the Medical Expenditure Panel Survey website located [here.](https://meps.ahrq.gov/mepsweb/data_stats/download_data_files_detail.jsp?cboPufNumber=HC-224) the code book can also be located [here](https://meps.ahrq.gov/data_stats/download_data/pufs/h224/h224cb.pdf) for the 2020 Full year Consolidate data file. 
+Lets import the built in `National Health Care Survery` data set from the Medical Expenditure Panel Survey website located [here.](https://meps.ahrq.gov/mepsweb/data_stats/download_data_files_detail.jsp?cboPufNumber=HC-224) the code book can also be located [here](https://meps.ahrq.gov/data_stats/download_data/pufs/h224/h224cb.pdf) for the 2020 Full year Consolidate data file.
 
 ### import MEPS data set
 
@@ -251,7 +249,7 @@ write_csv(hc2020_subset,
 
 ```
 
-let's say i want to take a sneak peak at this data set. I will use the `gtsummary` package to look at the first levels of the data set, and I just want to very simply make this data set interactive by using the `opt_interactive()` function in the `gt` package. 
+let's say i want to take a sneak peak at this data set. I will use the `gtsummary` package to look at the first levels of the data set, and I just want to very simply make this data set interactive by using the `opt_interactive()` function in the `gt` package.
 
 ```{r}
 #| message: false
@@ -281,38 +279,39 @@ HC2020_clean |>
 
 ## Some quick data exploration
 
-Remember what I said earlier about the mean and variance being the same? EDA is important because it might tell us more details about our variable of interest. For this particular question, we might be interested in the number of times an event has occurred. In this case, the number of times someone pay a visit to an office doctor. This data follows everyone for exactly one year. 
+Remember what I said earlier about the mean and variance being the same? EDA is important because it might tell us more details about our variable of interest. For this particular question, we might be interested in the number of times an event has occurred. In this case, the number of times someone pay a visit to an office doctor. This data follows everyone for exactly one year.
 
-- I am interested in seeing the number of physician office visits in the last year     (we can also call this our Y variable)
-- We are interested in seeing how self-perceived health status (Good, Fair, or        Poor), gender (is male, 1  = male, 0 = female), and marital status (married = 0,    not married/other categories = 0) is associated with number of doctor visits (our   X variables). 
+-   I am interested in seeing the number of physician office visits in the last year (we can also call this our Y variable)
+-   We are interested in seeing how self-perceived health status (Good, Fair, or Poor), gender (is male, 1 = male, 0 = female), and marital status (married = 0, not married/other categories = 0) is associated with number of doctor visits (our X variables).
 
-Because we are looking at count data, we might find it important to check out the mean and variance of our Y variables. In the case that our Y variable mean and variance are not the same, we might consider some sort of _transformation._ Transforming a data set can help with the normality of it. 
+Because we are looking at count data, we might find it important to check out the mean and variance of our Y variables. In the case that our Y variable mean and variance are not the same, we might consider some sort of *transformation.* Transforming a data set can help with the normality of it.
 
-
-### lets look at the outcome variable of interest 
+### lets look at the outcome variable of interest
 
 ```{r}
 
 mean(HC2020_clean$Nubr_office_visits, na.rm = TRUE)
 
 ```
+
 the mean of this data set is about 2.79.
 
 ```{r}
 
 var(HC2020_clean$Nubr_office_visits, na.rm = TRUE)
 ```
- and the variance is about 34.59. We might need to do something with this particular data set but as an example, lets first run a Generalized Linear Model without doing any kind of transformation to the data. 
- 
+
+and the variance is about 34.59. We might need to do something with this particular data set but as an example, lets first run a Generalized Linear Model without doing any kind of transformation to the data.
+
 ## How to build a GLM with a Poisson Distribution
 
 The basic core functions of a GLM look something like this: `glm(counts ~ outcome + treatment, data = data_set, family = poisson()` which includes:
 
-- `counts:` would be your Y variable 
-- `data:` where your pulling the data from
-- `~:` or an equal sign 
-- `outcome + treatment:` are your X variables 
-- `family:` the link or distribution you are following 
+-   `counts:` would be your Y variable
+-   `data:` where your pulling the data from
+-   `~:` or an equal sign
+-   `outcome + treatment:` are your X variables
+-   `family:` the link or distribution you are following
 
 *We are interested in measuring number of visits to a doctors office as a function of perceived health, sex assigned at birth, and marital status.*
 
@@ -326,10 +325,11 @@ PossionModel1 <- glm(Nubr_office_visits ~ Health_status + Is_male + Is_married,
 # check summary 
 summary(PossionModel1)
 ```
- 
-this summary gives us the null deviance, which is the total sum of squares, and the residual deviance which is the sum of square errors or the unexplained deviance. We also get the AIC for this model (although AIC is more useful when comparing to other model fits) and we also get the model coefficients for Health status, sex assigned at birth, and marital status. 
 
-Additionally, this output is extremely ugly so we will feed this model into `gtsummary` in a little bit so looks a little better. 
+this summary gives us the null deviance, which is the total sum of squares, and the residual deviance which is the sum of square errors or the unexplained deviance. We also get the AIC for this model (although AIC is more useful when comparing to other model fits) and we also get the model coefficients for Health status, sex assigned at birth, and marital status.
 
- 
+Additionally, this output is extremely ugly so we will feed this model into `gtsummary` in a little bit so looks a little better.
 
+### Modeling with gtsummary 
+
+the mean of  
