@@ -332,4 +332,5 @@ Additionally, this output is extremely ugly so we will feed this model into `gts
 
 ### Modeling with gtsummary 
 
- 
+
+
