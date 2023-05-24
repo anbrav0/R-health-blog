@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.649">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Tendai Gwanzura">
+<meta name="author" content="Ana Bravo">
+
+<title>How to Health Science in R - Fisher’s Exact Test</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">How to Health Science in R</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html">About</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html">Genalized Linear Model: Using Count Data</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./Fishersexactest.html" aria-current="page">Fisher’s Exact Test</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Fisher’s Exact Test</h1>
+            <p class="subtitle lead">Explaining Fisher’s Exact Test, how to run it in R and it’s interpretation.</p>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Authors</div>
+      <div class="quarto-title-meta-contents">
+               <p>Tendai Gwanzura </p>
+               <p>Ana Bravo </p>
+            </div>
+    </div>
+      
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions">Assumptions</a></li>
+  <li><a href="#hypotheses" id="toc-hypotheses" class="nav-link" data-scroll-target="#hypotheses">Hypotheses</a></li>
+  </ul></li>
+  <li><a href="#fishers-exact-test-equation" id="toc-fishers-exact-test-equation" class="nav-link" data-scroll-target="#fishers-exact-test-equation">Fisher’s Exact Test Equation</a>
+  <ul class="collapse">
+  <li><a href="#formula-description" id="toc-formula-description" class="nav-link" data-scroll-target="#formula-description">Formula description</a></li>
+  <li><a href="#what-is-a-contingency-table" id="toc-what-is-a-contingency-table" class="nav-link" data-scroll-target="#what-is-a-contingency-table">What is a contingency table?</a></li>
+  <li><a href="#performing-fishers-exact-test-in-r" id="toc-performing-fishers-exact-test-in-r" class="nav-link" data-scroll-target="#performing-fishers-exact-test-in-r">Performing Fisher’s Exact Test in R</a></li>
+  <li><a href="#data-source-gmp2017" id="toc-data-source-gmp2017" class="nav-link" data-scroll-target="#data-source-gmp2017">Data Source: GMP2017</a></li>
+  <li><a href="#load-in-libraries" id="toc-load-in-libraries" class="nav-link" data-scroll-target="#load-in-libraries">Load in libraries</a></li>
+  <li><a href="#descriptive-summary" id="toc-descriptive-summary" class="nav-link" data-scroll-target="#descriptive-summary">Descriptive summary</a></li>
+  <li><a href="#assessing-frequencies-to-answer-research-question" id="toc-assessing-frequencies-to-answer-research-question" class="nav-link" data-scroll-target="#assessing-frequencies-to-answer-research-question">Assessing frequencies to answer research question</a></li>
+  <li><a href="#visualizing-data-using-mosaic-plot" id="toc-visualizing-data-using-mosaic-plot" class="nav-link" data-scroll-target="#visualizing-data-using-mosaic-plot">Visualizing data using mosaic plot</a></li>
+  <li><a href="#running-the-fishers-exact-test-using-fisher.test" id="toc-running-the-fishers-exact-test-using-fisher.test" class="nav-link" data-scroll-target="#running-the-fishers-exact-test-using-fisher.test">Running the Fisher’s exact test using fisher.test()</a></li>
+  <li><a href="#running-the-test" id="toc-running-the-test" class="nav-link" data-scroll-target="#running-the-test">Running the test</a></li>
+  <li><a href="#interpretation-of-results" id="toc-interpretation-of-results" class="nav-link" data-scroll-target="#interpretation-of-results">Interpretation of results</a></li>
+  <li><a href="#visualizing-statistical-results-with-plots-using-ggstatsplot" id="toc-visualizing-statistical-results-with-plots-using-ggstatsplot" class="nav-link" data-scroll-target="#visualizing-statistical-results-with-plots-using-ggstatsplot">Visualizing statistical results with plots using ggstatsplot</a></li>
+  </ul></li>
+  <li><a href="#what-if-we-have-more-than-two-levels" id="toc-what-if-we-have-more-than-two-levels" class="nav-link" data-scroll-target="#what-if-we-have-more-than-two-levels">What if we have more than two levels?</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<ul>
+<li><p>Fisher’s exact test is an independent test used to determine if there is a relationship between categorical (non-parametric) variables with a small sample size.</p></li>
+<li><p>Used to assess whether proportions of one variable are different among values of another table.</p></li>
+<li><p>Uses (hypergeometric) marginal distribution to derive exact p-values which are not approximated which are somewhat conservative.</p></li>
+<li><p>The rules of Chi distribution do not apply when the frequency count is &lt;5 for more than 20% of the cells in a contingency table (Bower 2003).</p></li>
+<li><p>Data is easily manipulated by using a contingency table.</p></li>
+</ul>
+<section id="assumptions" class="level3">
+<h3 class="anchored" data-anchor-id="assumptions">Assumptions</h3>
+<ol type="1">
+<li>Assumes that the individual observations are independent.</li>
+<li>Assumes that the row and column totals are fixed or conditioned.</li>
+<li>The variables are categorical and randomly sampled.</li>
+<li>Observations are count data.</li>
+</ol>
+</section>
+<section id="hypotheses" class="level3">
+<h3 class="anchored" data-anchor-id="hypotheses">Hypotheses</h3>
+<p>The hypotheses of Fisher’s exact test are similar to Chi-square test:</p>
+<p>Null hypothesis:<span class="math inline">(H_0)</span> There is no relationship between the categorical variables, the variables are independent.</p>
+<p>Alternative hypothesis: <span class="math inline">(H_1)</span> There is a relationship between the categorical variables, the variables are dependent.</p>
+</section>
+</section>
+<section id="fishers-exact-test-equation" class="level2">
+<h2 class="anchored" data-anchor-id="fishers-exact-test-equation">Fisher’s Exact Test Equation</h2>
+<p>Fisher’s exact test for a one-tailed p-value is calculated using the following formula:</p>
+<p><span class="math display">   p = {(a+b)!(c+d)!(a+c)!(b+d)! \over a! b! c! d! n!} </span></p>
+<ul>
+<li>n = population size/ total frequency</li>
+<li>a + b = “successes” values in the contingency table</li>
+<li>a + c = sample size / draws from the population</li>
+<li>a = sample successes</li>
+</ul>
+<section id="formula-description" class="level3">
+<h3 class="anchored" data-anchor-id="formula-description">Formula description</h3>
+<p>this test is usually used as a one-tailed test but it can also be used as a two tailed test as well, <span class="math inline">a</span>,<span class="math inline">b</span>,<span class="math inline">c</span>, and <span class="math inline">d</span> are the individual frequencies on the 2x2 contingency table and <span class="math inline">n</span> is our total frequency. This particular test is used to obtain the probability of the combination of frequencies that we can actually obtain.</p>
+</section>
+<section id="what-is-a-contingency-table" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-a-contingency-table">What is a contingency table?</h3>
+<p>This is a table that shows the distribution of a variable in the rows and columns. Sometimes referred to as a 2x2 table. They are useful in summarizing categorical variables. The table() function is used to create a contingency table in R. When the variables of interest are summarized in a contingency table it is easier to run the Fisher’s Exact test.</p>
+<section id="example-creating-a-contingency-table" class="level4">
+<h4 class="anchored" data-anchor-id="example-creating-a-contingency-table">Example: Creating a contingency table</h4>
+<p>Lets say we have information on the gender of participants in a clinical trial and the type of drug administered to them we can create the following contingency table for further analysis.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example R code to create a contingency table</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating a data frame</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a> df <span class="ot">=</span> <span class="fu">data.frame</span> (</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>   <span class="st">"Drug"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Drug A"</span>, <span class="st">"Drug B"</span>, <span class="st">"Drug A"</span>),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>   <span class="st">"Gender"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Male"</span>, <span class="st">"Female"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a> )</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating contingency table using table()</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a> ctable <span class="ot">=</span> <span class="fu">table</span>(df)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a> <span class="fu">print</span>(ctable)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>        Gender
+Drug     Female Male
+  Drug A      1    1
+  Drug B      0    1</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="performing-fishers-exact-test-in-r" class="level3">
+<h3 class="anchored" data-anchor-id="performing-fishers-exact-test-in-r">Performing Fisher’s Exact Test in R</h3>
+<p>We will need to install the ggstatplot package to visualize the statistical results.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("ggstatplot") </span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("summarytools")</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("gmodels")</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(tidyVerse)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="data-source-gmp2017" class="level3">
+<h3 class="anchored" data-anchor-id="data-source-gmp2017">Data Source: GMP2017</h3>
+<p>For this example we will be using the Greater Manchester Police’s UK stop and search data from 2017(December) sourced from the Sage Research Methods Dataset Part 2. This data has information on stop and search events, gender and ethnicity. For this example we would like to access whether there is a significant relationship between gender and stop and search events?</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>GMP17 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"dataset-gmss-2017-subset1.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="load-in-libraries" class="level3">
+<h3 class="anchored" data-anchor-id="load-in-libraries">Load in libraries</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gmodels)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggstatsplot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>You can cite this package as:
+     Patil, I. (2021). Visualizations with statistical details: The 'ggstatsplot' approach.
+     Journal of Open Source Software, 6(61), 3167, doi:10.21105/joss.03167</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(katex)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.2     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+</div>
+</section>
+<section id="descriptive-summary" class="level3">
+<h3 class="anchored" data-anchor-id="descriptive-summary">Descriptive summary</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(GMP17)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Gender Ethnicity ObjectSearch
+1      1         1            1
+2      1         1           -9
+3      1         1            1
+4      1         1            1
+5      1         1           -9
+6      1         1            1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(GMP17)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   186 obs. of  3 variables:
+ $ Gender      : int  1 1 1 1 1 1 1 1 1 -9 ...
+ $ Ethnicity   : int  1 1 1 1 1 1 2 1 1 1 ...
+ $ ObjectSearch: int  1 -9 1 1 -9 1 1 1 -9 -9 ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># determining the number of rows</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">NROW</span>(GMP17)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 186</code></pre>
+</div>
+</div>
+</section>
+<section id="assessing-frequencies-to-answer-research-question" class="level3">
+<h3 class="anchored" data-anchor-id="assessing-frequencies-to-answer-research-question">Assessing frequencies to answer research question</h3>
+<p>For this analysis we will use the Gender variable and the ObjectSearch variable</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dropping the Ethnicity variable to remain with variables of interest for for the 2x2 table</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>newGMP17 <span class="ot">&lt;-</span>GMP17[ <span class="sc">-</span><span class="fu">c</span>(<span class="dv">2</span>) ]</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(newGMP17)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Gender ObjectSearch
+1      1            1
+2      1           -9
+3      1            1
+4      1            1
+5      1           -9
+6      1            1</code></pre>
+</div>
+</div>
+<p>The data contains missing values categorized as -9 that we need to drop and we need to rename our variables based on the data dictionary provided <a href="https://methods.sagepub.com/dataset/fishers-exact-gmss-2017-r" class="uri">https://methods.sagepub.com/dataset/fishers-exact-gmss-2017-r</a>.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exclude rows that have missing data in both variables</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>newGMP17_nom <span class="ot">&lt;-</span> <span class="fu">subset</span>(newGMP17, Gender <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>newGMP17_nom2 <span class="ot">&lt;-</span> <span class="fu">subset</span>(newGMP17_nom, ObjectSearch  <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(newGMP17_nom2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Gender       ObjectSearch  
+ Min.   :1.000   Min.   :1.000  
+ 1st Qu.:1.000   1st Qu.:1.000  
+ Median :1.000   Median :1.000  
+ Mean   :1.052   Mean   :1.259  
+ 3rd Qu.:1.000   3rd Qu.:2.000  
+ Max.   :2.000   Max.   :2.000  </code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(newGMP17_nom2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 116</code></pre>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Renaming the Gender variable based on data dictionary</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>newGMP17_nom2<span class="sc">$</span>Gender <span class="ot">&lt;-</span> </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">recode_factor</span>(</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    newGMP17_nom2<span class="sc">$</span>Gender,</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>            <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"Male"</span>,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>            <span class="st">"2"</span> <span class="ot">=</span> <span class="st">"Female"</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Renaming the Gender variable based on data dictionary</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>newGMP17_nom2<span class="sc">$</span>ObjectSearch <span class="ot">&lt;-</span> </span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">recode_factor</span>(</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    newGMP17_nom2<span class="sc">$</span>ObjectSearch,</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>            <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"Controlled_Drugs"</span>,</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>            <span class="st">"2"</span> <span class="ot">=</span> <span class="st">"Harmful_Objects"</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating the contingency table for subset data</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>cGMP17 <span class="ot">=</span> <span class="fu">table</span>(newGMP17_nom2)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(cGMP17)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>        ObjectSearch
+Gender   Controlled_Drugs Harmful_Objects
+  Male                 84              26
+  Female                2               4</code></pre>
+</div>
+</div>
+</section>
+<section id="visualizing-data-using-mosaic-plot" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-data-using-mosaic-plot">Visualizing data using mosaic plot</h3>
+<ul>
+<li>we can use the mosaic plot to represent the data.</li>
+</ul>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mosaicplot</span>(cGMP17,</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">main =</span><span class="st">'Mosaic Plot'</span>,</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Fishersexactest_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="running-the-fishers-exact-test-using-fisher.test" class="level3">
+<h3 class="anchored" data-anchor-id="running-the-fishers-exact-test-using-fisher.test">Running the Fisher’s exact test using fisher.test()</h3>
+<p><strong>What if we just run a Chi-square test?</strong></p>
+<p>Using our GMP17 dataset we can try to run a Chi-square test instead of the Fisher’s Exact test and see what happens.</p>
+<p>The R output gives us a warning that the Chi Square is not appropriate hence we should use another test in this case the Fisher’s Exact Test.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(cGMP17)<span class="sc">$</span>expected</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in chisq.test(cGMP17): Chi-squared approximation may be incorrect</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        ObjectSearch
+Gender   Controlled_Drugs Harmful_Objects
+  Male          81.551724       28.448276
+  Female         4.448276        1.551724</code></pre>
+</div>
+</div>
+</section>
+<section id="running-the-test" class="level3">
+<h3 class="anchored" data-anchor-id="running-the-test">Running the test</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># running the fisher's exact test</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> <span class="fu">fisher.test</span>(cGMP17)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>test</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Fisher's Exact Test for Count Data
+
+data:  cGMP17
+p-value = 0.03809
+alternative hypothesis: true odds ratio is not equal to 1
+95 percent confidence interval:
+  0.8528079 73.5937611
+sample estimates:
+odds ratio 
+  6.331977 </code></pre>
+</div>
+</div>
+<p>Using the gt summary to view results.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># test &lt;- fisher.test(cGMP17)</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="co"># table1 &lt;- test %&gt;% ungroup()</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   tbl_summary(by= Gender) %&gt;% </span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   add_p() %&gt;% </span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="co">#   bold_labels() %&gt;% </span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="co">#   bold_p() %&gt;% </span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># includes caption on top of table</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   modify_caption("Table 1: Fisher's Exact test results")</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="co"># table1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="interpretation-of-results" class="level3">
+<h3 class="anchored" data-anchor-id="interpretation-of-results">Interpretation of results</h3>
+<p>The most important test statistic is the p - value therefore we can retrieve the specific result using the following code;</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>test<span class="sc">$</span>p.value </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.03808788</code></pre>
+</div>
+</div>
+<p>Odds ratio = 6.33, 95% CI = 0.85-73.59], we reject the null hypothesis (<em>p</em> &lt; 0.05) and conclude that there is a strong association between the two categorical independent variables (gender and object search events)</p>
+<p>Therefore the odds ratio indicates that the odds of getting stopped and searched by gender is 6.33 times as likely for males compared to females. In other words, males are more likely of getting stopped and searched than females.</p>
+</section>
+<section id="visualizing-statistical-results-with-plots-using-ggstatsplot" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-statistical-results-with-plots-using-ggstatsplot">Visualizing statistical results with plots using ggstatsplot</h3>
+<ul>
+<li>we download the ggsattsplot package to visualize the results in a plot.</li>
+</ul>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fisher's exact test </span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> <span class="fu">fisher.test</span>(cGMP17)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="co"># combine plot and statistical test with ggbarstats</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggbarstats</span>(</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a> newGMP17_nom2, Gender, ObjectSearch,</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a> <span class="at">results.subtitle =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a> <span class="at">subtitle =</span> <span class="fu">paste0</span>(</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a> <span class="st">"Fisher's exact test"</span>, <span class="st">", p-value = "</span>,</span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a> <span class="fu">ifelse</span>(test<span class="sc">$</span>p.value <span class="sc">&lt;</span> <span class="fl">0.001</span>, <span class="st">"&lt; 0.001"</span>, <span class="fu">round</span>(test<span class="sc">$</span>p.value, <span class="dv">3</span>))</span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Fishersexactest_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>From the plot, it is clear that the proportion of males among object search events is higher compared to females, suggesting that there is a relationship between the two variables.</p>
+<p>This is confirmed thanks to the p-value displayed in the subtitle of the plot. As previously, we reject the null hypothesis and we conclude that the variables gender and stop and search events are not dependent (p-value = 0.038).</p>
+</section>
+</section>
+<section id="what-if-we-have-more-than-two-levels" class="level2">
+<h2 class="anchored" data-anchor-id="what-if-we-have-more-than-two-levels">What if we have more than two levels?</h2>
+<p>Using the drug example used previously lets say we have 3 drugs ‘Drug A, Drug B or Drug C’ and we want to see if there is any relationship with gender ‘Male/Female’.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating a data frame</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a> df <span class="ot">=</span> <span class="fu">data.frame</span> (</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>   <span class="st">"Drug"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Drug A"</span>, <span class="st">"Drug B"</span>, <span class="st">"Drug A"</span>, <span class="st">"Drug C"</span>, <span class="st">"Drug C"</span>),</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>   <span class="st">"Gender"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Male"</span>, <span class="st">"Female"</span>, <span class="st">"Female"</span>, <span class="st">"Female"</span>)</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a> )</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating contingency table using table()</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a> ctable <span class="ot">=</span> <span class="fu">table</span>(df)</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a> <span class="fu">print</span>(ctable)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>        Gender
+Drug     Female Male
+  Drug A      1    1
+  Drug B      0    1
+  Drug C      2    0</code></pre>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Running the Fisher's Exact test for the 3x2 table</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fisher.test</span>(ctable)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Fisher's Exact Test for Count Data
+
+data:  ctable
+p-value = 0.6
+alternative hypothesis: two.sided</code></pre>
+</div>
+</div>
+<p>The p-value is non-significant [<em>p</em>&nbsp;= 0.6], we fail to reject the null hypothesis (<em>p</em>&nbsp;&lt; 0.05) and conclude that there is no association between the drug treatments and gender. If the results had been significant we would have gone ahead and conducted a pair wise comparison.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<ol type="1">
+<li>Bower, Keith M. 2003. “When to Use Fisher’s Exact Test.” In <em>American Society for Quality, Six Sigma Forum Magazine</em>, 2:35–37. 4.</li>
+<li>McCrum-Gardner, Evie. 2008. “Which Is the Correct Statistical Test to Use?” <em>British Journal of Oral and Maxillofacial Surgery</em> 46 (1): 38–41.</li>
+<li>Wong KC.&nbsp;<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5426219/">Chi squared test versus Fisher’s exact test</a>. Hong Kong Med J. 2011 Oct;17(5):427</li>
+<li>Patil, I. (2021). Visualizations with statistical details: The ‘ggstatsplot’ approach. Journal of Open Source Software, 6(61), 3167, doi:10.21105/joss.03167</li>
+<li>Zach Bobbit. (2021). <a href="https://www.statology.org/fishers-exact-test/">Fisher’s Exact Test: Definition, Formula, and Example</a></li>
+</ol>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

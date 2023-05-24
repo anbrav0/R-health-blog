@@ -8,6 +8,7 @@ website:
     right:
       - about.qmd
       - index.qmd
+      - Fishersexactest.qmd
       - icon: github
         href: https://github.com/
       - icon: twitter
