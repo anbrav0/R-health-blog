@@ -12,6 +12,7 @@ format:
 toc: true
 editor: visual
 theme: zephyr
+bibliography: export-data.bib
 ---
 
 ## Introduction
@@ -91,7 +92,9 @@ We will need to install the ggstatplot package to visualize the statistical resu
 #install.packages("ggstatplot") 
 #install.packages("summarytools")
 #install.packages("gmodels")
-#install.packages(tidyVerse)
+#install.packages("gt")
+#install.packages("tidyverse")
+
 ```
 
 ### Data Source: GMP2017
