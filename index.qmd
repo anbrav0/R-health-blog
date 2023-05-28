@@ -1,5 +1,5 @@
 ---
-title: "Genalized Linear Model: Using Count Data"
+title: "Generalized Linear Model: Using Count Data"
 subtitle: Learning how to used Generalized Linear models in R 
 title-block-banner: true
 date: "`r Sys.Date()`"
@@ -352,7 +352,7 @@ lets divide the residual deviance by the degrees of freedom.
 PossionModel1$deviance / PossionModel1$df.residual
 ```
 
-the value we got from this was 5.56. this value is very big and so we should consider a negative  binomial regression. 
+the value we got from this was 5.56. this value is very big and so we should consider a negative binomial regression. 
 
 Additionally, this output is extremely ugly so we will feed this model into `gtsummary` in a little bit so looks a little better.
 
@@ -385,21 +385,22 @@ Lets interpret perceived poor health status when compared to fair. the coefficie
 
 ## How to acount for overdispersion 
 
-Remember how we spoke about earlier that this particular model we are fitting is most likely over dispered? Well, we should try to account for that. Over dispersion means that we may have to much variation in an Poisson regression model. some ways to mediate this is by:
+Remember how we spoke about earlier that this particular model we are fitting is most likely over dispersed? Well, we should try to account for that. Over dispersion means that we may have to much variation in an Poisson regression model. some ways to mediate this is by:
 
 - selecting a different random component distribution that can account for this (like negative binomial)
+
 - or use a nonlinear and generalize linear mixed model to handle the random effects.
 
 in this case we will go for negative binomial distribution. 
 
-## Negative Bonomial Distribution 
+## Negative Binomial Distribution 
 
 A negative binomial regression can be used for over-dispersed count data, like mentioned, when the variance exceed the mean. This can be considered like a generalization of the Poisson regression, because it has the same mean structure as Poisson regression but it has an extra parameter to model over-dispersion! Also because of the, the confidence intervals for a negative binomial may be a bit wider when compared to a normal Poisson regression model. 
 
 
-> a note about Zero-inflated regressio models: this type of model attempt to account for to many zeros. Zero-inflated models estimate two models at the same time, one for count model and one for excess zeros. 
+> _a note about Zero-inflated regressio models: this type of model attempt to account for to many zeros. Zero-inflated models estimate two models at the same time, one for count model and one for excess zeros._
 
-Let's go with a negative binomial regression analysis. In this case we will need to utilize the `MASS` package to estimate negative binomial regression. 
+Let's go with a negative binomial regression analysis. In this case we will need to utilize the `MASS` package to estimate negative binomial regression parameters and account for the dispersion in this data set. 
 
 ```{r}
 
@@ -410,13 +411,13 @@ summary(PoissonModel2_NB)
 
 ```
 
-lets check the dispersion of this model
+lets check the dispersion of this negative binomial model
 
 ```{r}
 
 PoissonModel2_NB$deviance / PoissonModel2_NB$df.residual
 ```
- 1.00 is much better than 5! lets fit this model into GT summary:
+ 1.00 is much better than 5. lets fit this model into GT summary:
  
 ```{r}
 
@@ -431,15 +432,19 @@ PoissonModel2_NB |>
 
 Our reference group is 0, so for variables `Is_male` and `Is_married` the reference group in this case would be females and not married. When your fitting a model, it is very important to double check what is your reference group because different statistical software may default to different reference groups. 
 
-- **Is_male:** $e^-0.32$ = 0.72, when comparing males to females, identifying as male is associated with a reduction of 28% (0.72 - 1 = -0.28) in doctors visits. 
-- **Is_married:** $e^.32$ = 1.38, when compared to married to non-married individuals, being married is associated with a 38% increase (1.38 - 1 = .38) in doctors visit. Or, the married group has a 1.38 times more doctors visit when compared to non-married. 
+- **Is_male:** $e^-0.32$ = 0.72, when comparing males to females, identifying as male is associated with a reduction of 28% (0.72 - 1 = -0.28) in doctors visits.
+
+- **Is_married:** $e^.32$ = 1.38, when compared married to non-married individuals, being married is associated with a 38% increase (1.38 - 1 = .38) in doctors visit. Or, the married group has a 1.38 times more doctors visit when compared to non-married. 
 
 
 ## References 
 
-McCullagh, P., and J. A. Nelder. 2019. “An Outline of Generalized Linear Models,” January, 21–47. [https://doi.org/10.1201/9780203753736-2](https://www.taylorfrancis.com/chapters/mono/10.1201/9780203753736-2/outline-generalized-linear-models-mccullagh-nelder)
-Nelder, J. A., and R. W. M. Wedderburn. 1972. “Generalized Linear Models.” Journal of the Royal Statistical Society. Series A (General) 135 (3): 370. [https://doi.org/10.2307/2344614.](https://www.jstor.org/stable/2344614?origin=crossref)
-Guyen, M. (2023). "A Guide on Data Analysis". Made on Bookdown. [https://bookdown.org/mike/data_analysis/poisson-regression.html](https://bookdown.org/mike/data_analysis/poisson-regression.html)
-Bruin, J. (2011). Negative Bonomial Regression, R Dad Analysis Examples. [https://stats.oarc.ucla.edu/stata/ado/analysis/](https://stats.oarc.ucla.edu/r/dae/negative-binomial-regression/)
+1. McCullagh, P., and J. A. Nelder. 2019. “An Outline of Generalized Linear Models,” January, 21–47. [https://doi.org/10.1201/9780203753736-2](https://www.taylorfrancis.com/chapters/mono/10.1201/9780203753736-2/outline-generalized-linear-models-mccullagh-nelder)
+
+2. Nelder, J. A., and R. W. M. Wedderburn. 1972. “Generalized Linear Models.” Journal of the Royal Statistical Society. Series A (General) 135 (3): 370. [https://doi.org/10.2307/2344614.](https://www.jstor.org/stable/2344614?origin=crossref)
+
+3. Guyen, M. (2023). "A Guide on Data Analysis". Made on Bookdown. [https://bookdown.org/mike/data_analysis/poisson-regression.html](https://bookdown.org/mike/data_analysis/poisson-regression.html)
+
+4. Bruin, J. (2011). Negative Bonomial Regression, R Dad Analysis Examples. [https://stats.oarc.ucla.edu/stata/ado/analysis/](https://stats.oarc.ucla.edu/r/dae/negative-binomial-regression/)
 
 
