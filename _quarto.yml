@@ -9,6 +9,7 @@ website:
       - about.qmd
       - index.qmd
       - Fishersexactest.qmd
+      - RandomInterceptModel.qmd
       - icon: github
         href: https://github.com/
       - icon: twitter

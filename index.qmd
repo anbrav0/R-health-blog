@@ -1,6 +1,6 @@
 ---
 title: "Generalized Linear Model: Using Count Data"
-subtitle: Learning how to used Generalized Linear models in R 
+subtitle: Learning how to use Generalized Linear models in R 
 title-block-banner: true
 date: "`r Sys.Date()`"
 author:

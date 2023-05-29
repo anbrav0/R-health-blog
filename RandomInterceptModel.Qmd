@@ -1,0 +1,72 @@
+---
+title: "Random Intercept Model"
+subtitle: Learning how to use Random Intercept Models in R 
+title-block-banner: true
+date: "`r Sys.Date()`"
+author:
+  - name: Ana Bravo & Tendai Gwanzura
+    affiliations:
+      - Florida International University
+      - Robert Stempel College of Public Health and Social Work
+toc: true
+number-sections: true
+highlight-style: pygments
+format:
+  html:
+    code-fold: true
+    html-math-method: katex
+---
+
+## Libraries Used
+
+```{r}
+#| message: false
+
+library(tidyverse)
+
+```
+
+## What is a Random Intercept model?
+
+Before talking about a random intercept model, let's understand why they are necessary and important in the real world by discussing a variance component model first. This will make sense as we go along in this lecture!
+
+### Variance component model
+
+We are familiar with a *fixed level of a factor* or variable. Which means that the factor level in an experiment is the only thing we are interested. For example, let's say we are interested in measuring the difference in resistance resulting from putting identical resistors to three different temperatures for a period of 24 hours. Let's say we have three different groups, and each of these three different groups have a sample size of 5. So each of the three treatment groups was replicated 5 times.
+
+| Level 1 | Level 2 | Level 3 |
+|---------|---------|---------|
+| 6.9     | 8.3     | 8.0     |
+| 5.4     | 6.8     | 10.5    |
+| 5.8     | 7.8     | 8.1     |
+| 4.6     | 9.2     | 6.9     |
+| 4.0     | 6.5     | 9.3     |
+| mean    | mean    | mean    |
+| 5.34    | 7.72    | 8.56    |
+
+In this example, the level of the temperature is considered _fixed_ meaning, the three temperatures were the only ones that we are interested in. This is called a _fixed effects model._
+
+a fixed effect model is a statistical model in which the parameters are fixed or non-random. This can also be referred to a regression model, in which group mean are "fixed" (non-random) or in simpler, terms something that is "fixed" in analysis is constant like sex assigned at birth or ethnicity. 
+
+$$ Y_{it} = \beta_1X_{1,it} + ... + \beta_kX_{k,it}+\alpha_i + u_{it} $$ 
+with $i =1...n$ and $t=1...T$ and the $\alpha_i$ are specific intercepts that capture heterogeneity across. 
+
+
+Now, let's say we want to look at different levels of _factors_ that were chosen because of random sampling, like number of operators working that day, lot batches, days etc. So in this case we are now regarding factors not related to themselves (variables) but we are now trying to represent all possible levels that these factors may take, the appropriate model is now a _random effects model._ 
+
+fitting these _random effects models_ are important because we want to obtain estimates of different contributions that experimental factors make to the variability of our data! (we can represent this as the variance) this is what is called _variance component_ 
+
+### Why is this relavant? 
+
+Well, a variance component model helps us see how much variance in ou response at the different levels. But what if you are interested in seeing the effects of the explanatory variables? 
+
+### Example 2: School level data 
+
+Let's say we have some data on exam results of students within a school and we use a variance component model and see that 15% of the variance is at the school level. Like for example, differing school districts, differing school policies etc. However, is it fair to really say that 15% of the variance in example scores is caused by schools? you _could_ also say that maybe that part of the variance could be cause by the students being different themselves as well before taking the exam. 
+
+In this case, it might be important to _control_ for the previous exams the students took, so you can look at the variance that is due to the things that happened when the students were at that school. 
+
+### Fitting a single-level regression model 
+
+
+
