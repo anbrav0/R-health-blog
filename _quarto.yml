@@ -10,6 +10,7 @@ website:
       - index.qmd
       - Fishersexactest.qmd
       - RandomInterceptModel.qmd
+      - Two_sample_t.qmd
       - icon: github
         href: https://github.com/
       - icon: twitter
