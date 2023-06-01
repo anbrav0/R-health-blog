@@ -6,8 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Tendai Gwanzura">
-<meta name="author" content="Ana Bravo">
+<meta name="author" content="Tendai Gwanzura &amp; Ana Bravo">
+<meta name="dcterms.date" content="2023-06-01">
 
 <title>How to Health Science in R - Two sample t test</title>
 <style>
@@ -192,17 +192,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
                       </div>
   </div>
     
-  
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliations</div>
+    
+      <div class="quarto-title-meta-contents">
+      Tendai Gwanzura &amp; Ana Bravo 
+    </div>
+      <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              Florida International University
+            </p>
+          <p class="affiliation">
+              Robert Stempel College of Public Health and Social Work
+            </p>
+        </div>
+      </div>
+
   <div class="quarto-title-meta">
 
+        
       <div>
-      <div class="quarto-title-meta-heading">Authors</div>
+      <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-               <p>Tendai Gwanzura </p>
-               <p>Ana Bravo </p>
-            </div>
+        <p class="date">June 1, 2023</p>
+      </div>
     </div>
-      
       
     </div>
     
@@ -215,11 +230,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#two-simple-t-test" id="toc-two-simple-t-test" class="nav-link active" data-scroll-target="#two-simple-t-test"><strong>Two simple t test</strong></a>
+  <li><a href="#two-sample-t-test" id="toc-two-sample-t-test" class="nav-link active" data-scroll-target="#two-sample-t-test">Two sample t test</a>
   <ul class="collapse">
   <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions">Assumptions</a></li>
   <li><a href="#hypotheses" id="toc-hypotheses" class="nav-link" data-scroll-target="#hypotheses">Hypotheses</a></li>
-  <li><a href="#statistical-hypotheses-formula" id="toc-statistical-hypotheses-formula" class="nav-link" data-scroll-target="#statistical-hypotheses-formula"><strong>Statistical hypotheses formula</strong></a></li>
+  <li><a href="#statistical-hypotheses-formula" id="toc-statistical-hypotheses-formula" class="nav-link" data-scroll-target="#statistical-hypotheses-formula">Statistical hypotheses formula</a></li>
   <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example">Example</a>
   <ul class="collapse">
   <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
@@ -227,7 +242,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#assessment" id="toc-assessment" class="nav-link" data-scroll-target="#assessment">Assessment</a></li>
   <li><a href="#performing-the-two-sample-t-test" id="toc-performing-the-two-sample-t-test" class="nav-link" data-scroll-target="#performing-the-two-sample-t-test"><strong>Performing the two-sample <em>t</em>-test</strong></a></li>
   </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><strong>Conclusion</strong></a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><strong>References</strong></a></li>
   </ul></li>
   </ul>
@@ -239,8 +254,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<section id="two-simple-t-test" class="level1">
-<h1><strong>Two simple t test</strong></h1>
+<section id="two-sample-t-test" class="level1">
+<h1>Two sample t test</h1>
 <p>This is also called the independent sample <em>t</em> test. It is used to see whether the unknown population means of two groups are equal or different. This test requires one variable which can be the exposure <em>x</em> and another variable which can be the outcome <em>y</em>. If you have more than two groups then analysis of variance <em>(ANOVA)</em> will be more suitable. If data is nonparametric then an alternative test to use would be the <em>Mann Whitney U test</em> or a <em>permutation test</em>.<span class="citation" data-cites="cressie1986">[@cressie1986]</span>.</p>
 <p>There are two types of t tests, the first being the <strong>Student’s t test,</strong> which assumes the variance of the two groups is equal, the second being the <strong>Welch’s t test</strong> (default in R), which assumes the variance in the two groups is different.</p>
 <p>In this article we will be discussing the <strong>Student’s t test</strong>.</p>
@@ -260,7 +275,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ol type="1">
 <li><p><span class="math inline">(H_0)</span>: the mean of group A <span class="math inline">(m_A)</span> is equal to the mean of group B <span class="math inline">(m_B)</span>- two tailed test.</p></li>
 <li><p><span class="math inline">(H_0)</span>: the mean of group A <span class="math inline">(m_A)</span> is greater than or equal to mean of group B <span class="math inline">(m_B)</span>- one tailed test.</p></li>
-<li><p><span class="math inline">(H_0)</span>: the mean of group A <span class="math inline">(m_A)</span> is less than or eaqual to the mean of group B <span class="math inline">(m_B)</span>- one tailed test.</p>
+<li><p><span class="math inline">(H_0)</span>: the mean of group A <span class="math inline">(m_A)</span> is less than or equal to the mean of group B <span class="math inline">(m_B)</span>- one tailed test.</p>
 <p>The corresponding alternative hypotheses would be as follows:</p></li>
 </ol>
 <!-- -->
@@ -271,19 +286,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ol>
 </section>
 <section id="statistical-hypotheses-formula" class="level2">
-<h2 class="anchored" data-anchor-id="statistical-hypotheses-formula"><strong>Statistical hypotheses formula</strong></h2>
+<h2 class="anchored" data-anchor-id="statistical-hypotheses-formula">Statistical hypotheses formula</h2>
 <p>For the <strong>Student’s t test</strong> which assumes equal variance the following is how the |t| statistic may be calculated using groups A and B as examples:</p>
-<p><span class="math inline">t ={ {m_{A} - m_{B}} \over \sqrt{ {S^2 \over n_{A} } + {S^2 \over n_{B}} }}</span></p>
+<p><span class="math display">t ={ {\bar{x}_{1} - \bar{x}_{2}} \over \sqrt{ s^2( {1 \over n_1 } + {1 \over n_2}) }}</span></p>
 <p>This can be described as the sample mean difference divided by the sample standard deviation of the sample mean difference where:</p>
 <p><span class="math inline">m_A</span> and <span class="math inline">m_B</span> are the mean values of A and B,</p>
 <p><span class="math inline">n_A</span> and <span class="math inline">n_B</span> are the seize of group A and B,</p>
 <p><span class="math inline">S^2</span> is the estimator for the pooled variance,</p>
 <p>with the degrees of freedom (<em>df)</em> = <span class="math inline">n_A + n_B - 2</span>,</p>
 <p>and <span class="math inline">S^2</span> is calculated as follows:</p>
-<p><span class="math inline">S^2 = { {\sum{ (x-m_{A})^2} + \sum{ (x-m_{B})^2}} \over {n_{A} + n_{B} - 2 }}</span></p>
+<p><span class="math display">s^2 = { {\displaystyle\sum_{i=1}^{n_1} { (x_i-\bar{x}_1)^2} + \displaystyle\sum_{j=1}^{n_2}{ (x_j-\bar{x}_2)^2}} \over {n_{1} + n_{2} - 2 }}</span></p>
 <p>Results for both <strong>Students t test</strong> and <strong>Welch’s t test</strong> are usually similar unless the group sizes and standard deviations are different.</p>
 <p><strong>What if the data is not independent?</strong></p>
-<p>If the data is not independent such as paired data in the form of matched pairs which are correlated, we use the <em>paired t test</em>. This test checks whether the means of two paired groups are different from each other. It usually used in clinical trial studies with a “before and after” or case control studies with matched pairs. For this test we only assume the difference of each pair to be normally distributed (the paired groups are important for analysis) unlike the <em>independent t test</em> which assumes that data from both samples are independent and variances are equal.<span class="citation" data-cites="fralick">[@fralick]</span></p>
+<p>If the data is not independent such as paired data in the form of matched pairs which are correlated, we use the <em>paired t test</em>. This test checks whether the means of two paired groups are different from each other. It’s usually used in clinical trial studies with a “before and after” or case control studies with matched pairs. For this test we only assume the difference of each pair to be normally distributed (the paired groups are the ones important for analysis) unlike the <em>independent t test</em> which assumes that data from both samples are independent and variances are equal.<span class="citation" data-cites="fralick">[@fralick]</span></p>
 <hr>
 </section>
 <section id="example" class="level2">
@@ -307,7 +322,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="dataset" class="level3">
 <h3 class="anchored" data-anchor-id="dataset">Dataset</h3>
-<p>This example dataset sourced from <a href="https://www.kaggle.com/datasets/uciml/student-alcohol-consumption/versions/2?resource=download">kaggle</a> was obtained from surveys of students in math and Portuguese classes in secondary school. It contains demographic information on gender, social and study information.<span class="citation" data-cites="cortez2008">[@cortez2008]</span></p>
+<p>This example dataset sourced from <a href="https://www.kaggle.com/datasets/uciml/student-alcohol-consumption/versions/2?resource=download">kaggle</a> was obtained from surveys of students in Math and Portuguese classes in secondary school. It contains demographic information on gender, social and study information.<span class="citation" data-cites="cortez2008">[@cortez2008]</span></p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -323,9 +338,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span> (gt)</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstatix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstatix)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p><strong>Checking the data</strong></p>
@@ -375,7 +390,7 @@ $ G3         &lt;int&gt; 6, 6, 10, 15, 10, 15, 11, 6, 19, 15, 9, 12, 14, 11, 16,
 </div>
 <p>In total there are 395 observations and 33 variables. We will drop the variables we do not need and keep the variables that will help us answer the following: <strong>Is there a difference between boys and girls in math final grades?</strong></p>
 <p><span class="math inline">H_0</span>: There is no statistical difference between the final grades between boys and girls.</p>
-<p><span class="math inline">H_1</span>: There is a difference between the final grades between the two groups.</p>
+<p><span class="math inline">H_1</span>: There is a statistically significant difference in the final grades between the two groups.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -407,78 +422,111 @@ $ G3  &lt;int&gt; 6, 6, 10, 15, 10, 15, 11, 6, 19, 15, 9, 12, 14, 11, 16, 14, 14
                     Max.   :20.00  </code></pre>
 </div>
 </div>
-<p><strong>Visualizing the data</strong>- we can use histograms and box lots to visualize the data to check for outliers and distribution thus checking for normality.</p>
+<p>We see that data ranges from 0-20 with 0 being people who were absent and could not take the test therefore missing data. We remove these 0 values before running the t test. However other models should be considered such as the zero inflated model to differentiate those who truly got a 0 and those who were not present to take test.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Histograms for data by groups </span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>male <span class="ot">=</span> math<span class="sc">$</span>G3[math<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"M"</span>]</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>female <span class="ot">=</span> math<span class="sc">$</span>G3[math<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"F"</span>]</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># plotting distribution for males</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plotNormalHistogram</span>(male)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creating a boxplot to visualize the data with no outliers</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>math2 <span class="ot">=</span> <span class="fu">subset</span>(math, G3<span class="sc">&gt;</span><span class="dv">0</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(G3 <span class="sc">~</span> sex,<span class="at">data=</span>math2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="Two_sample_t_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Final grades for males seem to be normally distributed from 0-20.</p>
+<p><strong>Visualizing the data</strong>- we can use histograms and box lots to visualize the data to check for outliers and distribution thus checking for normality.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plotting distribution for females</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotNormalHistogram</span>(female)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Histograms for data by groups </span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>male <span class="ot">=</span> math2<span class="sc">$</span>G3[math2<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"M"</span>]</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>female <span class="ot">=</span> math2<span class="sc">$</span>G3[math2<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"F"</span>]</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co"># plotting distribution for males</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plotNormalHistogram</span>(male, <span class="at">breaks=</span> <span class="dv">20</span>,<span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">20</span>),<span class="at">main=</span><span class="st">"Distribution of the grades for males "</span>, <span class="at">xlab=</span> <span class="st">"Math Grades"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="Two_sample_t_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Final grades for males seem to be normally distributed from 0-20. Data is approximately normal because we have a large amount of bins.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plotting distribution for females</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotNormalHistogram</span>(female, <span class="at">breaks=</span> <span class="dv">20</span>,<span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">20</span>),<span class="at">main=</span><span class="st">"Distribution of the grades for females "</span>, <span class="at">xlab=</span> <span class="st">"Math Grades"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Two_sample_t_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Final grades for females also appear to be normally distributed. The final score across both is almost evenly distributed. However there seem to be a significant number of individuals who failed the test (grade=0).</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plotting bar plot to see the distribution in sample size</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>sample_size <span class="ot">=</span> <span class="fu">table</span>(math<span class="sc">$</span>sex)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(sample_size,<span class="at">main=</span> <span class="st">"Distribution of sample size by sex"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="Two_sample_t_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>The bar plot shows that there are slightly more females in the sample than males.</p>
-<p><strong>Identifying outliers</strong></p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creating a boxplot to visualize the outliers (G3=0)</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(G3 <span class="sc">~</span> sex,<span class="at">data=</span>math)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plotting bar plot to see the distribution in sample size</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>sample_size <span class="ot">=</span> <span class="fu">table</span>(math2<span class="sc">$</span>sex)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(sample_size,<span class="at">main=</span> <span class="st">"Distribution of sample size by sex"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="Two_sample_t_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>The box plot shows us that there are outliers in terms of people who had a score of 0. This score is not truly reflective of the performance between boys and girls as a grade of 0 may represent absentia or other reasons for the test not been taken. Therefore we opt to drop the outliers. We will compare to see if this decision affects the mean which appears similar from the above plot.</p>
+<p>The bar graph shows that there are slightly more females in the sample than males.</p>
+<p><strong>Identifying outliers</strong></p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creating a boxplot to visualize the data with no outliers</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>math2 <span class="ot">=</span> <span class="fu">subset</span>(math, G3<span class="sc">&gt;</span><span class="dv">0</span>)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(G3 <span class="sc">~</span> sex,<span class="at">data=</span>math2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creating a boxplot to visualize the outliers (G3=0)</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(G3 <span class="sc">~</span> sex,<span class="at">data=</span>math2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="Two_sample_t_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>The mean has increased slightly but the distribution is still the same.</p>
+<p>The box plot shows us that there are no outliers as these have been removed in terms of people who had a score of 0. This score is not truly reflective of the performance between boys and girls as a grade of 0 may represent absentia or other reasons for the test not been taken. Therefore we opt to drop the outliers. We will compare to see if this decision affects the mean which appears similar from the above plot.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># finding the mean for the groups with outliers</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(math<span class="sc">$</span>G3[math<span class="sc">$</span>sex<span class="sc">==</span><span class="st">"F"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 9.966346</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(math<span class="sc">$</span>G3[math<span class="sc">$</span>sex<span class="sc">==</span><span class="st">"M"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10.91444</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># finding the mean for the groups without outliers</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(math2<span class="sc">$</span>G3[math2<span class="sc">$</span>sex<span class="sc">==</span><span class="st">"F"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 11.20541</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(math2<span class="sc">$</span>G3[math2<span class="sc">$</span>sex<span class="sc">==</span><span class="st">"M"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 11.86628</code></pre>
+</div>
+</div>
+<p>The mean has increased slightly and the difference decreased after removing the outliers but the distribution is still the same.</p>
 <p><strong>Check the equality of variances (homogeneity)</strong></p>
-<p>We can use the <em>Levene’s test</em> or the <em>Bartlett’s test</em> to check for homogeneity of variances. The former is in the <span style="background-color:yellow">car</span> library and the later in the <span style="background-color:yellow">rstatix</span> library. If the variances are homogeneous the p value will be greater than 0.05.</p>
+<p>We can use the <em>Levene’s test</em> or the <em>Bartlett’s test</em> to check for homogeneity of variances. The former is in the <code>car</code> library and the later in the <code>rstatix</code> library. If the variances are homogeneous the p value will be greater than 0.05.</p>
 <p>Other tests include <em>F test 2 sided</em>, <em>Brown-Forsythe</em> and <em>O’Brien</em> but we shall not cover these.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># running the Bartleet's test to check equal variance</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(G3<span class="sc">~</span>sex, <span class="at">data=</span>math2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># running the Bartleet's test to check equal variance</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(G3<span class="sc">~</span>sex, <span class="at">data=</span>math2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -489,8 +537,8 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
 </div>
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># running the Levene's test to check equal variance</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>math2 <span class="sc">%&gt;%</span> <span class="fu">levene_test</span>(G3<span class="sc">~</span>sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># running the Levene's test to check equal variance</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>math2 <span class="sc">%&gt;%</span> <span class="fu">levene_test</span>(G3<span class="sc">~</span>sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 4
@@ -518,11 +566,11 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># perfoming the two sample t test</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>stat.test <span class="ot">&lt;-</span> math2 <span class="sc">%&gt;%</span> </span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t_test</span>(G3<span class="sc">~</span> sex, <span class="at">var.equal=</span><span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_significance</span>()</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>stat.test</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># perfoming the two sample t test</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>stat.test <span class="ot">&lt;-</span> math2 <span class="sc">%&gt;%</span> </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t_test</span>(G3<span class="sc">~</span> sex, <span class="at">var.equal=</span><span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_significance</span>()</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>stat.test</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 9
@@ -534,7 +582,7 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>stat.test<span class="sc">$</span>statistic</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>stat.test<span class="sc">$</span>statistic</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>        t 
@@ -548,41 +596,41 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
 <li><p><strong>df</strong> - degrees of freedom</p></li>
 <li><p><strong>p</strong> - p value</p></li>
 </ul>
-<p><span class="math inline">\color{pink}{\text{gtsummary}}</span> table of results</p>
+<p><code>gtsummary</code> table of results</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>  math2 <span class="sc">|&gt;</span> </span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_summary</span>(</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> sex,</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">statistic =</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">list</span>(</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="st">"{mean} ({sd})"</span>,</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">all_dichotomous</span>() <span class="sc">~</span> <span class="st">"{p}%"</span>)</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span> </span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">add_n</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_overall</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_difference</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a> math2 <span class="sc">|&gt;</span> </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_summary</span>(</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> sex,</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">statistic =</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">list</span>(</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="st">"{mean} ({sd})"</span>,</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">all_dichotomous</span>() <span class="sc">~</span> <span class="st">"{p}%"</span>)</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span> </span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">add_n</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_overall</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_difference</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 
-<div id="vfzasmwfqj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#vfzasmwfqj table {
+<div id="mwdzirixzq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#mwdzirixzq table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#vfzasmwfqj thead, #vfzasmwfqj tbody, #vfzasmwfqj tfoot, #vfzasmwfqj tr, #vfzasmwfqj td, #vfzasmwfqj th {
+#mwdzirixzq thead, #mwdzirixzq tbody, #mwdzirixzq tfoot, #mwdzirixzq tr, #mwdzirixzq td, #mwdzirixzq th {
   border-style: none;
 }
 
-#vfzasmwfqj p {
+#mwdzirixzq p {
   margin: 0;
   padding: 0;
 }
 
-#vfzasmwfqj .gt_table {
+#mwdzirixzq .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -608,12 +656,12 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#vfzasmwfqj .gt_caption {
+#mwdzirixzq .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#vfzasmwfqj .gt_title {
+#mwdzirixzq .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -625,7 +673,7 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   border-bottom-width: 0;
 }
 
-#vfzasmwfqj .gt_subtitle {
+#mwdzirixzq .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -637,7 +685,7 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   border-top-width: 0;
 }
 
-#vfzasmwfqj .gt_heading {
+#mwdzirixzq .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -649,13 +697,13 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#vfzasmwfqj .gt_bottom_border {
+#mwdzirixzq .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#vfzasmwfqj .gt_col_headings {
+#mwdzirixzq .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -670,7 +718,7 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#vfzasmwfqj .gt_col_heading {
+#mwdzirixzq .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -690,7 +738,7 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   overflow-x: hidden;
 }
 
-#vfzasmwfqj .gt_column_spanner_outer {
+#mwdzirixzq .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -702,15 +750,15 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   padding-right: 4px;
 }
 
-#vfzasmwfqj .gt_column_spanner_outer:first-child {
+#mwdzirixzq .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#vfzasmwfqj .gt_column_spanner_outer:last-child {
+#mwdzirixzq .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#vfzasmwfqj .gt_column_spanner {
+#mwdzirixzq .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -722,11 +770,11 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   width: 100%;
 }
 
-#vfzasmwfqj .gt_spanner_row {
+#mwdzirixzq .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#vfzasmwfqj .gt_group_heading {
+#mwdzirixzq .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -752,7 +800,7 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   text-align: left;
 }
 
-#vfzasmwfqj .gt_empty_group_heading {
+#mwdzirixzq .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -767,15 +815,15 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   vertical-align: middle;
 }
 
-#vfzasmwfqj .gt_from_md > :first-child {
+#mwdzirixzq .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#vfzasmwfqj .gt_from_md > :last-child {
+#mwdzirixzq .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#vfzasmwfqj .gt_row {
+#mwdzirixzq .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -794,7 +842,7 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   overflow-x: hidden;
 }
 
-#vfzasmwfqj .gt_stub {
+#mwdzirixzq .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -807,7 +855,7 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   padding-right: 5px;
 }
 
-#vfzasmwfqj .gt_stub_row_group {
+#mwdzirixzq .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -821,15 +869,15 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   vertical-align: top;
 }
 
-#vfzasmwfqj .gt_row_group_first td {
+#mwdzirixzq .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#vfzasmwfqj .gt_row_group_first th {
+#mwdzirixzq .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#vfzasmwfqj .gt_summary_row {
+#mwdzirixzq .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -839,16 +887,16 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   padding-right: 5px;
 }
 
-#vfzasmwfqj .gt_first_summary_row {
+#mwdzirixzq .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#vfzasmwfqj .gt_first_summary_row.thick {
+#mwdzirixzq .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#vfzasmwfqj .gt_last_summary_row {
+#mwdzirixzq .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -858,7 +906,7 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#vfzasmwfqj .gt_grand_summary_row {
+#mwdzirixzq .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -868,7 +916,7 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   padding-right: 5px;
 }
 
-#vfzasmwfqj .gt_first_grand_summary_row {
+#mwdzirixzq .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -878,7 +926,7 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#vfzasmwfqj .gt_last_grand_summary_row_top {
+#mwdzirixzq .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -888,11 +936,11 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#vfzasmwfqj .gt_striped {
+#mwdzirixzq .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#vfzasmwfqj .gt_table_body {
+#mwdzirixzq .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -901,7 +949,7 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#vfzasmwfqj .gt_footnotes {
+#mwdzirixzq .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -915,7 +963,7 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#vfzasmwfqj .gt_footnote {
+#mwdzirixzq .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -924,7 +972,7 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   padding-right: 5px;
 }
 
-#vfzasmwfqj .gt_sourcenotes {
+#mwdzirixzq .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -938,7 +986,7 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#vfzasmwfqj .gt_sourcenote {
+#mwdzirixzq .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -946,63 +994,63 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   padding-right: 5px;
 }
 
-#vfzasmwfqj .gt_left {
+#mwdzirixzq .gt_left {
   text-align: left;
 }
 
-#vfzasmwfqj .gt_center {
+#mwdzirixzq .gt_center {
   text-align: center;
 }
 
-#vfzasmwfqj .gt_right {
+#mwdzirixzq .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#vfzasmwfqj .gt_font_normal {
+#mwdzirixzq .gt_font_normal {
   font-weight: normal;
 }
 
-#vfzasmwfqj .gt_font_bold {
+#mwdzirixzq .gt_font_bold {
   font-weight: bold;
 }
 
-#vfzasmwfqj .gt_font_italic {
+#mwdzirixzq .gt_font_italic {
   font-style: italic;
 }
 
-#vfzasmwfqj .gt_super {
+#mwdzirixzq .gt_super {
   font-size: 65%;
 }
 
-#vfzasmwfqj .gt_footnote_marks {
+#mwdzirixzq .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#vfzasmwfqj .gt_asterisk {
+#mwdzirixzq .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#vfzasmwfqj .gt_indent_1 {
+#mwdzirixzq .gt_indent_1 {
   text-indent: 5px;
 }
 
-#vfzasmwfqj .gt_indent_2 {
+#mwdzirixzq .gt_indent_2 {
   text-indent: 10px;
 }
 
-#vfzasmwfqj .gt_indent_3 {
+#mwdzirixzq .gt_indent_3 {
   text-indent: 15px;
 }
 
-#vfzasmwfqj .gt_indent_4 {
+#mwdzirixzq .gt_indent_4 {
   text-indent: 20px;
 }
 
-#vfzasmwfqj .gt_indent_5 {
+#mwdzirixzq .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1047,10 +1095,10 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
 </div>
 </div>
 <p><strong>Interpretation of results</strong></p>
-<p>For the two sample t test with t(355) = -1.940477, p &lt; 0.0531, the p value is greater than our alpha of 0.05 , we fail to reject the null hypothesis and conclude that there is no difference between the means of the two groups. There is no difference in final grades between boys and girls.</p>
+<p>For the two sample t test with t(355) = -1.940477, p &lt; 0.0531, the p value is greater than our alpha of 0.05 , we fail to reject the null hypothesis and conclude that there is no statistical difference between the means of the two groups. There is no difference in final grades between boys and girls. <em>(A significant |t| would be 1.96).</em></p>
 <p><strong>Effect size</strong></p>
 <p><em>Cohen’s d</em> can be an used as an effect size statistic for the two sample t test. It is the difference between the means of each group divided by the pooled standard deviation.</p>
-<p><span class="math display">d= {m_A-m_B \over SD_{pooled}}</span></p>
+<p><span class="math inline">d= {m_A-m_B \over SD_pooled}</span></p>
 <p>It ranges from 0 to infinity, with 0 indicating no effect where the means are equal. 0.5 means that the means differ by half the standard deviation of the data and 1 means they differ by 1 standard deviation. It is divided into small, medium or large using the following cut off points.</p>
 <ul>
 <li><p><strong><em>small</em></strong> 0.2-&lt;0.5</p></li>
@@ -1061,9 +1109,9 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#perfoming cohen's d</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>math2 <span class="sc">%&gt;%</span> </span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cohens_d</span>(G3<span class="sc">~</span>sex,<span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">#perfoming cohen's d</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>math2 <span class="sc">%&gt;%</span> </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cohens_d</span>(G3<span class="sc">~</span>sex,<span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 7
@@ -1073,17 +1121,17 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
 </div>
 </div>
 <p>The effect size is <strong><em>small</em></strong> d= -0.20.</p>
-<p>In conclusion, a two-samples t-test showed that the difference was not statistically significant, t(355) = -1.940477, p &lt; 0.0531, d = -0.20; where, t(355) is shorthand notation for a t-statistic that has 355 degrees of freedom and d is <em>Cohen’s d</em>.</p>
+<p>In conclusion, a two-samples t-test showed that the difference was not statistically significant, t(355) = -1.940477, p &lt; 0.0531, d = -0.20; where, t(355) is shorthand notation for a t-statistic that has 355 degrees of freedom and d is <em>Cohen’s d</em>. We can conclude that the females mean final grade is greater than males final grade (d= -0.20) but this result is not significant.</p>
 <p><strong>What if it is one tailed t test?</strong></p>
 <p>Use the <span class="math inline">\color{blue}{\text{alternative =}}</span> option to determine if one group is <span class="math inline">\color{blue}{\text{"less"}}</span> or <span class="math inline">\color{blue}{\text{"greater"}}</span>. For example if we want to see whether the final grades for females are greater than males we can use the following code:</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># perfoming the one tailed two sample t test</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>stat.test <span class="ot">&lt;-</span> math2 <span class="sc">%&gt;%</span> </span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t_test</span>(G3<span class="sc">~</span> sex, <span class="at">var.equal=</span><span class="cn">TRUE</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_significance</span>()</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>stat.test</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># perfoming the one tailed two sample t test</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>stat.test <span class="ot">&lt;-</span> math2 <span class="sc">%&gt;%</span> </span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t_test</span>(G3<span class="sc">~</span> sex, <span class="at">var.equal=</span><span class="cn">TRUE</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_significance</span>()</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>stat.test</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 9
@@ -1092,22 +1140,17 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
 1 G3    F      M        185   172     -1.94   355 0.973 ns      </code></pre>
 </div>
 </div>
-<p>The p value &gt; 0.05 (p=0.973) , we fail to reject the null hypothesis. We conclude that the final grades for females are not significantly greater than for males.</p>
+<p>The p value is greater than 0.05 (p=0.973), we fail to reject the null hypothesis. We conclude that the final grades for females are not significantly greater than for males.</p>
 <p><strong>What about running the paired sample t test?</strong></p>
 <p>We can simply add the syntax <span class="math inline">\color{blue}{\text{paired= TRUE}}</span> to our <code>t_test()</code> to run the analysis for matched pairs data.</p>
 </section>
 </section>
 <section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion"><strong>Conclusion</strong></h2>
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 <p>This article covers the <strong>Student’s t test</strong> and how we run it in R. It also shows how we find the effect size and how we can conclude the results.</p>
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references"><strong>References</strong></h2>
-<ol type="1">
-<li><p>Cortez, Paulo, and Alice Maria Gonçalves Silva. 2008. “Using data mining to predict secondary school student performance.” In. EUROSIS-ETI. <a href="http://repositorium.sdum.uminho.pt/">http://repositorium.sdum.uminho.pt/.</a></p></li>
-<li><p>Cressie, N. a. C., and H. J. Whitford. 1986. “How to Use the Two Sample t-Test.” Biometrical Journal 28 (2): 131–48. <a href="https://onlinelibrary.wiley.com/doi/10.1002/bimj.4710280202">https://doi.org/10.1002/bimj.4710280202.</a></p></li>
-<li><p>FRALICK, Drew, Julia Z. ZHENG, Bokai Wang, Xin M. TU, and Changyong FENG. n.d. “The Differences and Similarities Between Two-Sample t-Test and Paired t-Test.” Shanghai Archives of Psychiatry 29 (3): 184–88. <a href="http://www.shanghaiarchivesofpsychiatry.org/Download/Volume%2028/Issue%206/217070en.pdf">https://doi.org/10.11919/j.issn.1002-0829.217070.</a></p></li>
-</ol>
 
 
 </section>
