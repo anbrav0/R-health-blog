@@ -294,7 +294,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math inline">n_A</span> and <span class="math inline">n_B</span> are the seize of group A and B,</p>
 <p><span class="math inline">S^2</span> is the estimator for the pooled variance,</p>
 <p>with the degrees of freedom (<em>df)</em> = <span class="math inline">n_A + n_B - 2</span>,</p>
-<p>and <span class="math inline">S^2</span> is calculated as follows:</p>
+<p>and <span class="math inline">s^2</span> is calculated as follows:</p>
 <p><span class="math display">s^2 = { {\displaystyle\sum_{i=1}^{n_1} { (x_i-\bar{x}_1)^2} + \displaystyle\sum_{j=1}^{n_2}{ (x_j-\bar{x}_2)^2}} \over {n_{1} + n_{2} - 2 }}</span></p>
 <p>Results for both <strong>Students t test</strong> and <strong>Welch’s t test</strong> are usually similar unless the group sizes and standard deviations are different.</p>
 <p><strong>What if the data is not independent?</strong></p>
@@ -322,7 +322,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="dataset" class="level3">
 <h3 class="anchored" data-anchor-id="dataset">Dataset</h3>
-<p>This example dataset sourced from <a href="https://www.kaggle.com/datasets/uciml/student-alcohol-consumption/versions/2?resource=download">kaggle</a> was obtained from surveys of students in Math and Portuguese classes in secondary school. It contains demographic information on gender, social and study information.<span class="citation" data-cites="cortez2008">[@cortez2008]</span></p>
+<p>This example dataset sourced from <a href="https://www.kaggle.com/datasets/uciml/student-alcohol-consumption/versions/2?resource=download">kaggle</a> was obtained from surveys of students in Math and Portuguese classes in secondary school. It contains demographic information on gender, social and study information.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -614,23 +614,23 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
 </details>
 <div class="cell-output-display">
 
-<div id="mwdzirixzq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#mwdzirixzq table {
+<div id="wdvevhehal" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#wdvevhehal table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#mwdzirixzq thead, #mwdzirixzq tbody, #mwdzirixzq tfoot, #mwdzirixzq tr, #mwdzirixzq td, #mwdzirixzq th {
+#wdvevhehal thead, #wdvevhehal tbody, #wdvevhehal tfoot, #wdvevhehal tr, #wdvevhehal td, #wdvevhehal th {
   border-style: none;
 }
 
-#mwdzirixzq p {
+#wdvevhehal p {
   margin: 0;
   padding: 0;
 }
 
-#mwdzirixzq .gt_table {
+#wdvevhehal .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -656,12 +656,12 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#mwdzirixzq .gt_caption {
+#wdvevhehal .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#mwdzirixzq .gt_title {
+#wdvevhehal .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -673,7 +673,7 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   border-bottom-width: 0;
 }
 
-#mwdzirixzq .gt_subtitle {
+#wdvevhehal .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -685,7 +685,7 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   border-top-width: 0;
 }
 
-#mwdzirixzq .gt_heading {
+#wdvevhehal .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -697,13 +697,13 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#mwdzirixzq .gt_bottom_border {
+#wdvevhehal .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#mwdzirixzq .gt_col_headings {
+#wdvevhehal .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -718,7 +718,7 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#mwdzirixzq .gt_col_heading {
+#wdvevhehal .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -738,7 +738,7 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   overflow-x: hidden;
 }
 
-#mwdzirixzq .gt_column_spanner_outer {
+#wdvevhehal .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -750,15 +750,15 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   padding-right: 4px;
 }
 
-#mwdzirixzq .gt_column_spanner_outer:first-child {
+#wdvevhehal .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#mwdzirixzq .gt_column_spanner_outer:last-child {
+#wdvevhehal .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#mwdzirixzq .gt_column_spanner {
+#wdvevhehal .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -770,11 +770,11 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   width: 100%;
 }
 
-#mwdzirixzq .gt_spanner_row {
+#wdvevhehal .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#mwdzirixzq .gt_group_heading {
+#wdvevhehal .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -800,7 +800,7 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   text-align: left;
 }
 
-#mwdzirixzq .gt_empty_group_heading {
+#wdvevhehal .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -815,15 +815,15 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   vertical-align: middle;
 }
 
-#mwdzirixzq .gt_from_md > :first-child {
+#wdvevhehal .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#mwdzirixzq .gt_from_md > :last-child {
+#wdvevhehal .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#mwdzirixzq .gt_row {
+#wdvevhehal .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -842,7 +842,7 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   overflow-x: hidden;
 }
 
-#mwdzirixzq .gt_stub {
+#wdvevhehal .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -855,7 +855,7 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   padding-right: 5px;
 }
 
-#mwdzirixzq .gt_stub_row_group {
+#wdvevhehal .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -869,15 +869,15 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   vertical-align: top;
 }
 
-#mwdzirixzq .gt_row_group_first td {
+#wdvevhehal .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#mwdzirixzq .gt_row_group_first th {
+#wdvevhehal .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#mwdzirixzq .gt_summary_row {
+#wdvevhehal .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -887,16 +887,16 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   padding-right: 5px;
 }
 
-#mwdzirixzq .gt_first_summary_row {
+#wdvevhehal .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#mwdzirixzq .gt_first_summary_row.thick {
+#wdvevhehal .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#mwdzirixzq .gt_last_summary_row {
+#wdvevhehal .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -906,7 +906,7 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#mwdzirixzq .gt_grand_summary_row {
+#wdvevhehal .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -916,7 +916,7 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   padding-right: 5px;
 }
 
-#mwdzirixzq .gt_first_grand_summary_row {
+#wdvevhehal .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -926,7 +926,7 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#mwdzirixzq .gt_last_grand_summary_row_top {
+#wdvevhehal .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -936,11 +936,11 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#mwdzirixzq .gt_striped {
+#wdvevhehal .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#mwdzirixzq .gt_table_body {
+#wdvevhehal .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -949,7 +949,7 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#mwdzirixzq .gt_footnotes {
+#wdvevhehal .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -963,7 +963,7 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#mwdzirixzq .gt_footnote {
+#wdvevhehal .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -972,7 +972,7 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   padding-right: 5px;
 }
 
-#mwdzirixzq .gt_sourcenotes {
+#wdvevhehal .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -986,7 +986,7 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#mwdzirixzq .gt_sourcenote {
+#wdvevhehal .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -994,63 +994,63 @@ Bartlett's K-squared = 0.12148, df = 1, p-value = 0.7274</code></pre>
   padding-right: 5px;
 }
 
-#mwdzirixzq .gt_left {
+#wdvevhehal .gt_left {
   text-align: left;
 }
 
-#mwdzirixzq .gt_center {
+#wdvevhehal .gt_center {
   text-align: center;
 }
 
-#mwdzirixzq .gt_right {
+#wdvevhehal .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#mwdzirixzq .gt_font_normal {
+#wdvevhehal .gt_font_normal {
   font-weight: normal;
 }
 
-#mwdzirixzq .gt_font_bold {
+#wdvevhehal .gt_font_bold {
   font-weight: bold;
 }
 
-#mwdzirixzq .gt_font_italic {
+#wdvevhehal .gt_font_italic {
   font-style: italic;
 }
 
-#mwdzirixzq .gt_super {
+#wdvevhehal .gt_super {
   font-size: 65%;
 }
 
-#mwdzirixzq .gt_footnote_marks {
+#wdvevhehal .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#mwdzirixzq .gt_asterisk {
+#wdvevhehal .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#mwdzirixzq .gt_indent_1 {
+#wdvevhehal .gt_indent_1 {
   text-indent: 5px;
 }
 
-#mwdzirixzq .gt_indent_2 {
+#wdvevhehal .gt_indent_2 {
   text-indent: 10px;
 }
 
-#mwdzirixzq .gt_indent_3 {
+#wdvevhehal .gt_indent_3 {
   text-indent: 15px;
 }
 
-#mwdzirixzq .gt_indent_4 {
+#wdvevhehal .gt_indent_4 {
   text-indent: 20px;
 }
 
-#mwdzirixzq .gt_indent_5 {
+#wdvevhehal .gt_indent_5 {
   text-indent: 25px;
 }
 </style>

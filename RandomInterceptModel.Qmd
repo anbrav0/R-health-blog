@@ -58,7 +58,7 @@ fitting these _random effects models_ are important because we want to obtain es
 
 ### Why is this relavant? 
 
-Well, a variance component model helps us see how much variance in ou response at the different levels. But what if you are interested in seeing the effects of the explanatory variables? 
+Well, a variance component model helps us see how much variance in our response at the different levels. But what if you are interested in seeing the effects of the explanatory variables? [Or, what if your observations are NOT randomly sampled from simple random sample but instead from a cluster or a multi-level sampling design?]{style="background-color:yellow"} Random intercept models or random effects models are important.
 
 ### Example 2: School level data 
 
