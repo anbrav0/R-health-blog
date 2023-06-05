@@ -44,29 +44,60 @@ We are familiar with a *fixed level of a factor* or variable. Which means that t
 | mean    | mean    | mean    |
 | 5.34    | 7.72    | 8.56    |
 
-In this example, the level of the temperature is considered _fixed_ meaning, the three temperatures were the only ones that we are interested in. This is called a _fixed effects model._
+In this example, the level of the temperature is considered *fixed* meaning, the three temperatures were the only ones that we are interested in. This is called a *fixed effects model.*
 
-a fixed effect model is a statistical model in which the parameters are fixed or non-random. This can also be referred to a regression model, in which group mean are "fixed" (non-random) or in simpler, terms something that is "fixed" in analysis is constant like sex assigned at birth or ethnicity. 
+a fixed effect model is a statistical model in which the parameters are fixed or non-random. This can also be referred to a regression model, in which group mean are "fixed" (non-random) or in simpler, terms something that is "fixed" in analysis is constant like sex assigned at birth or ethnicity.
 
-$$ Y_{it} = \beta_1X_{1,it} + ... + \beta_kX_{k,it}+\alpha_i + u_{it} $$ 
-with $i =1...n$ and $t=1...T$ and the $\alpha_i$ are specific intercepts that capture heterogeneity across. 
+$$ Y_{it} = \beta_1X_{1,it} + ... + \beta_kX_{k,it}+\alpha_i + u_{it} $$ with $i =1...n$ and $t=1...T$ and the $\alpha_i$ are specific intercepts that capture heterogeneity across.
 
+Now, let's say we want to look at different levels of *factors* that were chosen because of random sampling, like number of operators working that day, lot batches, days etc. So in this case we are now regarding factors not related to themselves (variables) but we are now trying to represent all possible levels that these factors may take, the appropriate model is now a *random effects model.*
 
-Now, let's say we want to look at different levels of _factors_ that were chosen because of random sampling, like number of operators working that day, lot batches, days etc. So in this case we are now regarding factors not related to themselves (variables) but we are now trying to represent all possible levels that these factors may take, the appropriate model is now a _random effects model._ 
+fitting these *random effects models* are important because we want to obtain estimates of different contributions that experimental factors make to the variability of our data! (we can represent this as the variance) this is what is called *variance component*
 
-fitting these _random effects models_ are important because we want to obtain estimates of different contributions that experimental factors make to the variability of our data! (we can represent this as the variance) this is what is called _variance component_ 
-
-### Why is this relavant? 
+### Why is this relavant?
 
 Well, a variance component model helps us see how much variance in our response at the different levels. But what if you are interested in seeing the effects of the explanatory variables? [Or, what if your observations are NOT randomly sampled from simple random sample but instead from a cluster or a multi-level sampling design?]{style="background-color:yellow"} Random intercept models or random effects models are important.
 
-### Example 2: School level data 
+### Example 1: School level data
 
-Let's say we have some data on exam results of students within a school and we use a variance component model and see that 15% of the variance is at the school level. Like for example, differing school districts, differing school policies etc. However, is it fair to really say that 15% of the variance in example scores is caused by schools? you _could_ also say that maybe that part of the variance could be cause by the students being different themselves as well before taking the exam. 
+Let's say we have some data on exam results of students within a school and we use a variance component model and see that 15% of the variance is at the school level. Like for example, differing school districts, differing school policies etc. However, is it fair to really say that 15% of the variance in example scores is caused by schools? you *could* also say that maybe that part of the variance could be cause by the students being different themselves as well before taking the exam.
 
-In this case, it might be important to _control_ for the previous exams the students took, so you can look at the variance that is due to the things that happened when the students were at that school. 
+In this case, it might be important to *control* for the previous exams the students took, so you can look at the variance that is due to the things that happened when the students were at that school.
 
-### Fitting a single-level regression model 
+## Fitting a single-level regression model
+
+when we want to control for something (like previous exams students took) we can fit a single-level regression model that looks something like this:
+
+$$y_1 = \beta_0 + \beta_1x_i + e_i$$ where $y_1$ is your dependent variable, $\beta_0$ is your intercept and $\beta_1x_1$ are your slope and $\beta_1$ parameters. When you have *clustered* data fitting this model causes problems. Clustered data is data where you observation or participants are related. Like exam results for students within a school, height of children within a family etc.
+
+if we try to fit this clustered data:
+
+1.  our standard errors will be wrong.
+
+2.  this single level data model doesn't show up how much variation is at the school level and how much much of the variation is at the student level.
+
+So fitting this type of data in this regression we wont know how much of an effect the school level has on the exam score, after controlling for the previous score.
+
+## Solution: Fitting a Random Intercept model
+
+So what we can do is combine the variance component and single-level regression model to build a **random intercept model.** So this random intercept model has 2 random terms. the level one random term: $e_{ij} \sim N(0, \sigma_e^2)$ and the $N(0, \sigma_u^2)$ and has two parts:
+
+-   a fixed part
+-   a random part
+
+$$ y_{ij} = \overbrace{\beta_0 + \beta_1X_{ij}}^{\text{fixed part}} + \underbrace{u_j + e_{ij}}_{\text{random part}}$$ where the fixed parts includes our parameters that we estimate as our coefficients, and the random part is the parameter we estimate as the variance $e_{ij} \sim N(0, \sigma_e^2)$ and the $N(0, \sigma_u^2)$ and these are allowed to vary. 
+
+we can also write this equation like so:
+
+$$ Y_{ij} = \mu + b_i + \varepsilon_{ij} $$
+
+where
+
+-    $\mu$ is the population average
+
+-    $b_i$ is the random students effects (you have a random effect for every student)
+
+-   $\varepsilon_{ij}$ is your random error.
 
 
 

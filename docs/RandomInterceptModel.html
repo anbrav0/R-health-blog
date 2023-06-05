@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ana Bravo &amp; Tendai Gwanzura">
-<meta name="dcterms.date" content="2023-06-01">
+<meta name="dcterms.date" content="2023-06-04">
 
 <title>How to Health Science in R - Random Intercept Model</title>
 <style>
@@ -216,7 +216,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">June 1, 2023</p>
+        <p class="date">June 4, 2023</p>
       </div>
     </div>
       
@@ -236,9 +236,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul class="collapse">
   <li><a href="#variance-component-model" id="toc-variance-component-model" class="nav-link" data-scroll-target="#variance-component-model"> <span class="header-section-number">2.1</span> Variance component model</a></li>
   <li><a href="#why-is-this-relavant" id="toc-why-is-this-relavant" class="nav-link" data-scroll-target="#why-is-this-relavant"> <span class="header-section-number">2.2</span> Why is this relavant?</a></li>
-  <li><a href="#example-2-school-level-data" id="toc-example-2-school-level-data" class="nav-link" data-scroll-target="#example-2-school-level-data"> <span class="header-section-number">2.3</span> Example 2: School level data</a></li>
-  <li><a href="#fitting-a-single-level-regression-model" id="toc-fitting-a-single-level-regression-model" class="nav-link" data-scroll-target="#fitting-a-single-level-regression-model"> <span class="header-section-number">2.4</span> Fitting a single-level regression model</a></li>
+  <li><a href="#example-1-school-level-data" id="toc-example-1-school-level-data" class="nav-link" data-scroll-target="#example-1-school-level-data"> <span class="header-section-number">2.3</span> Example 1: School level data</a></li>
   </ul></li>
+  <li><a href="#fitting-a-single-level-regression-model" id="toc-fitting-a-single-level-regression-model" class="nav-link" data-scroll-target="#fitting-a-single-level-regression-model"> <span class="header-section-number">3</span> Fitting a single-level regression model</a></li>
+  <li><a href="#solution-fitting-a-random-intercept-model" id="toc-solution-fitting-a-random-intercept-model" class="nav-link" data-scroll-target="#solution-fitting-a-random-intercept-model"> <span class="header-section-number">4</span> Solution: Fitting a Random Intercept model</a></li>
   </ul>
 </nav>
     </div>
@@ -311,8 +312,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 <p>In this example, the level of the temperature is considered <em>fixed</em> meaning, the three temperatures were the only ones that we are interested in. This is called a <em>fixed effects model.</em></p>
 <p>a fixed effect model is a statistical model in which the parameters are fixed or non-random. This can also be referred to a regression model, in which group mean are “fixed” (non-random) or in simpler, terms something that is “fixed” in analysis is constant like sex assigned at birth or ethnicity.</p>
-<p><span class="math display"> Y_{it} = \beta_1X_{1,it} + ... + \beta_kX_{k,it}+\alpha_i + u_{it} </span></p>
-<p>with <span class="math inline">i =1...n</span> and <span class="math inline">t=1...T</span> and the <span class="math inline">\alpha_i</span> are specific intercepts that capture heterogeneity across.</p>
+<p><span class="math display"> Y_{it} = \beta_1X_{1,it} + ... + \beta_kX_{k,it}+\alpha_i + u_{it} </span> with <span class="math inline">i =1...n</span> and <span class="math inline">t=1...T</span> and the <span class="math inline">\alpha_i</span> are specific intercepts that capture heterogeneity across.</p>
 <p>Now, let’s say we want to look at different levels of <em>factors</em> that were chosen because of random sampling, like number of operators working that day, lot batches, days etc. So in this case we are now regarding factors not related to themselves (variables) but we are now trying to represent all possible levels that these factors may take, the appropriate model is now a <em>random effects model.</em></p>
 <p>fitting these <em>random effects models</em> are important because we want to obtain estimates of different contributions that experimental factors make to the variability of our data! (we can represent this as the variance) this is what is called <em>variance component</em></p>
 </section>
@@ -320,16 +320,41 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3 data-number="2.2" class="anchored" data-anchor-id="why-is-this-relavant"><span class="header-section-number">2.2</span> Why is this relavant?</h3>
 <p>Well, a variance component model helps us see how much variance in our response at the different levels. But what if you are interested in seeing the effects of the explanatory variables? <span style="background-color:yellow">Or, what if your observations are NOT randomly sampled from simple random sample but instead from a cluster or a multi-level sampling design?</span> Random intercept models or random effects models are important.</p>
 </section>
-<section id="example-2-school-level-data" class="level3" data-number="2.3">
-<h3 data-number="2.3" class="anchored" data-anchor-id="example-2-school-level-data"><span class="header-section-number">2.3</span> Example 2: School level data</h3>
+<section id="example-1-school-level-data" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="example-1-school-level-data"><span class="header-section-number">2.3</span> Example 1: School level data</h3>
 <p>Let’s say we have some data on exam results of students within a school and we use a variance component model and see that 15% of the variance is at the school level. Like for example, differing school districts, differing school policies etc. However, is it fair to really say that 15% of the variance in example scores is caused by schools? you <em>could</em> also say that maybe that part of the variance could be cause by the students being different themselves as well before taking the exam.</p>
 <p>In this case, it might be important to <em>control</em> for the previous exams the students took, so you can look at the variance that is due to the things that happened when the students were at that school.</p>
 </section>
-<section id="fitting-a-single-level-regression-model" class="level3" data-number="2.4">
-<h3 data-number="2.4" class="anchored" data-anchor-id="fitting-a-single-level-regression-model"><span class="header-section-number">2.4</span> Fitting a single-level regression model</h3>
-
-
 </section>
+<section id="fitting-a-single-level-regression-model" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="fitting-a-single-level-regression-model"><span class="header-section-number">3</span> Fitting a single-level regression model</h2>
+<p>when we want to control for something (like previous exams students took) we can fit a single-level regression model that looks something like this:</p>
+<p><span class="math display">y_1 = \beta_0 + \beta_1x_i + e_i</span> where <span class="math inline">y_1</span> is your dependent variable, <span class="math inline">\beta_0</span> is your intercept and <span class="math inline">\beta_1x_1</span> are your slope and <span class="math inline">\beta_1</span> parameters. When you have <em>clustered</em> data fitting this model causes problems. Clustered data is data where you observation or participants are related. Like exam results for students within a school, height of children within a family etc.</p>
+<p>if we try to fit this clustered data:</p>
+<ol type="1">
+<li><p>our standard errors will be wrong.</p></li>
+<li><p>this single level data model doesn’t show up how much variation is at the school level and how much much of the variation is at the student level.</p></li>
+</ol>
+<p>So fitting this type of data in this regression we wont know how much of an effect the school level has on the exam score, after controlling for the previous score.</p>
+</section>
+<section id="solution-fitting-a-random-intercept-model" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="solution-fitting-a-random-intercept-model"><span class="header-section-number">4</span> Solution: Fitting a Random Intercept model</h2>
+<p>So what we can do is combine the variance component and single-level regression model to build a <strong>random intercept model.</strong> So this random intercept model has 2 random terms. the level one random term: <span class="math inline">e_{ij} \sim N(0, \sigma_e^2)</span> and the <span class="math inline">N(0, \sigma_u^2)</span> and has two parts:</p>
+<ul>
+<li>a fixed part</li>
+<li>a random part</li>
+</ul>
+<p><span class="math display"> y_{ij} = \overbrace{\beta_0 + \beta_1X_{ij}}^{\text{fixed part}} + \underbrace{u_j + e_{ij}}_{\text{random part}}</span> where the fixed parts includes our parameters that we estimate as our coefficients, and the random part is the parameter we estimate as the variance <span class="math inline">e_{ij} \sim N(0, \sigma_e^2)</span> and the <span class="math inline">N(0, \sigma_u^2)</span></p>
+<p>we can also write this equation like so:</p>
+<p><span class="math display"> Y_{ij} = \mu + b_i + \varepsilon_{ij} </span></p>
+<p>where</p>
+<ul>
+<li><p><span class="math inline">\mu</span> is the population average</p></li>
+<li><p><span class="math inline">b_i</span> is the random students effects (you have a random effect for every student)</p></li>
+<li><p><span class="math inline">\varepsilon_{ij}</span> is your random error.</p></li>
+</ul>
+
+
 </section>
 
 </main> <!-- /main -->
