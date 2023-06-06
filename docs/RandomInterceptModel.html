@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ana Bravo &amp; Tendai Gwanzura">
-<meta name="dcterms.date" content="2023-06-04">
+<meta name="dcterms.date" content="2023-06-06">
 
 <title>How to Health Science in R - Random Intercept Model</title>
 <style>
@@ -216,7 +216,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">June 4, 2023</p>
+        <p class="date">June 6, 2023</p>
       </div>
     </div>
       
@@ -240,6 +240,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </ul></li>
   <li><a href="#fitting-a-single-level-regression-model" id="toc-fitting-a-single-level-regression-model" class="nav-link" data-scroll-target="#fitting-a-single-level-regression-model"> <span class="header-section-number">3</span> Fitting a single-level regression model</a></li>
   <li><a href="#solution-fitting-a-random-intercept-model" id="toc-solution-fitting-a-random-intercept-model" class="nav-link" data-scroll-target="#solution-fitting-a-random-intercept-model"> <span class="header-section-number">4</span> Solution: Fitting a Random Intercept model</a></li>
+  <li><a href="#final-key-points" id="toc-final-key-points" class="nav-link" data-scroll-target="#final-key-points"> <span class="header-section-number">5</span> Final key points</a></li>
+  <li><a href="#assumptions-of-a-random-effects-model" id="toc-assumptions-of-a-random-effects-model" class="nav-link" data-scroll-target="#assumptions-of-a-random-effects-model"> <span class="header-section-number">6</span> Assumptions of a random effects model:</a></li>
+  <li><a href="#example-2-planktonic-larval-duration-pld" id="toc-example-2-planktonic-larval-duration-pld" class="nav-link" data-scroll-target="#example-2-planktonic-larval-duration-pld"> <span class="header-section-number">7</span> Example 2: Planktonic larval duration (PLD)</a>
+  <ul class="collapse">
+  <li><a href="#load-pld-data" id="toc-load-pld-data" class="nav-link" data-scroll-target="#load-pld-data"> <span class="header-section-number">7.1</span> load PLD data</a></li>
+  <li><a href="#fit-first-model-linear-model" id="toc-fit-first-model-linear-model" class="nav-link" data-scroll-target="#fit-first-model-linear-model"> <span class="header-section-number">7.2</span> Fit first model: Linear model</a></li>
+  <li><a href="#log-transformation" id="toc-log-transformation" class="nav-link" data-scroll-target="#log-transformation"> <span class="header-section-number">7.3</span> Log transformation</a></li>
+  <li><a href="#residual-of-new-log-transformmed-graph" id="toc-residual-of-new-log-transformmed-graph" class="nav-link" data-scroll-target="#residual-of-new-log-transformmed-graph"> <span class="header-section-number">7.4</span> residual of new log transformmed graph</a></li>
+  </ul></li>
+  <li><a href="#fitting-a-random-intercept-model-random-intercept-same-slope" id="toc-fitting-a-random-intercept-model-random-intercept-same-slope" class="nav-link" data-scroll-target="#fitting-a-random-intercept-model-random-intercept-same-slope"> <span class="header-section-number">8</span> Fitting a random intercept model (random intercept, same slope)</a></li>
   </ul>
 </nav>
     </div>
@@ -254,7 +264,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lattice)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(arm)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -344,7 +359,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>a fixed part</li>
 <li>a random part</li>
 </ul>
-<p><span class="math display"> y_{ij} = \overbrace{\beta_0 + \beta_1X_{ij}}^{\text{fixed part}} + \underbrace{u_j + e_{ij}}_{\text{random part}}</span> where the fixed parts includes our parameters that we estimate as our coefficients, and the random part is the parameter we estimate as the variance <span class="math inline">e_{ij} \sim N(0, \sigma_e^2)</span> and the <span class="math inline">N(0, \sigma_u^2)</span></p>
+<p><span class="math display"> y_{ij} = \overbrace{\beta_0 + \beta_1X_{ij}}^{\text{fixed part}} + \underbrace{u_j + e_{ij}}_{\text{random part}}</span> where the fixed parts includes our parameters that we estimate as our coefficients, and the random part is the parameter we estimate as the variance <span class="math inline">e_{ij} \sim N(0, \sigma_e^2)</span> and the <span class="math inline">N(0, \sigma_u^2)</span> and these are allowed to vary.</p>
 <p>we can also write this equation like so:</p>
 <p><span class="math display"> Y_{ij} = \mu + b_i + \varepsilon_{ij} </span></p>
 <p>where</p>
@@ -353,6 +368,763 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p><span class="math inline">b_i</span> is the random students effects (you have a random effect for every student)</p></li>
 <li><p><span class="math inline">\varepsilon_{ij}</span> is your random error.</p></li>
 </ul>
+</section>
+<section id="final-key-points" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="final-key-points"><span class="header-section-number">5</span> Final key points</h2>
+<ul>
+<li><p>random intercept models are used for answering questions about clustered data, and at different levels. For example, what is the relationship between exam scores at 11 and at age 16? how much variation is there between students progress from 11 to 16 at the school level?</p></li>
+<li><p><span class="math inline">b_i</span> is the error associated with the students.</p></li>
+<li><p><span class="math inline">\varepsilon_{ij}</span> is the random error.</p></li>
+<li><p>for a random intercept model, each individual will have a random intercept, but sample slope.</p></li>
+</ul>
+</section>
+<section id="assumptions-of-a-random-effects-model" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="assumptions-of-a-random-effects-model"><span class="header-section-number">6</span> Assumptions of a random effects model:</h2>
+<ul>
+<li><p>unobserved cluster effects is not corrected with observed variables (all <span class="math inline">u_{ij}</span> terms are not correlated with the your predictors.)</p></li>
+<li><p>the within and between effects are the same.</p></li>
+<li><p>your error term is independent with your constant term.</p></li>
+<li><p>you have homoscedasticity</p></li>
+</ul>
+</section>
+<section id="example-2-planktonic-larval-duration-pld" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="example-2-planktonic-larval-duration-pld"><span class="header-section-number">7</span> Example 2: Planktonic larval duration (PLD)</h2>
+<p>this is example is from <a href="https://www.jstor.org/stable/25426272">O’Connor et al (2007).</a> A brief intro on this study, temperature is important for the development of organism. In marine species, temperature is very important and linked to growth. So the time spent as a planktonic larvae can have associations on mortality and regulation on the species. Previous research has looked at the association between species comparison but not within species comparisons. What if we are interest in within and between species variation?</p>
+<section id="load-pld-data" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="load-pld-data"><span class="header-section-number">7.1</span> load PLD data</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>PLD <span class="ot">&lt;-</span> <span class="fu">read_table</span>(<span class="st">"/Users/anbravo/Documents/GitHub/R-health-blog/PLD.txt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>I am curious about the structure of this data and how it briefly looks.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#strcuture </span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(PLD)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>spc_tbl_ [214 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+ $ phylum : chr [1:214] "Annelida" "Annelida" "Annelida" "Annelida" ...
+ $ species: chr [1:214] "Circeus.spirillum" "Circeus.spirillum" "Circeus.spirillum" "Hydroides.elegans" ...
+ $ D.mode : chr [1:214] "L" "L" "L" "P" ...
+ $ temp   : num [1:214] 5 10 15 15 20 25 30 5 10 17 ...
+ $ pld    : num [1:214] 16 16 4 8 6.5 5 3.2 15 9.5 4.5 ...
+ - attr(*, "spec")=
+  .. cols(
+  ..   phylum = col_character(),
+  ..   species = col_character(),
+  ..   D.mode = col_character(),
+  ..   temp = col_double(),
+  ..   pld = col_double()
+  .. )</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># just the top - seeing how it looks</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(PLD)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 5
+  phylum   species           D.mode  temp   pld
+  &lt;chr&gt;    &lt;chr&gt;             &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1 Annelida Circeus.spirillum L          5  16  
+2 Annelida Circeus.spirillum L         10  16  
+3 Annelida Circeus.spirillum L         15   4  
+4 Annelida Hydroides.elegans P         15   8  
+5 Annelida Hydroides.elegans P         20   6.5
+6 Annelida Hydroides.elegans P         25   5  </code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># brief summary</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(PLD)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>    phylum            species             D.mode               temp      
+ Length:214         Length:214         Length:214         Min.   : 2.50  
+ Class :character   Class :character   Class :character   1st Qu.:12.28  
+ Mode  :character   Mode  :character   Mode  :character   Median :20.00  
+                                                          Mean   :18.59  
+                                                          3rd Qu.:25.00  
+                                                          Max.   :32.00  
+      pld        
+ Min.   :  1.00  
+ 1st Qu.: 11.00  
+ Median : 19.30  
+ Mean   : 26.28  
+ 3rd Qu.: 33.45  
+ Max.   :129.00  </code></pre>
+</div>
+</div>
+<p>I am curious about how this would look just plotting the variable <code>pld</code> or planktonic larvae duration and the temperature. So i am interested in seeing how the temperature is associated with their durtation.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># how to plot in base R </span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pld <span class="sc">~</span> temp, <span class="at">data =</span> PLD,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"temperature (C)"</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"PLD survival (Days)"</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">16</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># add lm line in base R</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">lm</span>(pld <span class="sc">~</span> temp, <span class="at">data =</span> PLD))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="RandomInterceptModel_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>you can also do this in ggplot plot like so:</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> PLD) <span class="sc">+</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">y =</span> pld, <span class="at">x =</span> temp) <span class="sc">+</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="RandomInterceptModel_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="fit-first-model-linear-model" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="fit-first-model-linear-model"><span class="header-section-number">7.2</span> Fit first model: Linear model</h3>
+<p>Let’s first fit a linear model and check any assumptions. Why are we fitting a linear model first? It might be important to check the standard error of this model and compare to the next model, that might be a better fit.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fitting linear model first </span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>LinearModel_1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(pld <span class="sc">~</span> temp, <span class="at">data =</span> PLD)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(LinearModel_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = pld ~ temp, data = PLD)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-44.158 -11.351  -0.430   7.684  93.884 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  54.8390     3.7954  14.449  &lt; 2e-16 ***
+temp         -1.5361     0.1899  -8.087 4.65e-14 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 20.36 on 212 degrees of freedom
+Multiple R-squared:  0.2358,    Adjusted R-squared:  0.2322 
+F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
+</div>
+</div>
+<p>We can fit this output in a gtsummary to make it nicer looking:</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>LinearModel_1 <span class="sc">|&gt;</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_regression</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+
+<div id="oohvntpema" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#oohvntpema table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#oohvntpema thead, #oohvntpema tbody, #oohvntpema tfoot, #oohvntpema tr, #oohvntpema td, #oohvntpema th {
+  border-style: none;
+}
+
+#oohvntpema p {
+  margin: 0;
+  padding: 0;
+}
+
+#oohvntpema .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#oohvntpema .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#oohvntpema .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#oohvntpema .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#oohvntpema .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#oohvntpema .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#oohvntpema .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#oohvntpema .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#oohvntpema .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#oohvntpema .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#oohvntpema .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#oohvntpema .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#oohvntpema .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#oohvntpema .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#oohvntpema .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#oohvntpema .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#oohvntpema .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#oohvntpema .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#oohvntpema .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#oohvntpema .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#oohvntpema .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#oohvntpema .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#oohvntpema .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#oohvntpema .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#oohvntpema .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#oohvntpema .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#oohvntpema .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#oohvntpema .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#oohvntpema .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#oohvntpema .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#oohvntpema .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#oohvntpema .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#oohvntpema .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#oohvntpema .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#oohvntpema .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#oohvntpema .gt_left {
+  text-align: left;
+}
+
+#oohvntpema .gt_center {
+  text-align: center;
+}
+
+#oohvntpema .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#oohvntpema .gt_font_normal {
+  font-weight: normal;
+}
+
+#oohvntpema .gt_font_bold {
+  font-weight: bold;
+}
+
+#oohvntpema .gt_font_italic {
+  font-style: italic;
+}
+
+#oohvntpema .gt_super {
+  font-size: 65%;
+}
+
+#oohvntpema .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#oohvntpema .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#oohvntpema .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#oohvntpema .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#oohvntpema .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#oohvntpema .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#oohvntpema .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="<strong>Characteristic</strong>"><strong>Characteristic</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>Beta</strong>"><strong>Beta</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>95% CI</strong><span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;><sup>1</sup></span>"><strong>95% CI</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>p-value</strong>"><strong>p-value</strong></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="label" class="gt_row gt_left">temp</td>
+<td headers="estimate" class="gt_row gt_center">-1.5</td>
+<td headers="ci" class="gt_row gt_center">-1.9, -1.2</td>
+<td headers="p.value" class="gt_row gt_center">&lt;0.001</td></tr>
+  </tbody>
+  
+  <tfoot class="gt_footnotes">
+    <tr>
+      <td class="gt_footnote" colspan="4"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span> CI = Confidence Interval</td>
+    </tr>
+  </tfoot>
+</table>
+</div>
+</div>
+</div>
+<p>I am interested in checking out visually, the equal variance (homoscedasticity) and so i will plot a base histogram:</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># better to do a scatter plot </span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>LinearModel_res <span class="ot">&lt;-</span> <span class="fu">resid</span>(LinearModel_1)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># plot residual </span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(PLD<span class="sc">$</span>temp, LinearModel_res,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"residuals"</span>,</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"temp"</span>,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Residual graph"</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>     )</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="RandomInterceptModel_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Just upon visual observation, it seems like this assumption may be violated so i think it might be important to do some transformations.</p>
+</section>
+<section id="log-transformation" class="level3" data-number="7.3">
+<h3 data-number="7.3" class="anchored" data-anchor-id="log-transformation"><span class="header-section-number">7.3</span> Log transformation</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>LinearMode_2Log <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(pld) <span class="sc">~</span> <span class="fu">log</span>(temp), <span class="at">data=</span> PLD)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(LinearMode_2Log)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = log(pld) ~ log(temp), data = PLD)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.0768 -0.3956  0.1802  0.5461  1.9656 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   4.6946     0.3128  15.011  &lt; 2e-16 ***
+log(temp)    -0.6308     0.1093  -5.771 2.77e-08 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.8236 on 212 degrees of freedom
+Multiple R-squared:  0.1358,    Adjusted R-squared:  0.1317 
+F-statistic: 33.31 on 1 and 212 DF,  p-value: 2.767e-08</code></pre>
+</div>
+</div>
+</section>
+<section id="residual-of-new-log-transformmed-graph" class="level3" data-number="7.4">
+<h3 data-number="7.4" class="anchored" data-anchor-id="residual-of-new-log-transformmed-graph"><span class="header-section-number">7.4</span> residual of new log transformmed graph</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># better to do a scatter plot </span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>LinearModel2_res <span class="ot">&lt;-</span> <span class="fu">resid</span>(LinearMode_2Log)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># plot residual </span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(PLD<span class="sc">$</span>temp, LinearModel2_res,</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"residuals(log)"</span>,</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"temp(log)"</span>,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Residual graph (log transformation)"</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>     )</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="RandomInterceptModel_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>A bit better! Now i kinda want to see the original plot i plotted with PLD and temperature:</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log</span>(pld) <span class="sc">~</span> <span class="fu">log</span>(temp), <span class="at">data =</span> PLD,</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Temperature in C"</span>,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"PLD in days"</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(LinearMode_2Log)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="RandomInterceptModel_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>in ggplot you can use the <code>facet_wrap()</code> function to seperate by phylum:</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> PLD) <span class="sc">+</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">log</span>(temp), <span class="at">y =</span> <span class="fu">log</span>(pld)) <span class="sc">+</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>phylum) <span class="sc">+</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="RandomInterceptModel_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="fitting-a-random-intercept-model-random-intercept-same-slope" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="fitting-a-random-intercept-model-random-intercept-same-slope"><span class="header-section-number">8</span> Fitting a random intercept model (random intercept, same slope)</h2>
+<p>I am interested in see if the overall temperature and the PLD relationship is similar among species, but not the same. We are interested in plotting a mixed effects model with a random intercept but fixed/same slope. I am only interested in the species-specific plot for now with the phylum <code>Mollusca.</code></p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter to only mollusca</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>Mollusca_subset <span class="ot">&lt;-</span> </span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  PLD <span class="sc">|&gt;</span> </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(phylum <span class="sc">==</span> <span class="st">"Mollusca"</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Mollusca_subset) <span class="sc">+</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">log</span>(pld), <span class="at">y =</span> <span class="fu">log</span>(temp)) <span class="sc">+</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Log(temperature)"</span>,</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Log(PLD)"</span>) <span class="sc">+</span> </span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> <span class="st">"y ~ x"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">fullrange =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="RandomInterceptModel_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 
 
 </section>

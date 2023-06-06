@@ -22,6 +22,11 @@ format:
 ```{r}
 #| message: false
 
+library(gt)
+library(gtsummary)
+library(lattice)
+library(lme4)
+library(arm)
 library(tidyverse)
 
 ```
@@ -98,6 +103,212 @@ where
 -    $b_i$ is the random students effects (you have a random effect for every student)
 
 -   $\varepsilon_{ij}$ is your random error.
+
+## Final key points
+
+- random intercept models are used for answering questions about clustered data, and at different levels. For example, what is the relationship between exam scores at 11 and at age 16? how much variation is there between students progress from 11 to 16 at the school level?
+
+- $b_i$ is the error associated with the students. 
+
+- $\varepsilon_{ij}$ is the random error.
+
+- for a random intercept model, each individual will have a random intercept, but sample slope.
+
+
+## Assumptions of a random effects model:
+
+- unobserved cluster effects is not corrected with observed variables (all $u_{ij}$ terms are not correlated with the your predictors.)
+
+- the within and between effects are the same. 
+
+- your error term is independent with your constant term.
+
+- you have homoscedasticity
+
+## Example 2: Planktonic larval duration (PLD)
+
+this is example is from [O'Connor et al (2007).](https://www.jstor.org/stable/25426272) A brief intro on this study, temperature is important for the development of organism. In marine species, temperature is very important and linked to growth. So the time spent as a planktonic larvae can have associations on mortality and regulation on the species. Previous research has looked at the association between species comparison but not within species comparisons. What if we are interest in within and between species variation?
+
+### load PLD data
+
+```{r}
+#| message: false
+
+
+PLD <- read_table("/Users/anbravo/Documents/GitHub/R-health-blog/PLD.txt")
+
+```
+
+I am curious about the structure of this data and how it briefly looks. 
+
+```{r}
+#| message: false
+
+#strcuture 
+str(PLD)
+
+# just the top - seeing how it looks
+head(PLD)
+
+# brief summary
+summary(PLD)
+
+```
+
+I am curious about how this would look just plotting the variable `pld` or planktonic larvae duration and the temperature. So i am interested in seeing how the temperature is associated with their durtation. 
+
+```{r}
+#| message: false
+
+# how to plot in base R 
+plot(pld ~ temp, data = PLD,
+     xlab = "temperature (C)",
+     ylab = "PLD survival (Days)",
+     pch = 16)
+# add lm line in base R
+abline(lm(pld ~ temp, data = PLD))
+
+
+```
+
+you can also do this in ggplot plot like so:
+
+```{r}
+#| message: false
+
+ggplot(data = PLD) +
+  aes(y = pld, x = temp) +
+  stat_smooth(method = "lm") +
+  geom_point() +
+  theme_bw()
+
+```
+
+### Fit first model: Linear model 
+
+Let's first fit a linear model and check any assumptions. Why are we fitting a linear model first? It might be important to check the standard error of this model and compare to the next model, that might be a better fit. 
+
+```{r}
+#| message: false
+
+# fitting linear model first 
+
+LinearModel_1 <- lm(pld ~ temp, data = PLD)
+
+summary(LinearModel_1)
+```
+
+We can fit this output in a gtsummary to make it nicer looking: 
+
+```{r}
+#| message: false
+
+LinearModel_1 |> 
+  tbl_regression()
+  
+```
+
+I am interested in checking out visually, the equal variance (homoscedasticity) and so i will plot a base histogram: 
+
+```{r}
+#| message: false
+
+
+# better to do a scatter plot 
+LinearModel_res <- resid(LinearModel_1)
+
+# plot residual 
+plot(PLD$temp, LinearModel_res,
+     ylab = "residuals",
+     xlab = "temp",
+     main = "Residual graph"
+     )
+abline(0,0)
+
+
+```
+
+Just upon visual observation, it seems like this assumption may be violated so i think it might be important to do some transformations. 
+
+### Log transformation 
+
+```{r}
+#| message: false
+
+LinearMode_2Log <- lm(log(pld) ~ log(temp), data= PLD)
+
+summary(LinearMode_2Log)
+
+```
+
+### residual of new log transformmed graph
+
+```{r}
+#| message: false
+
+# better to do a scatter plot 
+LinearModel2_res <- resid(LinearMode_2Log)
+
+# plot residual 
+plot(PLD$temp, LinearModel2_res,
+     ylab = "residuals(log)",
+     xlab = "temp(log)",
+     main = "Residual graph (log transformation)"
+     )
+abline(0,0)
+
+
+```
+
+A bit better! Now i kinda want to see the original plot i plotted with PLD and temperature:
+
+```{r}
+#| message: false
+
+plot(log(pld) ~ log(temp), data = PLD,
+     xlab = "Temperature in C",
+     ylab = "PLD in days")
+abline(LinearMode_2Log)
+
+```
+
+in ggplot you can use the `facet_wrap()` function to seperate by phylum:
+
+```{r}
+#| message: false
+
+ggplot(data = PLD) +
+  aes(x = log(temp), y = log(pld)) +
+  geom_point() +
+  stat_smooth(method = "lm") +
+  facet_wrap(~phylum) +
+  theme_classic()
+```
+
+## Fitting a random intercept model (random intercept, same slope)
+
+I am interested in see if the overall temperature and the PLD relationship is similar among species, but not the same. We are interested in plotting a mixed effects model with a random intercept but fixed/same slope. I am only interested in the species-specific plot for now with the phylum `Mollusca.`
+
+```{r}
+#| message: false
+
+# filter to only mollusca
+
+Mollusca_subset <- 
+  PLD |> 
+  filter(phylum == "Mollusca")
+
+ggplot(data = Mollusca_subset) +
+  aes(x = log(pld), y = log(temp)) +
+  geom_point() +
+  labs(x = "Log(temperature)",
+       y = "Log(PLD)") + 
+  stat_smooth(method = "lm", formula = "y ~ x", se = FALSE, fullrange = TRUE) +
+  theme_classic() +
+  facet_wrap(~ species)
+
+```
+
 
 
 
