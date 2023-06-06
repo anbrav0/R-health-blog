@@ -249,7 +249,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#log-transformation" id="toc-log-transformation" class="nav-link" data-scroll-target="#log-transformation"> <span class="header-section-number">7.3</span> Log transformation</a></li>
   <li><a href="#residual-of-new-log-transformmed-graph" id="toc-residual-of-new-log-transformmed-graph" class="nav-link" data-scroll-target="#residual-of-new-log-transformmed-graph"> <span class="header-section-number">7.4</span> residual of new log transformmed graph</a></li>
   </ul></li>
-  <li><a href="#fitting-a-random-intercept-model-random-intercept-same-slope" id="toc-fitting-a-random-intercept-model-random-intercept-same-slope" class="nav-link" data-scroll-target="#fitting-a-random-intercept-model-random-intercept-same-slope"> <span class="header-section-number">8</span> Fitting a random intercept model (random intercept, same slope)</a></li>
+  <li><a href="#fitting-a-random-intercept-model-random-intercept-same-slope" id="toc-fitting-a-random-intercept-model-random-intercept-same-slope" class="nav-link" data-scroll-target="#fitting-a-random-intercept-model-random-intercept-same-slope"> <span class="header-section-number">8</span> Fitting a random intercept model (random intercept, same slope)</a>
+  <ul class="collapse">
+  <li><a href="#fitting-model" id="toc-fitting-model" class="nav-link" data-scroll-target="#fitting-model"> <span class="header-section-number">8.1</span> fitting model</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -532,23 +535,23 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
 </details>
 <div class="cell-output-display">
 
-<div id="oohvntpema" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#oohvntpema table {
+<div id="xwnawhpckm" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#xwnawhpckm table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#oohvntpema thead, #oohvntpema tbody, #oohvntpema tfoot, #oohvntpema tr, #oohvntpema td, #oohvntpema th {
+#xwnawhpckm thead, #xwnawhpckm tbody, #xwnawhpckm tfoot, #xwnawhpckm tr, #xwnawhpckm td, #xwnawhpckm th {
   border-style: none;
 }
 
-#oohvntpema p {
+#xwnawhpckm p {
   margin: 0;
   padding: 0;
 }
 
-#oohvntpema .gt_table {
+#xwnawhpckm .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -574,12 +577,12 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#oohvntpema .gt_caption {
+#xwnawhpckm .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#oohvntpema .gt_title {
+#xwnawhpckm .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -591,7 +594,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-bottom-width: 0;
 }
 
-#oohvntpema .gt_subtitle {
+#xwnawhpckm .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -603,7 +606,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-top-width: 0;
 }
 
-#oohvntpema .gt_heading {
+#xwnawhpckm .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -615,13 +618,13 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#oohvntpema .gt_bottom_border {
+#xwnawhpckm .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#oohvntpema .gt_col_headings {
+#xwnawhpckm .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -636,7 +639,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#oohvntpema .gt_col_heading {
+#xwnawhpckm .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -656,7 +659,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   overflow-x: hidden;
 }
 
-#oohvntpema .gt_column_spanner_outer {
+#xwnawhpckm .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -668,15 +671,15 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 4px;
 }
 
-#oohvntpema .gt_column_spanner_outer:first-child {
+#xwnawhpckm .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#oohvntpema .gt_column_spanner_outer:last-child {
+#xwnawhpckm .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#oohvntpema .gt_column_spanner {
+#xwnawhpckm .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -688,11 +691,11 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   width: 100%;
 }
 
-#oohvntpema .gt_spanner_row {
+#xwnawhpckm .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#oohvntpema .gt_group_heading {
+#xwnawhpckm .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -718,7 +721,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   text-align: left;
 }
 
-#oohvntpema .gt_empty_group_heading {
+#xwnawhpckm .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -733,15 +736,15 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   vertical-align: middle;
 }
 
-#oohvntpema .gt_from_md > :first-child {
+#xwnawhpckm .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#oohvntpema .gt_from_md > :last-child {
+#xwnawhpckm .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#oohvntpema .gt_row {
+#xwnawhpckm .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -760,7 +763,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   overflow-x: hidden;
 }
 
-#oohvntpema .gt_stub {
+#xwnawhpckm .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -773,7 +776,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 5px;
 }
 
-#oohvntpema .gt_stub_row_group {
+#xwnawhpckm .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -787,15 +790,15 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   vertical-align: top;
 }
 
-#oohvntpema .gt_row_group_first td {
+#xwnawhpckm .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#oohvntpema .gt_row_group_first th {
+#xwnawhpckm .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#oohvntpema .gt_summary_row {
+#xwnawhpckm .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -805,16 +808,16 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 5px;
 }
 
-#oohvntpema .gt_first_summary_row {
+#xwnawhpckm .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#oohvntpema .gt_first_summary_row.thick {
+#xwnawhpckm .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#oohvntpema .gt_last_summary_row {
+#xwnawhpckm .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -824,7 +827,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#oohvntpema .gt_grand_summary_row {
+#xwnawhpckm .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -834,7 +837,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 5px;
 }
 
-#oohvntpema .gt_first_grand_summary_row {
+#xwnawhpckm .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -844,7 +847,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#oohvntpema .gt_last_grand_summary_row_top {
+#xwnawhpckm .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -854,11 +857,11 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#oohvntpema .gt_striped {
+#xwnawhpckm .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#oohvntpema .gt_table_body {
+#xwnawhpckm .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -867,7 +870,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#oohvntpema .gt_footnotes {
+#xwnawhpckm .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -881,7 +884,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#oohvntpema .gt_footnote {
+#xwnawhpckm .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -890,7 +893,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 5px;
 }
 
-#oohvntpema .gt_sourcenotes {
+#xwnawhpckm .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -904,7 +907,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#oohvntpema .gt_sourcenote {
+#xwnawhpckm .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -912,63 +915,63 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 5px;
 }
 
-#oohvntpema .gt_left {
+#xwnawhpckm .gt_left {
   text-align: left;
 }
 
-#oohvntpema .gt_center {
+#xwnawhpckm .gt_center {
   text-align: center;
 }
 
-#oohvntpema .gt_right {
+#xwnawhpckm .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#oohvntpema .gt_font_normal {
+#xwnawhpckm .gt_font_normal {
   font-weight: normal;
 }
 
-#oohvntpema .gt_font_bold {
+#xwnawhpckm .gt_font_bold {
   font-weight: bold;
 }
 
-#oohvntpema .gt_font_italic {
+#xwnawhpckm .gt_font_italic {
   font-style: italic;
 }
 
-#oohvntpema .gt_super {
+#xwnawhpckm .gt_super {
   font-size: 65%;
 }
 
-#oohvntpema .gt_footnote_marks {
+#xwnawhpckm .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#oohvntpema .gt_asterisk {
+#xwnawhpckm .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#oohvntpema .gt_indent_1 {
+#xwnawhpckm .gt_indent_1 {
   text-indent: 5px;
 }
 
-#oohvntpema .gt_indent_2 {
+#xwnawhpckm .gt_indent_2 {
   text-indent: 10px;
 }
 
-#oohvntpema .gt_indent_3 {
+#xwnawhpckm .gt_indent_3 {
   text-indent: 15px;
 }
 
-#oohvntpema .gt_indent_4 {
+#xwnawhpckm .gt_indent_4 {
   text-indent: 20px;
 }
 
-#oohvntpema .gt_indent_5 {
+#xwnawhpckm .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1125,8 +1128,80 @@ F-statistic: 33.31 on 1 and 212 DF,  p-value: 2.767e-08</code></pre>
 <p><img src="RandomInterceptModel_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<section id="fitting-model" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="fitting-model"><span class="header-section-number">8.1</span> fitting model</h3>
+<p>We can use the library <code>lme4</code> to fit a model of a linear regression with a <strong>random effect</strong></p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creating log -transformed variables </span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>Mollusca_subset<span class="sc">$</span>log_pld <span class="ot">&lt;-</span> <span class="fu">log</span>(Mollusca_subset<span class="sc">$</span>pld)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>Mollusca_subset<span class="sc">$</span>log_temp <span class="ot">&lt;-</span> <span class="fu">log</span>(Mollusca_subset<span class="sc">$</span>temp)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co"># mixed model with random intercept only </span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>RandIntModel_Mollusca <span class="ot">&lt;-</span> <span class="fu">lmer</span>(log_pld <span class="sc">~</span> log_temp <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> species), <span class="at">data =</span> Mollusca_subset)</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(RandIntModel_Mollusca)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML ['lmerMod']
+Formula: log_pld ~ log_temp + (1 | species)
+   Data: Mollusca_subset
+
+REML criterion at convergence: 43.7
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-2.37222 -0.32686 -0.09382  0.43821  2.34871 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ species  (Intercept) 0.86457  0.9298  
+ Residual             0.03309  0.1819  
+Number of obs: 44, groups:  species, 16
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept)   7.1728     0.5284  13.575
+log_temp     -1.5175     0.1592  -9.531
+
+Correlation of Fixed Effects:
+         (Intr)
+log_temp -0.896</code></pre>
+</div>
+</div>
+<p>the <code>fixed effects:</code> section in the output is the estimate for the fixed slope, and the grand mean of the intercept. in the fixed effects section the intercept here is the random effect, and you can see this in the <code>Random effects</code> section in this output, in this case our random effect was specifies the <code>Names</code> sections tells us the parameter is the intercept. the <code>Group</code> section tells us we have a random intercept for each species. We also have the variance and standard deviation for the random effects (as well as the residuals)</p>
+<p>Since we have a random effect at the individual level, we can subset this section out so it is clear to see that these organism will have a random intercept and fixed slope (this this case log(temp).</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># subset of the coefficients for random intercept and fixed slop</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(RandIntModel_Mollusca)<span class="sc">$</span>species</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                      (Intercept) log_temp
+Chlamys.hastata          7.612748 -1.51751
+Crassostrea.virginica    7.592515 -1.51751
+Crepidula.fornicata.     8.045609 -1.51751
+Crepidula.plana          8.063220 -1.51751
+Haliotis.asinina         5.807247 -1.51751
+Haliotis.fulgens         6.083069 -1.51751
+Haliotis.sorenseni.      6.688210 -1.51751
+Mactra.solidissima       7.589660 -1.51751
+Mopalia.muscosa          7.061086 -1.51751
+Mytilus.edulis           7.141801 -1.51751
+Nassarius.obsoletus      7.370159 -1.51751
+Ostrea.lurida            6.967626 -1.51751
+Perna.viridis            8.144314 -1.51751
+Strombus.gigas           8.048942 -1.51751
+Tivela.mactroides        7.677603 -1.51751
+Tonicella.lineata        4.871674 -1.51751</code></pre>
+</div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

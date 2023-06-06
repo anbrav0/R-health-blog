@@ -309,6 +309,39 @@ ggplot(data = Mollusca_subset) +
 
 ```
 
+### fitting model 
 
+We can use the library `lme4` to fit a model of a linear regression with a **random effect**
+
+```{r}
+#| message: false
+
+# creating log -transformed variables 
+Mollusca_subset$log_pld <- log(Mollusca_subset$pld)
+Mollusca_subset$log_temp <- log(Mollusca_subset$temp)
+
+# mixed model with random intercept only 
+RandIntModel_Mollusca <- lmer(log_pld ~ log_temp + (1 | species), data = Mollusca_subset)
+
+summary(RandIntModel_Mollusca)
+
+```
+
+the `fixed effects:` section in the output is the estimate for the fixed slope, and the grand mean of the intercept. in the fixed effects section the intercept here is the random effect, and you can see this in the `Random effects` section in this output, in this case our random effect was specifies the `Names` sections tells us the parameter is the intercept. the `Group` section tells us we have a random intercept for each species. We also have the variance and standard deviation for the random effects (as well as the residuals)
+
+Since we have a random effect at the individual level, we can subset this section out so it is clear to see that these organism will have a random intercept and fixed slope (this this case log(temp). 
+
+```{r}
+#| message: false
+#| warning: false
+
+
+
+# subset of the coefficients for random intercept and fixed slop
+
+coef(RandIntModel_Mollusca)$species
+
+
+```
 
 
