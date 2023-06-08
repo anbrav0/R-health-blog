@@ -429,7 +429,7 @@ So 0.86 / 0.86 + 0.03 = 0.96 , so the difference between between species can exp
 
 there is a very long description on the why the `lmer()` function doesn't include the p-value that can be found [here.](https://stat.ethz.ch/pipermail/r-help/2006-May/094765.html)
 
-**interpretation of temp variable** for the fixed part, we can interpret this parameter the same as a single-level regression model, [so $\beta_1$ is the increase/decrease in response for 1 unit increase/decrease in $x.$]{style="background-color:yellow"} In other words, for one unit change in the degrees of temperature, there is a -1.5 decrease in Planktonic larval duration. (or, as the temperature increase, the plankton duration is lower.)
+**interpretation of temp variable** for the fixed part, we can interpret this parameter the same as a single-level regression model, [so $\beta_1$ is the increase/decrease in response for 1 unit increase/decrease in $x.$]{style="background-color:yellow"} In other words, for one unit increase in the degrees of temperature, there is a -1.5 decrease in Planktonic larval duration. (or, as the temperature increase, the plankton duration is lower.)
 
 ## Conclusion
 
