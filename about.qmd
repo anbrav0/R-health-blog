@@ -1,6 +1,6 @@
 ---
-title: "About"
-image: profile.jpg
+title: "Ana Bravo"
+image: profile.jpeg
 about:
   template: jolla
   links:
