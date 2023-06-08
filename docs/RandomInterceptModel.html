@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ana Bravo &amp; Tendai Gwanzura">
-<meta name="dcterms.date" content="2023-06-07">
+<meta name="dcterms.date" content="2023-06-08">
 
 <title>How to Health Science in R - Random Intercept Model</title>
 <style>
@@ -216,7 +216,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">June 7, 2023</p>
+        <p class="date">June 8, 2023</p>
       </div>
     </div>
       
@@ -232,10 +232,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
    
   <ul>
   <li><a href="#libraries-used" id="toc-libraries-used" class="nav-link active" data-scroll-target="#libraries-used"> <span class="header-section-number">1</span> Libraries Used</a></li>
-  <li><a href="#what-is-a-random-intercept-model" id="toc-what-is-a-random-intercept-model" class="nav-link" data-scroll-target="#what-is-a-random-intercept-model"> <span class="header-section-number">2</span> What is a Random Intercept model?</a>
+  <li><a href="#what-is-a-random-intercept-model" id="toc-what-is-a-random-intercept-model" class="nav-link" data-scroll-target="#what-is-a-random-intercept-model"> <span class="header-section-number">2</span> What is a Random Intercept model</a>
   <ul class="collapse">
   <li><a href="#variance-component-model" id="toc-variance-component-model" class="nav-link" data-scroll-target="#variance-component-model"> <span class="header-section-number">2.1</span> Variance component model</a></li>
-  <li><a href="#why-is-this-relavant" id="toc-why-is-this-relavant" class="nav-link" data-scroll-target="#why-is-this-relavant"> <span class="header-section-number">2.2</span> Why is this relavant?</a></li>
+  <li><a href="#why-this-is-relavant" id="toc-why-this-is-relavant" class="nav-link" data-scroll-target="#why-this-is-relavant"> <span class="header-section-number">2.2</span> Why this is relavant</a></li>
   <li><a href="#example-1-school-level-data" id="toc-example-1-school-level-data" class="nav-link" data-scroll-target="#example-1-school-level-data"> <span class="header-section-number">2.3</span> Example 1: School level data</a></li>
   </ul></li>
   <li><a href="#fitting-a-single-level-regression-model" id="toc-fitting-a-single-level-regression-model" class="nav-link" data-scroll-target="#fitting-a-single-level-regression-model"> <span class="header-section-number">3</span> Fitting a single-level regression model</a></li>
@@ -284,8 +284,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </section>
 <section id="what-is-a-random-intercept-model" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="what-is-a-random-intercept-model"><span class="header-section-number">2</span> What is a Random Intercept model?</h2>
-<p>Before talking about a random intercept model, let’s understand why they are necessary and important in the real world by discussing a variance component model first. This will make sense as we go along in this lecture!</p>
+<h2 data-number="2" class="anchored" data-anchor-id="what-is-a-random-intercept-model"><span class="header-section-number">2</span> What is a Random Intercept model</h2>
+<p>Before talking about a random intercept model, let’s understand why they are necessary and important in the real world by discussing a variance component model first. This will make sense as we go along in this lecture.</p>
 <section id="variance-component-model" class="level3" data-number="2.1">
 <h3 data-number="2.1" class="anchored" data-anchor-id="variance-component-model"><span class="header-section-number">2.1</span> Variance component model</h3>
 <p>We are familiar with a <em>fixed level of a factor</em> or variable. Which means that the factor level in an experiment is the only thing we are interested. For example, let’s say we are interested in measuring the difference in resistance resulting from putting identical resistors to three different temperatures for a period of 24 hours. Let’s say we have three different groups, and each of these three different groups have a sample size of 5. So each of the three treatment groups was replicated 5 times.</p>
@@ -337,12 +337,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 <p>In this example, the level of the temperature is considered <em>fixed</em> meaning, the three temperatures were the only ones that we are interested in. This is called a <em>fixed effects model.</em></p>
 <p>a fixed effect model is a statistical model in which the parameters are fixed or non-random. This can also be referred to a regression model, in which group mean are “fixed” (non-random) or in simpler, terms something that is “fixed” in analysis is constant like sex assigned at birth or ethnicity.</p>
-<p><span class="math display"> y_i = \beta_0 + X_i\beta_i + \alpha_u + u_{it} </span></p>
+<p><span class="math display"> y_i = \beta_0 + X_i\beta_i + \alpha_u  </span></p>
 <p>Now, let’s say we want to look at different levels of <em>factors</em> that were chosen because of random sampling, like number of operators working that day, lot batches, days etc. So in this case we are now regarding factors not related to themselves (variables) but we are now trying to represent all possible levels that these factors may take, the appropriate model is now a <em>random effects model.</em></p>
 <p>fitting these <em>random effects models</em> are important because we want to obtain estimates of different contributions that experimental factors make to the variability of our data! (we can represent this as the variance) this is what is called <em>variance component</em></p>
 </section>
-<section id="why-is-this-relavant" class="level3" data-number="2.2">
-<h3 data-number="2.2" class="anchored" data-anchor-id="why-is-this-relavant"><span class="header-section-number">2.2</span> Why is this relavant?</h3>
+<section id="why-this-is-relavant" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="why-this-is-relavant"><span class="header-section-number">2.2</span> Why this is relavant</h3>
 <p>Well, a variance component model helps us see how much variance in our response at the different levels. But what if you are interested in seeing the effects of the explanatory variables? <span style="background-color:yellow">Or, what if your observations are NOT randomly sampled from simple random sample but instead from a cluster or a multi-level sampling design?</span> Random intercept models or random effects models are important.</p>
 </section>
 <section id="example-1-school-level-data" class="level3" data-number="2.3">
@@ -356,7 +356,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>when we want to control for something (like previous exams students took) we can fit a single-level regression model that looks something like this:</p>
 <p><span class="math display">y_1 = \beta_0 + \beta_1x_i + e_i</span> where</p>
 <ul>
-<li><p><span class="math inline">y_1</span> is your dependent variable,</p></li>
+<li><p><span class="math inline">y_1</span> is your dependent variable</p></li>
 <li><p><span class="math inline">\beta_0</span> is your intercept and</p></li>
 <li><p><span class="math inline">\beta_1x_1</span> are your slope and <span class="math inline">\beta_1</span> parameters.</p></li>
 </ul>
@@ -379,8 +379,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>where:</p>
 <ul>
 <li><p><span class="math inline">y_{ij}</span> is your dependent variable at <span class="math inline">i</span> individual and <span class="math inline">j</span> level</p></li>
-<li><p><span class="math inline">N(0, \sigma_u^2)</span> is the measurement at the school level</p></li>
-<li><p>and <span class="math inline">e_{ij} \sim N(0, \sigma_e^2)</span> is the measurement at the student level</p></li>
+<li><p><span class="math inline">N(0, \sigma_u^2)</span> is the measurement at the student level</p></li>
+<li><p>and <span class="math inline">e_{ij} \sim N(0, \sigma_e^2)</span> is the measurement at the school level</p></li>
 <li><p>and <span class="math inline">i</span> subscript is for the students</p></li>
 <li><p>and <span class="math inline">j</span> is the school subscript</p></li>
 </ul>
@@ -400,13 +400,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>random intercept models are used for answering questions about clustered data, and at different levels. For example, what is the relationship between exam scores at 11 and at age 16? how much variation is there between students progress from 11 to 16 at the school level?</p></li>
 <li><p><span class="math inline">b_i</span> is the error associated with the students.</p></li>
 <li><p><span class="math inline">\varepsilon_{ij}</span> is the random error.</p></li>
-<li><p>for a random intercept model, each individual will have a random intercept, but sample slope.</p></li>
+<li><p>for a random intercept model, each individual will have a random intercept, but the sample slope.</p></li>
 </ul>
 </section>
 <section id="assumptions-of-a-random-effects-model" class="level2" data-number="6">
 <h2 data-number="6" class="anchored" data-anchor-id="assumptions-of-a-random-effects-model"><span class="header-section-number">6</span> Assumptions of a random effects model:</h2>
 <ul>
-<li><p>unobserved cluster effects is not corrected with observed variables (all <span class="math inline">u_{ij}</span> terms are not correlated with the your predictors.)</p></li>
+<li><p>unobserved cluster effects is not correlated with observed variables (all <span class="math inline">u_{ij}</span> terms are not correlated with the your predictors.)</p></li>
 <li><p>the within and between effects are the same.</p></li>
 <li><p>your error term is independent with your constant term.</p></li>
 <li><p>you have homoscedasticity</p></li>
@@ -525,7 +525,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="fit-first-model-linear-model" class="level3" data-number="8.2">
 <h3 data-number="8.2" class="anchored" data-anchor-id="fit-first-model-linear-model"><span class="header-section-number">8.2</span> Fit first model: Linear model</h3>
-<p>Let’s first fit a linear model and check any assumptions. Why are we fitting a linear model first? It might be important to check the standard error of this model and compare to the next model, that might be a better fit.</p>
+<p>Let’s first fit a linear model and check any assumptions. Why are we fitting a linear model first? It might be important to check the standard error of this model and compare to the next model, that might be a better fit later on.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -556,7 +556,7 @@ Multiple R-squared:  0.2358,    Adjusted R-squared:  0.2322
 F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
 </div>
 </div>
-<p>We can fit this output in a gtsummary to make it nicer looking:</p>
+<p>We can fit this output in a <code>gtsummary</code> to make it nicer looking:</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -565,23 +565,23 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
 </details>
 <div class="cell-output-display">
 
-<div id="glmcdzybjx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#glmcdzybjx table {
+<div id="iohcndavdz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#iohcndavdz table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#glmcdzybjx thead, #glmcdzybjx tbody, #glmcdzybjx tfoot, #glmcdzybjx tr, #glmcdzybjx td, #glmcdzybjx th {
+#iohcndavdz thead, #iohcndavdz tbody, #iohcndavdz tfoot, #iohcndavdz tr, #iohcndavdz td, #iohcndavdz th {
   border-style: none;
 }
 
-#glmcdzybjx p {
+#iohcndavdz p {
   margin: 0;
   padding: 0;
 }
 
-#glmcdzybjx .gt_table {
+#iohcndavdz .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -607,12 +607,12 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#glmcdzybjx .gt_caption {
+#iohcndavdz .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#glmcdzybjx .gt_title {
+#iohcndavdz .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -624,7 +624,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-bottom-width: 0;
 }
 
-#glmcdzybjx .gt_subtitle {
+#iohcndavdz .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -636,7 +636,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-top-width: 0;
 }
 
-#glmcdzybjx .gt_heading {
+#iohcndavdz .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -648,13 +648,13 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#glmcdzybjx .gt_bottom_border {
+#iohcndavdz .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#glmcdzybjx .gt_col_headings {
+#iohcndavdz .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -669,7 +669,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#glmcdzybjx .gt_col_heading {
+#iohcndavdz .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -689,7 +689,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   overflow-x: hidden;
 }
 
-#glmcdzybjx .gt_column_spanner_outer {
+#iohcndavdz .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -701,15 +701,15 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 4px;
 }
 
-#glmcdzybjx .gt_column_spanner_outer:first-child {
+#iohcndavdz .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#glmcdzybjx .gt_column_spanner_outer:last-child {
+#iohcndavdz .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#glmcdzybjx .gt_column_spanner {
+#iohcndavdz .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -721,11 +721,11 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   width: 100%;
 }
 
-#glmcdzybjx .gt_spanner_row {
+#iohcndavdz .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#glmcdzybjx .gt_group_heading {
+#iohcndavdz .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -751,7 +751,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   text-align: left;
 }
 
-#glmcdzybjx .gt_empty_group_heading {
+#iohcndavdz .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -766,15 +766,15 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   vertical-align: middle;
 }
 
-#glmcdzybjx .gt_from_md > :first-child {
+#iohcndavdz .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#glmcdzybjx .gt_from_md > :last-child {
+#iohcndavdz .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#glmcdzybjx .gt_row {
+#iohcndavdz .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -793,7 +793,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   overflow-x: hidden;
 }
 
-#glmcdzybjx .gt_stub {
+#iohcndavdz .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -806,7 +806,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 5px;
 }
 
-#glmcdzybjx .gt_stub_row_group {
+#iohcndavdz .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -820,15 +820,15 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   vertical-align: top;
 }
 
-#glmcdzybjx .gt_row_group_first td {
+#iohcndavdz .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#glmcdzybjx .gt_row_group_first th {
+#iohcndavdz .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#glmcdzybjx .gt_summary_row {
+#iohcndavdz .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -838,16 +838,16 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 5px;
 }
 
-#glmcdzybjx .gt_first_summary_row {
+#iohcndavdz .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#glmcdzybjx .gt_first_summary_row.thick {
+#iohcndavdz .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#glmcdzybjx .gt_last_summary_row {
+#iohcndavdz .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -857,7 +857,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#glmcdzybjx .gt_grand_summary_row {
+#iohcndavdz .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -867,7 +867,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 5px;
 }
 
-#glmcdzybjx .gt_first_grand_summary_row {
+#iohcndavdz .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -877,7 +877,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#glmcdzybjx .gt_last_grand_summary_row_top {
+#iohcndavdz .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -887,11 +887,11 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#glmcdzybjx .gt_striped {
+#iohcndavdz .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#glmcdzybjx .gt_table_body {
+#iohcndavdz .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -900,7 +900,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#glmcdzybjx .gt_footnotes {
+#iohcndavdz .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -914,7 +914,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#glmcdzybjx .gt_footnote {
+#iohcndavdz .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -923,7 +923,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 5px;
 }
 
-#glmcdzybjx .gt_sourcenotes {
+#iohcndavdz .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -937,7 +937,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#glmcdzybjx .gt_sourcenote {
+#iohcndavdz .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -945,63 +945,63 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 5px;
 }
 
-#glmcdzybjx .gt_left {
+#iohcndavdz .gt_left {
   text-align: left;
 }
 
-#glmcdzybjx .gt_center {
+#iohcndavdz .gt_center {
   text-align: center;
 }
 
-#glmcdzybjx .gt_right {
+#iohcndavdz .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#glmcdzybjx .gt_font_normal {
+#iohcndavdz .gt_font_normal {
   font-weight: normal;
 }
 
-#glmcdzybjx .gt_font_bold {
+#iohcndavdz .gt_font_bold {
   font-weight: bold;
 }
 
-#glmcdzybjx .gt_font_italic {
+#iohcndavdz .gt_font_italic {
   font-style: italic;
 }
 
-#glmcdzybjx .gt_super {
+#iohcndavdz .gt_super {
   font-size: 65%;
 }
 
-#glmcdzybjx .gt_footnote_marks {
+#iohcndavdz .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#glmcdzybjx .gt_asterisk {
+#iohcndavdz .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#glmcdzybjx .gt_indent_1 {
+#iohcndavdz .gt_indent_1 {
   text-indent: 5px;
 }
 
-#glmcdzybjx .gt_indent_2 {
+#iohcndavdz .gt_indent_2 {
   text-indent: 10px;
 }
 
-#glmcdzybjx .gt_indent_3 {
+#iohcndavdz .gt_indent_3 {
   text-indent: 15px;
 }
 
-#glmcdzybjx .gt_indent_4 {
+#iohcndavdz .gt_indent_4 {
   text-indent: 20px;
 }
 
-#glmcdzybjx .gt_indent_5 {
+#iohcndavdz .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1233,6 +1233,7 @@ Tivela.mactroides        7.677603 -1.51751
 Tonicella.lineata        4.871674 -1.51751</code></pre>
 </div>
 </div>
+<p>So now we can see that in the <code>Mollusca</code> subset, we have all random intercepts for individual specifies, but the same slope.</p>
 </section>
 <section id="interclass-correlation-coefficient-icc" class="level3" data-number="9.2">
 <h3 data-number="9.2" class="anchored" data-anchor-id="interclass-correlation-coefficient-icc"><span class="header-section-number">9.2</span> Interclass correlation coefficient (ICC)</h3>
@@ -1244,11 +1245,21 @@ Tonicella.lineata        4.871674 -1.51751</code></pre>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creating data frame</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>var <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">VarCorr</span>(RandIntModel_Mollusca))</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co">#ICC equation</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>ICC <span class="ot">&lt;-</span> var<span class="sc">$</span>vcov[<span class="dv">1</span>] <span class="sc">/</span> (var<span class="sc">$</span>vcov[<span class="dv">1</span>] <span class="sc">+</span> var<span class="sc">$</span>vcov[<span class="dv">2</span>])</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co"># ICC value </span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>ICC</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co">#check our data frame</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>var</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       grp        var1 var2       vcov     sdcor
+1  species (Intercept) &lt;NA&gt; 0.86457141 0.9298233
+2 Residual        &lt;NA&gt; &lt;NA&gt; 0.03309183 0.1819116</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ICC equation</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>ICC <span class="ot">&lt;-</span> var<span class="sc">$</span>vcov[<span class="dv">1</span>] <span class="sc">/</span> (var<span class="sc">$</span>vcov[<span class="dv">1</span>] <span class="sc">+</span> var<span class="sc">$</span>vcov[<span class="dv">2</span>])</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ICC value </span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>ICC</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.9631356</code></pre>
@@ -1262,7 +1273,7 @@ Tonicella.lineata        4.871674 -1.51751</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(RandIntModel_Mollusca)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(RandIntModel_Mollusca)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Linear mixed model fit by REML ['lmerMod']
@@ -1298,10 +1309,22 @@ log_temp -0.896</code></pre>
 </section>
 <section id="conclusion" class="level2" data-number="11">
 <h2 data-number="11" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">11</span> Conclusion</h2>
-<p>In this lecture you learned about the importance of a random intercept model, when it is appropriate to use a random intercept model, the difference between an ordinary single-level model, the Interclass correlation coefficient (ICC) and how to interpret results from the fixed part and the random part of a random intercept model.</p>
+<p>In this lecture you learned about the importance of a random intercept model, when it is appropriate to use a random intercept model, the difference between an ordinary single-level model, and a random intercept model, the assumptions of the random intercept model, hypothesis testing for the variation, the Interclass correlation coefficient (ICC) and finally, how to interpret results from the fixed part and the random part of a random intercept model.</p>
 </section>
 <section id="references" class="level2" data-number="12">
 <h2 data-number="12" class="anchored" data-anchor-id="references"><span class="header-section-number">12</span> References</h2>
+<ol type="1">
+<li><p>Abedin, Jaynal, and Kishor Kumar Das. 2015. Data Manipulation with r. Packt Publishing Ltd.</p></li>
+<li><p>Annesley, Thomas M. 2010. “Bars and Pies Make Better Desserts Than Figures.” Clinical Chemistry 56 (9): 1394–1400.</p></li>
+<li><p>Anscombe, Francis J. 1973. “Graphs in Statistical Analysis.” The American Statistician 27 (1): 17–21.</p></li>
+<li><p>Borer, Elizabeth T, Eric W Seabloom, Matthew B Jones, and Mark Schildhauer. 2009. “Some Simple Guidelines for Effective Data Management.” The Bulletin of the Ecological Society of America 90 (2): 205–14.</p></li>
+<li><p>Borghi, John, Stephen Abrams, Daniella Lowenberg, Stephanie Simms, and John Chodacki. 2018. “Support Your Data: A Research Data Management Guide for Researchers.” Research Ideas and Outcomes 4: e26439.</p></li>
+<li><p>Broman, Karl W, and Kara H Woo. 2018. “Data Organization in Spreadsheets.” The American Statistician 72 (1): 2–10.</p></li>
+<li><p>Chamberlin, Thomas C. 1890. “The Method of Multiple Working Hypotheses.” Science 15 (366): 92–96.</p></li>
+<li><p>supplementary material for Tom Snijders and Roel Bosker textbook - Shjders, T Bosker R, 1999. <em>Multilevel analysis: an introduction to basic and advanced mltilevel modeling,</em> London, Sage, including updates and corrections data set examples <a href="http://stat.gamma.rug.nl/multilevel.htm">http://stat.gamma.rug.nl/multilevel.htm</a></p></li>
+<li><p>University of Bristol, Random Intercept model, (2018). <a href="http://www.bristol.ac.uk/cmm/learning/videos/random-intercepts.html">http://www.bristol.ac.uk/cmm/learning/videos/random-intercepts.html</a></p></li>
+<li><p>Midway, S. (2019). “Data Analysis in R.” <a href="https://bookdown.org/steve_midway/DAR/random-effects.html">https://bookdown.org/steve_midway/DAR/random-effects.html</a></p></li>
+</ol>
 
 
 </section>
