@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ana Bravo &amp; Tendai Gwanzura">
-<meta name="dcterms.date" content="2023-06-06">
+<meta name="dcterms.date" content="2023-06-07">
 
 <title>How to Health Science in R - Random Intercept Model</title>
 <style>
@@ -216,7 +216,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">June 6, 2023</p>
+        <p class="date">June 7, 2023</p>
       </div>
     </div>
       
@@ -242,17 +242,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#solution-fitting-a-random-intercept-model" id="toc-solution-fitting-a-random-intercept-model" class="nav-link" data-scroll-target="#solution-fitting-a-random-intercept-model"> <span class="header-section-number">4</span> Solution: Fitting a Random Intercept model</a></li>
   <li><a href="#final-key-points" id="toc-final-key-points" class="nav-link" data-scroll-target="#final-key-points"> <span class="header-section-number">5</span> Final key points</a></li>
   <li><a href="#assumptions-of-a-random-effects-model" id="toc-assumptions-of-a-random-effects-model" class="nav-link" data-scroll-target="#assumptions-of-a-random-effects-model"> <span class="header-section-number">6</span> Assumptions of a random effects model:</a></li>
-  <li><a href="#example-2-planktonic-larval-duration-pld" id="toc-example-2-planktonic-larval-duration-pld" class="nav-link" data-scroll-target="#example-2-planktonic-larval-duration-pld"> <span class="header-section-number">7</span> Example 2: Planktonic larval duration (PLD)</a>
+  <li><a href="#hypothesis-of-a-random-effects-model" id="toc-hypothesis-of-a-random-effects-model" class="nav-link" data-scroll-target="#hypothesis-of-a-random-effects-model"> <span class="header-section-number">7</span> hypothesis of a random effects model:</a></li>
+  <li><a href="#example-2-planktonic-larval-duration-pld" id="toc-example-2-planktonic-larval-duration-pld" class="nav-link" data-scroll-target="#example-2-planktonic-larval-duration-pld"> <span class="header-section-number">8</span> Example 2: Planktonic larval duration (PLD)</a>
   <ul class="collapse">
-  <li><a href="#load-pld-data" id="toc-load-pld-data" class="nav-link" data-scroll-target="#load-pld-data"> <span class="header-section-number">7.1</span> load PLD data</a></li>
-  <li><a href="#fit-first-model-linear-model" id="toc-fit-first-model-linear-model" class="nav-link" data-scroll-target="#fit-first-model-linear-model"> <span class="header-section-number">7.2</span> Fit first model: Linear model</a></li>
-  <li><a href="#log-transformation" id="toc-log-transformation" class="nav-link" data-scroll-target="#log-transformation"> <span class="header-section-number">7.3</span> Log transformation</a></li>
-  <li><a href="#residual-of-new-log-transformmed-graph" id="toc-residual-of-new-log-transformmed-graph" class="nav-link" data-scroll-target="#residual-of-new-log-transformmed-graph"> <span class="header-section-number">7.4</span> residual of new log transformmed graph</a></li>
+  <li><a href="#load-pld-data" id="toc-load-pld-data" class="nav-link" data-scroll-target="#load-pld-data"> <span class="header-section-number">8.1</span> load PLD data</a></li>
+  <li><a href="#fit-first-model-linear-model" id="toc-fit-first-model-linear-model" class="nav-link" data-scroll-target="#fit-first-model-linear-model"> <span class="header-section-number">8.2</span> Fit first model: Linear model</a></li>
+  <li><a href="#log-transformation" id="toc-log-transformation" class="nav-link" data-scroll-target="#log-transformation"> <span class="header-section-number">8.3</span> Log transformation</a></li>
+  <li><a href="#residual-of-new-log-transformmed-graph" id="toc-residual-of-new-log-transformmed-graph" class="nav-link" data-scroll-target="#residual-of-new-log-transformmed-graph"> <span class="header-section-number">8.4</span> residual of new log transformmed graph</a></li>
   </ul></li>
-  <li><a href="#fitting-a-random-intercept-model-random-intercept-same-slope" id="toc-fitting-a-random-intercept-model-random-intercept-same-slope" class="nav-link" data-scroll-target="#fitting-a-random-intercept-model-random-intercept-same-slope"> <span class="header-section-number">8</span> Fitting a random intercept model (random intercept, same slope)</a>
+  <li><a href="#fitting-a-random-intercept-model-random-intercept-same-slope" id="toc-fitting-a-random-intercept-model-random-intercept-same-slope" class="nav-link" data-scroll-target="#fitting-a-random-intercept-model-random-intercept-same-slope"> <span class="header-section-number">9</span> Fitting a random intercept model (random intercept, same slope)</a>
   <ul class="collapse">
-  <li><a href="#fitting-model" id="toc-fitting-model" class="nav-link" data-scroll-target="#fitting-model"> <span class="header-section-number">8.1</span> fitting model</a></li>
+  <li><a href="#fitting-model" id="toc-fitting-model" class="nav-link" data-scroll-target="#fitting-model"> <span class="header-section-number">9.1</span> fitting model</a></li>
+  <li><a href="#interclass-correlation-coefficient-icc" id="toc-interclass-correlation-coefficient-icc" class="nav-link" data-scroll-target="#interclass-correlation-coefficient-icc"> <span class="header-section-number">9.2</span> Interclass correlation coefficient (ICC)</a></li>
   </ul></li>
+  <li><a href="#interpretation-of-results" id="toc-interpretation-of-results" class="nav-link" data-scroll-target="#interpretation-of-results"> <span class="header-section-number">10</span> Interpretation of results</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"> <span class="header-section-number">11</span> Conclusion</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"> <span class="header-section-number">12</span> References</a></li>
   </ul>
 </nav>
     </div>
@@ -268,11 +273,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lattice)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(arm)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lattice)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(arm)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -330,7 +337,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 <p>In this example, the level of the temperature is considered <em>fixed</em> meaning, the three temperatures were the only ones that we are interested in. This is called a <em>fixed effects model.</em></p>
 <p>a fixed effect model is a statistical model in which the parameters are fixed or non-random. This can also be referred to a regression model, in which group mean are “fixed” (non-random) or in simpler, terms something that is “fixed” in analysis is constant like sex assigned at birth or ethnicity.</p>
-<p><span class="math display"> Y_{it} = \beta_1X_{1,it} + ... + \beta_kX_{k,it}+\alpha_i + u_{it} </span> with <span class="math inline">i =1...n</span> and <span class="math inline">t=1...T</span> and the <span class="math inline">\alpha_i</span> are specific intercepts that capture heterogeneity across.</p>
+<p><span class="math display"> y_i = \beta_0 + X_i\beta_i + \alpha_u + u_{it} </span></p>
 <p>Now, let’s say we want to look at different levels of <em>factors</em> that were chosen because of random sampling, like number of operators working that day, lot batches, days etc. So in this case we are now regarding factors not related to themselves (variables) but we are now trying to represent all possible levels that these factors may take, the appropriate model is now a <em>random effects model.</em></p>
 <p>fitting these <em>random effects models</em> are important because we want to obtain estimates of different contributions that experimental factors make to the variability of our data! (we can represent this as the variance) this is what is called <em>variance component</em></p>
 </section>
@@ -347,7 +354,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="fitting-a-single-level-regression-model" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="fitting-a-single-level-regression-model"><span class="header-section-number">3</span> Fitting a single-level regression model</h2>
 <p>when we want to control for something (like previous exams students took) we can fit a single-level regression model that looks something like this:</p>
-<p><span class="math display">y_1 = \beta_0 + \beta_1x_i + e_i</span> where <span class="math inline">y_1</span> is your dependent variable, <span class="math inline">\beta_0</span> is your intercept and <span class="math inline">\beta_1x_1</span> are your slope and <span class="math inline">\beta_1</span> parameters. When you have <em>clustered</em> data fitting this model causes problems. Clustered data is data where you observation or participants are related. Like exam results for students within a school, height of children within a family etc.</p>
+<p><span class="math display">y_1 = \beta_0 + \beta_1x_i + e_i</span> where</p>
+<ul>
+<li><p><span class="math inline">y_1</span> is your dependent variable,</p></li>
+<li><p><span class="math inline">\beta_0</span> is your intercept and</p></li>
+<li><p><span class="math inline">\beta_1x_1</span> are your slope and <span class="math inline">\beta_1</span> parameters.</p></li>
+</ul>
+<p>When you have <em>clustered</em> data fitting this model causes problems. Clustered data is data where you observation or participants are related. Like exam results for students within a school, height of children within a family etc.</p>
 <p>if we try to fit this clustered data:</p>
 <ol type="1">
 <li><p>our standard errors will be wrong.</p></li>
@@ -363,11 +376,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>a random part</li>
 </ul>
 <p><span class="math display"> y_{ij} = \overbrace{\beta_0 + \beta_1X_{ij}}^{\text{fixed part}} + \underbrace{u_j + e_{ij}}_{\text{random part}}</span> where the fixed parts includes our parameters that we estimate as our coefficients, and the random part is the parameter we estimate as the variance <span class="math inline">e_{ij} \sim N(0, \sigma_e^2)</span> and the <span class="math inline">N(0, \sigma_u^2)</span> and these are allowed to vary.</p>
+<p>where:</p>
+<ul>
+<li><p><span class="math inline">y_{ij}</span> is your dependent variable at <span class="math inline">i</span> individual and <span class="math inline">j</span> level</p></li>
+<li><p><span class="math inline">N(0, \sigma_u^2)</span> is the measurement at the school level</p></li>
+<li><p>and <span class="math inline">e_{ij} \sim N(0, \sigma_e^2)</span> is the measurement at the student level</p></li>
+<li><p>and <span class="math inline">i</span> subscript is for the students</p></li>
+<li><p>and <span class="math inline">j</span> is the school subscript</p></li>
+</ul>
 <p>we can also write this equation like so:</p>
 <p><span class="math display"> Y_{ij} = \mu + b_i + \varepsilon_{ij} </span></p>
 <p>where</p>
 <ul>
-<li><p><span class="math inline">\mu</span> is the population average</p></li>
+<li><p><span class="math inline">Y_{ij}</span> is your dependent outcome of intested for a subject <span class="math inline">i</span> at school <span class="math inline">j</span></p></li>
+<li><p><span class="math inline">\mu</span> is the population average mean</p></li>
 <li><p><span class="math inline">b_i</span> is the random students effects (you have a random effect for every student)</p></li>
 <li><p><span class="math inline">\varepsilon_{ij}</span> is your random error.</p></li>
 </ul>
@@ -388,13 +410,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>the within and between effects are the same.</p></li>
 <li><p>your error term is independent with your constant term.</p></li>
 <li><p>you have homoscedasticity</p></li>
+<li><p><span class="math inline">b_i</span> and <span class="math inline">\varepsilon</span> are independent of each other</p></li>
 </ul>
 </section>
-<section id="example-2-planktonic-larval-duration-pld" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="example-2-planktonic-larval-duration-pld"><span class="header-section-number">7</span> Example 2: Planktonic larval duration (PLD)</h2>
+<section id="hypothesis-of-a-random-effects-model" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="hypothesis-of-a-random-effects-model"><span class="header-section-number">7</span> hypothesis of a random effects model:</h2>
+<p>hypothesis testing for a random effects model runs as follows:</p>
+<p><span class="math display"> H_0: \sigma^2_u = 0</span></p>
+<p><span class="math display">H_1: \sigma^2_u \not = 0</span></p>
+<p>the null hypothesis states that if <span class="math inline">\sigma^2_u</span> is true, then the random component is not needed in this model. so you can fit a single level regression model. to do this, you would can do a likelihood ratio test comparing the two model to see if sigma is significant.</p>
+</section>
+<section id="example-2-planktonic-larval-duration-pld" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="example-2-planktonic-larval-duration-pld"><span class="header-section-number">8</span> Example 2: Planktonic larval duration (PLD)</h2>
 <p>this is example is from <a href="https://www.jstor.org/stable/25426272">O’Connor et al (2007).</a> A brief intro on this study, temperature is important for the development of organisms. In marine species, temperature is very important and linked to growth. So the time spent as a planktonic larvae can have associations on mortality and regulation on the species. Previous research has looked at the association between species comparison but not within species comparisons. What if we are interest in within and between species variation?</p>
-<section id="load-pld-data" class="level3" data-number="7.1">
-<h3 data-number="7.1" class="anchored" data-anchor-id="load-pld-data"><span class="header-section-number">7.1</span> load PLD data</h3>
+<section id="load-pld-data" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="load-pld-data"><span class="header-section-number">8.1</span> load PLD data</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -493,8 +523,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="fit-first-model-linear-model" class="level3" data-number="7.2">
-<h3 data-number="7.2" class="anchored" data-anchor-id="fit-first-model-linear-model"><span class="header-section-number">7.2</span> Fit first model: Linear model</h3>
+<section id="fit-first-model-linear-model" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="fit-first-model-linear-model"><span class="header-section-number">8.2</span> Fit first model: Linear model</h3>
 <p>Let’s first fit a linear model and check any assumptions. Why are we fitting a linear model first? It might be important to check the standard error of this model and compare to the next model, that might be a better fit.</p>
 <div class="cell">
 <details>
@@ -535,23 +565,23 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
 </details>
 <div class="cell-output-display">
 
-<div id="izqtyhmsei" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#izqtyhmsei table {
+<div id="glmcdzybjx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#glmcdzybjx table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#izqtyhmsei thead, #izqtyhmsei tbody, #izqtyhmsei tfoot, #izqtyhmsei tr, #izqtyhmsei td, #izqtyhmsei th {
+#glmcdzybjx thead, #glmcdzybjx tbody, #glmcdzybjx tfoot, #glmcdzybjx tr, #glmcdzybjx td, #glmcdzybjx th {
   border-style: none;
 }
 
-#izqtyhmsei p {
+#glmcdzybjx p {
   margin: 0;
   padding: 0;
 }
 
-#izqtyhmsei .gt_table {
+#glmcdzybjx .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -577,12 +607,12 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#izqtyhmsei .gt_caption {
+#glmcdzybjx .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#izqtyhmsei .gt_title {
+#glmcdzybjx .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -594,7 +624,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-bottom-width: 0;
 }
 
-#izqtyhmsei .gt_subtitle {
+#glmcdzybjx .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -606,7 +636,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-top-width: 0;
 }
 
-#izqtyhmsei .gt_heading {
+#glmcdzybjx .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -618,13 +648,13 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#izqtyhmsei .gt_bottom_border {
+#glmcdzybjx .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#izqtyhmsei .gt_col_headings {
+#glmcdzybjx .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -639,7 +669,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#izqtyhmsei .gt_col_heading {
+#glmcdzybjx .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -659,7 +689,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   overflow-x: hidden;
 }
 
-#izqtyhmsei .gt_column_spanner_outer {
+#glmcdzybjx .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -671,15 +701,15 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 4px;
 }
 
-#izqtyhmsei .gt_column_spanner_outer:first-child {
+#glmcdzybjx .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#izqtyhmsei .gt_column_spanner_outer:last-child {
+#glmcdzybjx .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#izqtyhmsei .gt_column_spanner {
+#glmcdzybjx .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -691,11 +721,11 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   width: 100%;
 }
 
-#izqtyhmsei .gt_spanner_row {
+#glmcdzybjx .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#izqtyhmsei .gt_group_heading {
+#glmcdzybjx .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -721,7 +751,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   text-align: left;
 }
 
-#izqtyhmsei .gt_empty_group_heading {
+#glmcdzybjx .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -736,15 +766,15 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   vertical-align: middle;
 }
 
-#izqtyhmsei .gt_from_md > :first-child {
+#glmcdzybjx .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#izqtyhmsei .gt_from_md > :last-child {
+#glmcdzybjx .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#izqtyhmsei .gt_row {
+#glmcdzybjx .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -763,7 +793,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   overflow-x: hidden;
 }
 
-#izqtyhmsei .gt_stub {
+#glmcdzybjx .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -776,7 +806,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 5px;
 }
 
-#izqtyhmsei .gt_stub_row_group {
+#glmcdzybjx .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -790,15 +820,15 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   vertical-align: top;
 }
 
-#izqtyhmsei .gt_row_group_first td {
+#glmcdzybjx .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#izqtyhmsei .gt_row_group_first th {
+#glmcdzybjx .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#izqtyhmsei .gt_summary_row {
+#glmcdzybjx .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -808,16 +838,16 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 5px;
 }
 
-#izqtyhmsei .gt_first_summary_row {
+#glmcdzybjx .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#izqtyhmsei .gt_first_summary_row.thick {
+#glmcdzybjx .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#izqtyhmsei .gt_last_summary_row {
+#glmcdzybjx .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -827,7 +857,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#izqtyhmsei .gt_grand_summary_row {
+#glmcdzybjx .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -837,7 +867,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 5px;
 }
 
-#izqtyhmsei .gt_first_grand_summary_row {
+#glmcdzybjx .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -847,7 +877,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#izqtyhmsei .gt_last_grand_summary_row_top {
+#glmcdzybjx .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -857,11 +887,11 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#izqtyhmsei .gt_striped {
+#glmcdzybjx .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#izqtyhmsei .gt_table_body {
+#glmcdzybjx .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -870,7 +900,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#izqtyhmsei .gt_footnotes {
+#glmcdzybjx .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -884,7 +914,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#izqtyhmsei .gt_footnote {
+#glmcdzybjx .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -893,7 +923,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 5px;
 }
 
-#izqtyhmsei .gt_sourcenotes {
+#glmcdzybjx .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -907,7 +937,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#izqtyhmsei .gt_sourcenote {
+#glmcdzybjx .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -915,63 +945,63 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 5px;
 }
 
-#izqtyhmsei .gt_left {
+#glmcdzybjx .gt_left {
   text-align: left;
 }
 
-#izqtyhmsei .gt_center {
+#glmcdzybjx .gt_center {
   text-align: center;
 }
 
-#izqtyhmsei .gt_right {
+#glmcdzybjx .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#izqtyhmsei .gt_font_normal {
+#glmcdzybjx .gt_font_normal {
   font-weight: normal;
 }
 
-#izqtyhmsei .gt_font_bold {
+#glmcdzybjx .gt_font_bold {
   font-weight: bold;
 }
 
-#izqtyhmsei .gt_font_italic {
+#glmcdzybjx .gt_font_italic {
   font-style: italic;
 }
 
-#izqtyhmsei .gt_super {
+#glmcdzybjx .gt_super {
   font-size: 65%;
 }
 
-#izqtyhmsei .gt_footnote_marks {
+#glmcdzybjx .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#izqtyhmsei .gt_asterisk {
+#glmcdzybjx .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#izqtyhmsei .gt_indent_1 {
+#glmcdzybjx .gt_indent_1 {
   text-indent: 5px;
 }
 
-#izqtyhmsei .gt_indent_2 {
+#glmcdzybjx .gt_indent_2 {
   text-indent: 10px;
 }
 
-#izqtyhmsei .gt_indent_3 {
+#glmcdzybjx .gt_indent_3 {
   text-indent: 15px;
 }
 
-#izqtyhmsei .gt_indent_4 {
+#glmcdzybjx .gt_indent_4 {
   text-indent: 20px;
 }
 
-#izqtyhmsei .gt_indent_5 {
+#glmcdzybjx .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1022,8 +1052,8 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
 </div>
 <p>Just upon visual observation, it seems like this assumption may be violated so i think it might be important to do some transformations.</p>
 </section>
-<section id="log-transformation" class="level3" data-number="7.3">
-<h3 data-number="7.3" class="anchored" data-anchor-id="log-transformation"><span class="header-section-number">7.3</span> Log transformation</h3>
+<section id="log-transformation" class="level3" data-number="8.3">
+<h3 data-number="8.3" class="anchored" data-anchor-id="log-transformation"><span class="header-section-number">8.3</span> Log transformation</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -1053,8 +1083,8 @@ F-statistic: 33.31 on 1 and 212 DF,  p-value: 2.767e-08</code></pre>
 </div>
 </div>
 </section>
-<section id="residual-of-new-log-transformmed-graph" class="level3" data-number="7.4">
-<h3 data-number="7.4" class="anchored" data-anchor-id="residual-of-new-log-transformmed-graph"><span class="header-section-number">7.4</span> residual of new log transformmed graph</h3>
+<section id="residual-of-new-log-transformmed-graph" class="level3" data-number="8.4">
+<h3 data-number="8.4" class="anchored" data-anchor-id="residual-of-new-log-transformmed-graph"><span class="header-section-number">8.4</span> residual of new log transformmed graph</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -1103,8 +1133,8 @@ F-statistic: 33.31 on 1 and 212 DF,  p-value: 2.767e-08</code></pre>
 </div>
 </section>
 </section>
-<section id="fitting-a-random-intercept-model-random-intercept-same-slope" class="level2" data-number="8">
-<h2 data-number="8" class="anchored" data-anchor-id="fitting-a-random-intercept-model-random-intercept-same-slope"><span class="header-section-number">8</span> Fitting a random intercept model (random intercept, same slope)</h2>
+<section id="fitting-a-random-intercept-model-random-intercept-same-slope" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="fitting-a-random-intercept-model-random-intercept-same-slope"><span class="header-section-number">9</span> Fitting a random intercept model (random intercept, same slope)</h2>
 <p>I am interested in seeing if the overall temperature and the PLD relationship is similar among species, but not the same. We are interested in plotting a mixed effects model with a random intercept but fixed/same slope. I am only interested in the species-specific plot for now with the phylum <code>Mollusca.</code></p>
 <div class="cell">
 <details>
@@ -1128,8 +1158,8 @@ F-statistic: 33.31 on 1 and 212 DF,  p-value: 2.767e-08</code></pre>
 <p><img src="RandomInterceptModel_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<section id="fitting-model" class="level3" data-number="8.1">
-<h3 data-number="8.1" class="anchored" data-anchor-id="fitting-model"><span class="header-section-number">8.1</span> fitting model</h3>
+<section id="fitting-model" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="fitting-model"><span class="header-section-number">9.1</span> fitting model</h3>
 <p>We can use the library <code>lme4</code> to fit a model of a linear regression with a <strong>random effect</strong></p>
 <div class="cell">
 <details>
@@ -1170,7 +1200,11 @@ Correlation of Fixed Effects:
 log_temp -0.896</code></pre>
 </div>
 </div>
-<p>the <code>fixed effects:</code> section in the output is the estimate for the fixed slope, and the grand mean of the intercept. in the fixed effects section the intercept here is the random effect, and you can see this in the <code>Random effects</code> section in this output, in this case our random effect was specifies the <code>Names</code> sections tells us the parameter is the intercept. the <code>Group</code> section tells us we have a random intercept for each species. We also have the variance and standard deviation for the random effects (as well as the residuals)</p>
+<ul>
+<li><p>the <code>fixed effects:</code> section in the output is the estimate for the fixed slope, and the grand mean of the intercept. in the fixed effects section the intercept here is the random effect, and you can see this</p></li>
+<li><p>in the <code>Random effects</code> section in this output, in this case our random effect was specified in the the <code>Names</code> sections, which tells us the parameter is the intercept.</p></li>
+<li><p>the <code>Group</code> section tells us we have a random intercept for each species. We also have the variance and standard deviation for the random effects (as well as the residuals)</p></li>
+</ul>
 <p>Since we have a random effect at the individual level, we can subset this section out so it is clear to see that these organism will have a random intercept and fixed slope.</p>
 <div class="cell">
 <details>
@@ -1199,9 +1233,77 @@ Tivela.mactroides        7.677603 -1.51751
 Tonicella.lineata        4.871674 -1.51751</code></pre>
 </div>
 </div>
-
-
 </section>
+<section id="interclass-correlation-coefficient-icc" class="level3" data-number="9.2">
+<h3 data-number="9.2" class="anchored" data-anchor-id="interclass-correlation-coefficient-icc"><span class="header-section-number">9.2</span> Interclass correlation coefficient (ICC)</h3>
+<p>for a random intercept model, we can run a diagnostic called the interclass correlation coefficient (ICC), which lets us know how much group specific information is available for the random effect. this is somewhat similar to the ANOVA, in which it looks at the variability within groups compared to the variability between groups. Low ICC means that observation within group don’t really cluster.</p>
+<p><span class="math display"> ICC = {\sigma^2_{\alpha} \over \sigma^2 + \sigma^2_\alpha} </span></p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creating data frame</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>var <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">VarCorr</span>(RandIntModel_Mollusca))</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co">#ICC equation</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>ICC <span class="ot">&lt;-</span> var<span class="sc">$</span>vcov[<span class="dv">1</span>] <span class="sc">/</span> (var<span class="sc">$</span>vcov[<span class="dv">1</span>] <span class="sc">+</span> var<span class="sc">$</span>vcov[<span class="dv">2</span>])</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co"># ICC value </span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>ICC</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9631356</code></pre>
+</div>
+</div>
+<p>In our model, the <span class="math inline">\sigma^2_{\alpha}</span> is 0.8645 (also the vcov part) and the <span class="math inline">\sigma^2</span> is 0.033. so once we do the mathematics we get <code>0.9631.</code> Which is the proportion of the total variance in Y that is accounted for by clustering. This is a high value and therefore, suggesting we have within-group variability, so it might be good we are running this random effects model.</p>
+</section>
+</section>
+<section id="interpretation-of-results" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="interpretation-of-results"><span class="header-section-number">10</span> Interpretation of results</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(RandIntModel_Mollusca)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML ['lmerMod']
+Formula: log_pld ~ log_temp + (1 | species)
+   Data: Mollusca_subset
+
+REML criterion at convergence: 43.7
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-2.37222 -0.32686 -0.09382  0.43821  2.34871 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ species  (Intercept) 0.86457  0.9298  
+ Residual             0.03309  0.1819  
+Number of obs: 44, groups:  species, 16
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept)   7.1728     0.5284  13.575
+log_temp     -1.5175     0.1592  -9.531
+
+Correlation of Fixed Effects:
+         (Intr)
+log_temp -0.896</code></pre>
+</div>
+</div>
+<p><strong>Interpretation:</strong> Summary of this PLD data includes information about the random effects. Here we can see that the column <em>groups</em> shows the random effect variable. in the <code>name</code> section, you can see that the random effect is our intercept. so we have the variation due to the species. in the <code>Residuals</code> section, this is the variation that cannot be explained by the model (the error). As you will notice our <code>Standard error</code> is smaller compared to the ordinary regression we ran in the previous one. Standard error for this model is <code>0.15</code> and the previous standard error for the first model we ran was <code>0.18.</code></p>
+<p>So 0.86 / 0.86 + 0.03 = 0.96 , so the difference between between species can explain 96% of the variance that is is left over after the variance is explained by our fixed effect. since the random effects of the species explain most.</p>
+<p>there is a very long description on the why the <code>lmer()</code> function doesn’t include the p-value that can be found <a href="https://stat.ethz.ch/pipermail/r-help/2006-May/094765.html">here.</a></p>
+<p><strong>interpretation of temp variable</strong> for the fixed part, we can interpret this parameter the same as a single-level regression model, <span style="background-color:yellow">so <span class="math inline">\beta_1</span> is the increase/decrease in response for 1 unit increase/decrease in <span class="math inline">x.</span></span> In other words, for one unit change in the degrees of temperature, there is a -1.5 decrease in Planktonic larval duration. (or, as the temperature increase, the plankton duration is lower.)</p>
+</section>
+<section id="conclusion" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">11</span> Conclusion</h2>
+<p>In this lecture you learned about the importance of a random intercept model, when it is appropriate to use a random intercept model, the difference between an ordinary single-level model, the Interclass correlation coefficient (ICC) and how to interpret results from the fixed part and the random part of a random intercept model.</p>
+</section>
+<section id="references" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="references"><span class="header-section-number">12</span> References</h2>
+
+
 </section>
 
 </main> <!-- /main -->

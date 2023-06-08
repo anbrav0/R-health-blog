@@ -23,6 +23,8 @@ format:
 #| message: false
 
 library(gt)
+library(broom)
+library(knitr)
 library(gtsummary)
 library(lattice)
 library(lme4)
@@ -53,7 +55,7 @@ In this example, the level of the temperature is considered *fixed* meaning, the
 
 a fixed effect model is a statistical model in which the parameters are fixed or non-random. This can also be referred to a regression model, in which group mean are "fixed" (non-random) or in simpler, terms something that is "fixed" in analysis is constant like sex assigned at birth or ethnicity.
 
-$$ Y_{it} = \beta_1X_{1,it} + ... + \beta_kX_{k,it}+\alpha_i + u_{it} $$ with $i =1...n$ and $t=1...T$ and the $\alpha_i$ are specific intercepts that capture heterogeneity across.
+$$ y_i = \beta_0 + X_i\beta_i + \alpha_u + u_{it} $$
 
 Now, let's say we want to look at different levels of *factors* that were chosen because of random sampling, like number of operators working that day, lot batches, days etc. So in this case we are now regarding factors not related to themselves (variables) but we are now trying to represent all possible levels that these factors may take, the appropriate model is now a *random effects model.*
 
@@ -73,7 +75,15 @@ In this case, it might be important to *control* for the previous exams the stud
 
 when we want to control for something (like previous exams students took) we can fit a single-level regression model that looks something like this:
 
-$$y_1 = \beta_0 + \beta_1x_i + e_i$$ where $y_1$ is your dependent variable, $\beta_0$ is your intercept and $\beta_1x_1$ are your slope and $\beta_1$ parameters. When you have *clustered* data fitting this model causes problems. Clustered data is data where you observation or participants are related. Like exam results for students within a school, height of children within a family etc.
+$$y_1 = \beta_0 + \beta_1x_i + e_i$$ where 
+
+- $y_1$ is your dependent variable, 
+
+- $\beta_0$ is your intercept and
+
+- $\beta_1x_1$ are your slope and  $\beta_1$ parameters. 
+
+When you have *clustered* data fitting this model causes problems. Clustered data is data where you observation or participants are related. Like exam results for students within a school, height of children within a family etc.
 
 if we try to fit this clustered data:
 
@@ -92,13 +102,28 @@ So what we can do is combine the variance component and single-level regression 
 
 $$ y_{ij} = \overbrace{\beta_0 + \beta_1X_{ij}}^{\text{fixed part}} + \underbrace{u_j + e_{ij}}_{\text{random part}}$$ where the fixed parts includes our parameters that we estimate as our coefficients, and the random part is the parameter we estimate as the variance $e_{ij} \sim N(0, \sigma_e^2)$ and the $N(0, \sigma_u^2)$ and these are allowed to vary. 
 
+where:
+
+- $y_{ij}$ is your dependent variable at $i$ individual and $j$ level
+
+- $N(0, \sigma_u^2)$ is the measurement at the school level
+
+- and $e_{ij} \sim N(0, \sigma_e^2)$ is the measurement at the student level
+
+- and $i$ subscript is for the students 
+
+- and $j$ is the school subscript 
+
+
 we can also write this equation like so:
 
 $$ Y_{ij} = \mu + b_i + \varepsilon_{ij} $$
 
 where
 
--    $\mu$ is the population average
+- $Y_{ij}$ is your dependent outcome of intested for a subject $i$ at school $j$
+
+-    $\mu$ is the population average mean
 
 -    $b_i$ is the random students effects (you have a random effect for every student)
 
@@ -124,6 +149,17 @@ where
 - your error term is independent with your constant term.
 
 - you have homoscedasticity
+
+- $b_i$ and $\varepsilon$ are independent of each other
+
+## hypothesis of a random effects model:
+
+hypothesis testing for a random effects model runs as follows:
+
+$$ H_0: \sigma^2_u = 0$$
+$$H_1: \sigma^2_u \not = 0$$
+the null hypothesis states that if $\sigma^2_u$ is true, then the random component is not needed in this model. so you can fit a single level regression model. to do this, you would can do a likelihood ratio test comparing the two model to see if sigma is significant.
+
 
 ## Example 2: Planktonic larval duration (PLD)
 
@@ -327,7 +363,11 @@ summary(RandIntModel_Mollusca)
 
 ```
 
-the `fixed effects:` section in the output is the estimate for the fixed slope, and the grand mean of the intercept. in the fixed effects section the intercept here is the random effect, and you can see this in the `Random effects` section in this output, in this case our random effect was specifies the `Names` sections tells us the parameter is the intercept. the `Group` section tells us we have a random intercept for each species. We also have the variance and standard deviation for the random effects (as well as the residuals)
+- the `fixed effects:` section in the output is the estimate for the fixed slope, and the grand mean of the intercept. in the fixed effects section the intercept here is the random effect, and you can see this
+
+- in the `Random effects` section in this output, in this case our random effect was specified in the the `Names` sections, which tells us the parameter is the intercept. 
+
+- the `Group` section tells us we have a random intercept for each species. We also have the variance and standard deviation for the random effects (as well as the residuals)
 
 Since we have a random effect at the individual level, we can subset this section out so it is clear to see that these organism will have a random intercept and fixed slope. 
 
@@ -343,5 +383,52 @@ coef(RandIntModel_Mollusca)$species
 
 
 ```
+
+### Interclass correlation coefficient (ICC)
+
+for a random intercept model, we can run a diagnostic called the interclass correlation coefficient (ICC), which lets us know how much group specific information is available for the random effect. this is somewhat similar to the ANOVA, in which it looks at the variability within groups compared to the variability between groups. Low ICC means that observation within group don't really cluster. 
+
+$$ ICC = {\sigma^2_{\alpha} \over \sigma^2 + \sigma^2_\alpha} $$
+
+
+```{r}
+#| message: false
+#| warning: false
+
+# creating data frame
+var <- as.data.frame(VarCorr(RandIntModel_Mollusca))
+
+#ICC equation
+ICC <- var$vcov[1] / (var$vcov[1] + var$vcov[2])
+
+# ICC value 
+ICC
+```
+
+In our model, the $\sigma^2_{\alpha}$ is 0.8645 (also the vcov part) and the $\sigma^2$ is 0.033. so once we do the mathematics we get `0.9631.` Which is the proportion of the total variance in Y that is accounted for by clustering. This is a high value and therefore, suggesting we have within-group variability, so it might be good we are running this random effects model. 
+
+## Interpretation of results 
+
+```{r}
+
+summary(RandIntModel_Mollusca)
+
+
+
+```
+
+**Interpretation:** Summary of this PLD data includes information about the random effects. Here we can see that the column _groups_ shows the random effect variable. in the `name` section, you can see that the random effect is our intercept. so we have the variation due to the species. in the `Residuals` section, this is the variation that cannot be explained by the model (the error). As you will notice our `Standard error` is smaller compared to the ordinary regression we ran in the previous one. Standard error for this model is `0.15` and the previous standard error for the first model we ran was `0.18.`
+
+So 0.86 / 0.86 + 0.03 = 0.96 , so the difference between between species can explain 96% of the variance that is is left over after the variance is explained by our fixed effect. since the random effects of the species explain most. 
+
+there is a very long description on the why the `lmer()` function doesn't include the p-value that can be found [here.](https://stat.ethz.ch/pipermail/r-help/2006-May/094765.html)
+
+**interpretation of temp variable** for the fixed part, we can interpret this parameter the same as a single-level regression model, [so $\beta_1$ is the increase/decrease in response for 1 unit increase/decrease in $x.$]{style="background-color:yellow"} In other words, for one unit change in the degrees of temperature, there is a -1.5 decrease in Planktonic larval duration. (or, as the temperature increase, the plankton duration is lower.)
+
+## Conclusion
+
+In this lecture you learned about the importance of a random intercept model, when it is appropriate to use a random intercept model, the difference between an ordinary single-level model, the Interclass correlation coefficient (ICC) and how to interpret results from the fixed part and the random part of a random intercept model. 
+
+## References 
 
 
