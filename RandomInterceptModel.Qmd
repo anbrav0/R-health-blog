@@ -55,7 +55,7 @@ In this example, the level of the temperature is considered *fixed* meaning, the
 
 a fixed effect model is a statistical model in which the parameters are fixed or non-random. This can also be referred to a regression model, in which group mean are "fixed" (non-random) or in simpler, terms something that is "fixed" in analysis is constant like sex assigned at birth or ethnicity.
 
-$$ y_i = \beta_0 + X_i\beta_i + \alpha_u  $$
+$$ y_i = \beta_0 + X_i\beta_i + \alpha_u + \epsilon_i $$
 
 Now, let's say we want to look at different levels of *factors* that were chosen because of random sampling, like number of operators working that day, lot batches, days etc. So in this case we are now regarding factors not related to themselves (variables) but we are now trying to represent all possible levels that these factors may take, the appropriate model is now a *random effects model.*
 
@@ -106,9 +106,9 @@ where:
 
 - $y_{ij}$ is your dependent variable at $i$ individual and $j$ level
 
-- $N(0, \sigma_u^2)$ is the measurement at the student level
+- $N(0, \sigma_u^2)$ is the measurement at the school level
 
-- and $e_{ij} \sim N(0, \sigma_e^2)$ is the measurement at the school level
+- and $e_{ij} \sim N(0, \sigma_e^2)$ is the measurement at the student level
 
 - and $i$ subscript is for the students 
 
