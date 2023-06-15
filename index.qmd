@@ -27,6 +27,7 @@ library(katex)
 library(gt)
 library(gtsummary)
 library(devtools)
+library(pscl)
 library(MEPS)
 library(MASS)
 library(tidyverse)
@@ -441,6 +442,20 @@ PossionModel1 |>
 
 ```
 
+here we can do some further diagnostics as well like plotting the residuals for this first model fit
+
+```{r}
+
+res <- residuals(PossionModel1, type = "deviance")
+plot(log(predict(PossionModel1)), res)
+abline(h = 0, lty = 2)
+qqnorm(res)
+qqline(res)
+ 
+```
+
+ploting the residual (raw deviance or scaled) on a y axis vs the log predicted values on x axis. here are some large residuals and lots of deviance from the norm. (however I have heard that normality of rediauls is not to be expected so this may not be conclusive)
+
 ## Interpreting Rate Ratio 
 
 For this particular data set, we are interested in looking at the number of doctor visits over a year. the coefficient for $\beta_1$ = -0.579 and is statistically significant. Meaning that perceived health influence the rate of doctors visits. And because it is negative we can figure out by how much. So in other words $e^{-.579}$ = 0.56. This is our rate ratio, the multiplicative increase on doctors visits for those perceived as good health when compared to fair. Because out $\beta$ is < 1, then perceived good health has a protective factor and we can interpret this as: 
@@ -467,6 +482,28 @@ A negative binomial regression can be used for over-dispersed count data, like m
 
 
 > _a note about Zero-inflated regressio models: this type of model attempt to account for to many zeros. Zero-inflated models estimate two models at the same time, one for count model and one for excess zeros._
+
+> _we can also compare our model to a zero inflated model to check for fit:_
+
+```{r}
+#| eval: true
+#| message: false
+
+#this is prob a better fit the negative B   
+PoissonModel2_NB <- glm.nb(Nubr_office_visits ~ Health_status + Is_male + Is_married, data = HC2020_clean)
+
+# fit model with log link
+PoissonModel3_ZI <- zeroinfl(Nubr_office_visits ~ Health_status + Is_male + Is_married, data = HC2020_clean, dist = "poisson")
+
+#summary analysis
+summary(PoissonModel3_ZI)
+
+# comparing AIC score of ZB and NB
+AIC(PoissonModel2_NB, PoissonModel3_ZI)
+
+```
+
+as suspected, the model `PoissonModel2_NB` negative binomial, seems to be a better fit. 
 
 Let's go with a negative binomial regression analysis. In this case we will need to utilize the `MASS` package to estimate negative binomial regression parameters and account for the dispersion in this data set. 
 
