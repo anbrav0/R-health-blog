@@ -3,16 +3,22 @@ project:
   output-dir: docs
 
 website:
-  title: "How to Health Science in R"
+  title: How to Health Science in R
   navbar:
-    right:
-      - about.qmd
-      - index.qmd
-      - Fishersexactest.qmd
-      - RandomInterceptModel.qmd
-      - Two_sample_t.qmd
-      - icon: github
-        href: https://github.com/anbrav0
+    background: primary
+    search: true
+    left:
+      - text: "About"
+        file: about.qmd
+      - text: "GLM: Count Data"
+        file: index.qmd
+      - text: "Random Intercept Model"
+        file: RandomInterceptModel.qmd
+      - text: "Fishers Exact Test"
+        file: Fishersexactest.qmd
+      - text: "Two Sample T-test"
+        file: Two_sample_t.qmd
+
 format:
   html:
     theme: cosmo
@@ -20,3 +26,16 @@ format:
 
 editor: visual
 
+ 
+
+#website:
+ # title: "How to Health Science in R"
+ # navbar:
+  #  right:
+    #  - about.qmd
+     # - index.qmd
+     # - Fishersexactest.qmd
+     # - RandomInterceptModel.qmd
+     # - Two_sample_t.qmd
+     # - icon: github
+       # href: https://github.com/anbrav0
