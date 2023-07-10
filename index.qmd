@@ -28,7 +28,7 @@ library(gt)
 library(gtsummary)
 library(devtools)
 library(pscl)
-library(MEPS)
+#library(MEPS)
 library(MASS)
 library(tidyverse)
 ```
@@ -188,9 +188,12 @@ Lets import the built in `National Health Care Survery` data set from the Medica
 
 ```{r}
 #| message: false
+#| eval: false
+
+
 
 # clean 
-HC2020_clean <- read_csv("/Users/anbravo/GitHub/R-health-blog/HC2020_clean.csv")
+HC2020_clean <- read_csv("/Users/anabravo/Documents/GitHub/R-health-blog/HC2020_clean.csv")
 
 # Load data from AHRQ MEPS website
 hc2020 = read_MEPS(file = "h224")
@@ -294,7 +297,7 @@ let's say i want to take a sneak peak at this data set. I will use the `gtsummar
 ```{r}
 #| message: false
 
-
+HC2020_clean <- read_csv("/Users/anabravo/Documents/GitHub/R-health-blog/HC2020_clean.csv")
 
 HC2020_clean |> 
   select(Person_ID, Nubr_office_visits, Health_status, Pain_Level, Region, Is_employed, Is_married, Is_employed, Is_male) |> 
@@ -436,19 +439,6 @@ PossionModel1 |>
 
 ```
 
-here we can do some further diagnostics as well like plotting the residuals for this first model fit
-
-```{r}
-
-res <- residuals(PossionModel1, type = "deviance")
-plot(log(predict(PossionModel1)), res)
-abline(h = 0, lty = 2)
-qqnorm(res)
-qqline(res)
- 
-```
-
-ploting the residual (raw deviance or scaled) on a y axis vs the log predicted values on x axis. here are some large residuals and lots of deviance from the norm. (however I have heard that normality of rediauls is not to be expected so this may not be conclusive)
 
 ## Interpreting Rate Ratio
 
