@@ -18,6 +18,17 @@ website:
         file: Fishersexactest.qmd
       - text: "Two Sample T-test"
         file: Two_sample_t.qmd
+  sidebar: 
+    tools:
+      - icon: twitter
+        href: https://twitter.com/anabananaqtpie
+      - icon: github
+        menu:
+          - text: Source Code
+            url:  https://github.com/anbrav0/R-health-blog
+          - text: Report a Bug
+            url:  https://github.com/anbrav0/R-health-blog/issues
+        
 
 format:
   html:
@@ -27,15 +38,3 @@ format:
 editor: visual
 
  
-
-#website:
- # title: "How to Health Science in R"
- # navbar:
-  #  right:
-    #  - about.qmd
-     # - index.qmd
-     # - Fishersexactest.qmd
-     # - RandomInterceptModel.qmd
-     # - Two_sample_t.qmd
-     # - icon: github
-       # href: https://github.com/anbrav0
