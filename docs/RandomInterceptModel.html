@@ -141,7 +141,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">GLM: Count Data</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./RandomInterceptModel.qmd" rel="" target="">
+    <a class="nav-link active" href="./RandomInterceptModel.html" rel="" target="" aria-current="page">
  <span class="menu-text">Random Intercept Model</span></a>
   </li>  
   <li class="nav-item">
@@ -211,7 +211,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#what-is-a-random-intercept-model" id="toc-what-is-a-random-intercept-model" class="nav-link" data-scroll-target="#what-is-a-random-intercept-model"><span class="header-section-number">2</span> What is a Random Intercept model</a>
   <ul class="collapse">
   <li><a href="#variance-component-model" id="toc-variance-component-model" class="nav-link" data-scroll-target="#variance-component-model"><span class="header-section-number">2.1</span> Variance component model</a></li>
-  <li><a href="#why-this-is-relavant" id="toc-why-this-is-relavant" class="nav-link" data-scroll-target="#why-this-is-relavant"><span class="header-section-number">2.2</span> Why this is relavant</a></li>
+  <li><a href="#why-this-is-relevant" id="toc-why-this-is-relevant" class="nav-link" data-scroll-target="#why-this-is-relevant"><span class="header-section-number">2.2</span> Why this is relevant</a></li>
   <li><a href="#example-1-school-level-data" id="toc-example-1-school-level-data" class="nav-link" data-scroll-target="#example-1-school-level-data"><span class="header-section-number">2.3</span> Example 1: School level data</a></li>
   </ul></li>
   <li><a href="#fitting-a-single-level-regression-model" id="toc-fitting-a-single-level-regression-model" class="nav-link" data-scroll-target="#fitting-a-single-level-regression-model"><span class="header-section-number">3</span> Fitting a single-level regression model</a></li>
@@ -224,12 +224,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#load-pld-data" id="toc-load-pld-data" class="nav-link" data-scroll-target="#load-pld-data"><span class="header-section-number">8.1</span> load PLD data</a></li>
   <li><a href="#fit-first-model-linear-model" id="toc-fit-first-model-linear-model" class="nav-link" data-scroll-target="#fit-first-model-linear-model"><span class="header-section-number">8.2</span> Fit first model: Linear model</a></li>
   <li><a href="#log-transformation" id="toc-log-transformation" class="nav-link" data-scroll-target="#log-transformation"><span class="header-section-number">8.3</span> Log transformation</a></li>
-  <li><a href="#residual-of-new-log-transformmed-graph" id="toc-residual-of-new-log-transformmed-graph" class="nav-link" data-scroll-target="#residual-of-new-log-transformmed-graph"><span class="header-section-number">8.4</span> residual of new log transformmed graph</a></li>
+  <li><a href="#residual-of-new-log-transformed-graph" id="toc-residual-of-new-log-transformed-graph" class="nav-link" data-scroll-target="#residual-of-new-log-transformed-graph"><span class="header-section-number">8.4</span> residual of new log transformed graph</a></li>
   </ul></li>
   <li><a href="#fitting-a-random-intercept-model-random-intercept-same-slope" id="toc-fitting-a-random-intercept-model-random-intercept-same-slope" class="nav-link" data-scroll-target="#fitting-a-random-intercept-model-random-intercept-same-slope"><span class="header-section-number">9</span> Fitting a random intercept model (random intercept, same slope)</a>
   <ul class="collapse">
   <li><a href="#fitting-model" id="toc-fitting-model" class="nav-link" data-scroll-target="#fitting-model"><span class="header-section-number">9.1</span> fitting model</a></li>
-  <li><a href="#interclass-correlation-coefficient-icc" id="toc-interclass-correlation-coefficient-icc" class="nav-link" data-scroll-target="#interclass-correlation-coefficient-icc"><span class="header-section-number">9.2</span> Interclass correlation coefficient (ICC)</a></li>
+  <li><a href="#inter-class-correlation-coefficient-icc" id="toc-inter-class-correlation-coefficient-icc" class="nav-link" data-scroll-target="#inter-class-correlation-coefficient-icc"><span class="header-section-number">9.2</span> Inter class correlation coefficient (ICC)</a></li>
   </ul></li>
   <li><a href="#interpretation-of-results" id="toc-interpretation-of-results" class="nav-link" data-scroll-target="#interpretation-of-results"><span class="header-section-number">10</span> Interpretation of results</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">11</span> Conclusion</a></li>
@@ -317,8 +317,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Now, let’s say we want to look at different levels of <em>factors</em> that were chosen because of random sampling, like number of operators working that day, lot batches, days etc. So in this case we are now regarding factors not related to themselves (variables) but we are now trying to represent all possible levels that these factors may take, the appropriate model is now a <em>random effects model.</em></p>
 <p>fitting these <em>random effects models</em> are important because we want to obtain estimates of different contributions that experimental factors make to the variability of our data! (we can represent this as the variance) this is what is called <em>variance component</em></p>
 </section>
-<section id="why-this-is-relavant" class="level3" data-number="2.2">
-<h3 data-number="2.2" class="anchored" data-anchor-id="why-this-is-relavant"><span class="header-section-number">2.2</span> Why this is relavant</h3>
+<section id="why-this-is-relevant" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="why-this-is-relevant"><span class="header-section-number">2.2</span> Why this is relevant</h3>
 <p>Well, a variance component model helps us see how much variance in our response at the different levels. But what if you are interested in seeing the effects of the explanatory variables? <span style="background-color:yellow">Or, what if your observations are NOT randomly sampled from simple random sample but instead from a cluster or a multi-level sampling design?</span> Random intercept models or random effects models are important.</p>
 </section>
 <section id="example-1-school-level-data" class="level3" data-number="2.3">
@@ -539,23 +539,23 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
 </details>
 <div class="cell-output-display">
 
-<div id="ypqpjtkfil" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ypqpjtkfil table {
+<div id="ujsgeupozz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ujsgeupozz table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ypqpjtkfil thead, #ypqpjtkfil tbody, #ypqpjtkfil tfoot, #ypqpjtkfil tr, #ypqpjtkfil td, #ypqpjtkfil th {
+#ujsgeupozz thead, #ujsgeupozz tbody, #ujsgeupozz tfoot, #ujsgeupozz tr, #ujsgeupozz td, #ujsgeupozz th {
   border-style: none;
 }
 
-#ypqpjtkfil p {
+#ujsgeupozz p {
   margin: 0;
   padding: 0;
 }
 
-#ypqpjtkfil .gt_table {
+#ujsgeupozz .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -581,12 +581,12 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#ypqpjtkfil .gt_caption {
+#ujsgeupozz .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ypqpjtkfil .gt_title {
+#ujsgeupozz .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -598,7 +598,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-bottom-width: 0;
 }
 
-#ypqpjtkfil .gt_subtitle {
+#ujsgeupozz .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -610,7 +610,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-top-width: 0;
 }
 
-#ypqpjtkfil .gt_heading {
+#ujsgeupozz .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -622,13 +622,13 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#ypqpjtkfil .gt_bottom_border {
+#ujsgeupozz .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ypqpjtkfil .gt_col_headings {
+#ujsgeupozz .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -643,7 +643,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#ypqpjtkfil .gt_col_heading {
+#ujsgeupozz .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -663,7 +663,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   overflow-x: hidden;
 }
 
-#ypqpjtkfil .gt_column_spanner_outer {
+#ujsgeupozz .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -675,15 +675,15 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 4px;
 }
 
-#ypqpjtkfil .gt_column_spanner_outer:first-child {
+#ujsgeupozz .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ypqpjtkfil .gt_column_spanner_outer:last-child {
+#ujsgeupozz .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ypqpjtkfil .gt_column_spanner {
+#ujsgeupozz .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -695,11 +695,11 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   width: 100%;
 }
 
-#ypqpjtkfil .gt_spanner_row {
+#ujsgeupozz .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ypqpjtkfil .gt_group_heading {
+#ujsgeupozz .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -725,7 +725,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   text-align: left;
 }
 
-#ypqpjtkfil .gt_empty_group_heading {
+#ujsgeupozz .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -740,15 +740,15 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   vertical-align: middle;
 }
 
-#ypqpjtkfil .gt_from_md > :first-child {
+#ujsgeupozz .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ypqpjtkfil .gt_from_md > :last-child {
+#ujsgeupozz .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ypqpjtkfil .gt_row {
+#ujsgeupozz .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -767,7 +767,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   overflow-x: hidden;
 }
 
-#ypqpjtkfil .gt_stub {
+#ujsgeupozz .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -780,7 +780,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 5px;
 }
 
-#ypqpjtkfil .gt_stub_row_group {
+#ujsgeupozz .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -794,15 +794,15 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   vertical-align: top;
 }
 
-#ypqpjtkfil .gt_row_group_first td {
+#ujsgeupozz .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ypqpjtkfil .gt_row_group_first th {
+#ujsgeupozz .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ypqpjtkfil .gt_summary_row {
+#ujsgeupozz .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -812,16 +812,16 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 5px;
 }
 
-#ypqpjtkfil .gt_first_summary_row {
+#ujsgeupozz .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ypqpjtkfil .gt_first_summary_row.thick {
+#ujsgeupozz .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ypqpjtkfil .gt_last_summary_row {
+#ujsgeupozz .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -831,7 +831,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#ypqpjtkfil .gt_grand_summary_row {
+#ujsgeupozz .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -841,7 +841,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 5px;
 }
 
-#ypqpjtkfil .gt_first_grand_summary_row {
+#ujsgeupozz .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -851,7 +851,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#ypqpjtkfil .gt_last_grand_summary_row_top {
+#ujsgeupozz .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -861,11 +861,11 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#ypqpjtkfil .gt_striped {
+#ujsgeupozz .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ypqpjtkfil .gt_table_body {
+#ujsgeupozz .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -874,7 +874,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#ypqpjtkfil .gt_footnotes {
+#ujsgeupozz .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -888,7 +888,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#ypqpjtkfil .gt_footnote {
+#ujsgeupozz .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -897,7 +897,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 5px;
 }
 
-#ypqpjtkfil .gt_sourcenotes {
+#ujsgeupozz .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -911,7 +911,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#ypqpjtkfil .gt_sourcenote {
+#ujsgeupozz .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -919,63 +919,63 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 5px;
 }
 
-#ypqpjtkfil .gt_left {
+#ujsgeupozz .gt_left {
   text-align: left;
 }
 
-#ypqpjtkfil .gt_center {
+#ujsgeupozz .gt_center {
   text-align: center;
 }
 
-#ypqpjtkfil .gt_right {
+#ujsgeupozz .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ypqpjtkfil .gt_font_normal {
+#ujsgeupozz .gt_font_normal {
   font-weight: normal;
 }
 
-#ypqpjtkfil .gt_font_bold {
+#ujsgeupozz .gt_font_bold {
   font-weight: bold;
 }
 
-#ypqpjtkfil .gt_font_italic {
+#ujsgeupozz .gt_font_italic {
   font-style: italic;
 }
 
-#ypqpjtkfil .gt_super {
+#ujsgeupozz .gt_super {
   font-size: 65%;
 }
 
-#ypqpjtkfil .gt_footnote_marks {
+#ujsgeupozz .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ypqpjtkfil .gt_asterisk {
+#ujsgeupozz .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ypqpjtkfil .gt_indent_1 {
+#ujsgeupozz .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ypqpjtkfil .gt_indent_2 {
+#ujsgeupozz .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ypqpjtkfil .gt_indent_3 {
+#ujsgeupozz .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ypqpjtkfil .gt_indent_4 {
+#ujsgeupozz .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ypqpjtkfil .gt_indent_5 {
+#ujsgeupozz .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1057,8 +1057,8 @@ F-statistic: 33.31 on 1 and 212 DF,  p-value: 2.767e-08</code></pre>
 </div>
 </div>
 </section>
-<section id="residual-of-new-log-transformmed-graph" class="level3" data-number="8.4">
-<h3 data-number="8.4" class="anchored" data-anchor-id="residual-of-new-log-transformmed-graph"><span class="header-section-number">8.4</span> residual of new log transformmed graph</h3>
+<section id="residual-of-new-log-transformed-graph" class="level3" data-number="8.4">
+<h3 data-number="8.4" class="anchored" data-anchor-id="residual-of-new-log-transformed-graph"><span class="header-section-number">8.4</span> residual of new log transformed graph</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -1090,7 +1090,7 @@ F-statistic: 33.31 on 1 and 212 DF,  p-value: 2.767e-08</code></pre>
 <p><img src="RandomInterceptModel_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>in ggplot you can use the <code>facet_wrap()</code> function to seperate by phylum:</p>
+<p>in ggplot you can use the <code>facet_wrap()</code> function to separate by phylum:</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -1209,9 +1209,9 @@ Tonicella.lineata        4.871674 -1.51751</code></pre>
 </div>
 <p>So now we can see that in the <code>Mollusca</code> subset, we have all random intercepts for individual specifies, but the same slope.</p>
 </section>
-<section id="interclass-correlation-coefficient-icc" class="level3" data-number="9.2">
-<h3 data-number="9.2" class="anchored" data-anchor-id="interclass-correlation-coefficient-icc"><span class="header-section-number">9.2</span> Interclass correlation coefficient (ICC)</h3>
-<p>for a random intercept model, we can run a diagnostic called the interclass correlation coefficient (ICC), which lets us know how much group specific information is available for the random effect. this is somewhat similar to the ANOVA, in which it looks at the variability within groups compared to the variability between groups. Low ICC means that observation within group don’t really cluster.</p>
+<section id="inter-class-correlation-coefficient-icc" class="level3" data-number="9.2">
+<h3 data-number="9.2" class="anchored" data-anchor-id="inter-class-correlation-coefficient-icc"><span class="header-section-number">9.2</span> Inter class correlation coefficient (ICC)</h3>
+<p>for a random intercept model, we can run a diagnostic called the inter-class correlation coefficient (ICC), which lets us know how much group specific information is available for the random effect. this is somewhat similar to the ANOVA, in which it looks at the variability within groups compared to the variability between groups. Low ICC means that observation within group don’t really cluster.</p>
 <p><span class="math display"> ICC = {\sigma^2_{\alpha} \over \sigma^2 + \sigma^2_\alpha} </span></p>
 <div class="cell">
 <details>

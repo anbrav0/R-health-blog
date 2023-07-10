@@ -13,7 +13,7 @@ website:
       - text: "GLM: Count Data"
         file: index.qmd
       - text: "Random Intercept Model"
-        file: RandomInterceptModel.qmd
+        file: RandomInterceptModel.Qmd
       - text: "Fishers Exact Test"
         file: Fishersexactest.qmd
       - text: "Two Sample T-test"

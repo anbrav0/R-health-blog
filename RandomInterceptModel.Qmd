@@ -61,7 +61,7 @@ Now, let's say we want to look at different levels of *factors* that were chosen
 
 fitting these *random effects models* are important because we want to obtain estimates of different contributions that experimental factors make to the variability of our data! (we can represent this as the variance) this is what is called *variance component*
 
-### Why this is relavant
+### Why this is relevant
 
 Well, a variance component model helps us see how much variance in our response at the different levels. But what if you are interested in seeing the effects of the explanatory variables? [Or, what if your observations are NOT randomly sampled from simple random sample but instead from a cluster or a multi-level sampling design?]{style="background-color:yellow"} Random intercept models or random effects models are important.
 
@@ -272,7 +272,7 @@ summary(LinearMode_2Log)
 
 ```
 
-### residual of new log transformmed graph
+### residual of new log transformed graph
 
 ```{r}
 #| message: false
@@ -303,7 +303,7 @@ abline(LinearMode_2Log)
 
 ```
 
-in ggplot you can use the `facet_wrap()` function to seperate by phylum:
+in ggplot you can use the `facet_wrap()` function to separate by phylum:
 
 ```{r}
 #| message: false
@@ -381,9 +381,9 @@ coef(RandIntModel_Mollusca)$species
 
 So now we can see that in the `Mollusca` subset, we have all random intercepts for individual specifies, but the same slope.
 
-### Interclass correlation coefficient (ICC)
+### Inter class correlation coefficient (ICC)
 
-for a random intercept model, we can run a diagnostic called the interclass correlation coefficient (ICC), which lets us know how much group specific information is available for the random effect. this is somewhat similar to the ANOVA, in which it looks at the variability within groups compared to the variability between groups. Low ICC means that observation within group don't really cluster.
+for a random intercept model, we can run a diagnostic called the inter-class correlation coefficient (ICC), which lets us know how much group specific information is available for the random effect. this is somewhat similar to the ANOVA, in which it looks at the variability within groups compared to the variability between groups. Low ICC means that observation within group don't really cluster.
 
 $$ ICC = {\sigma^2_{\alpha} \over \sigma^2 + \sigma^2_\alpha} $$
 
