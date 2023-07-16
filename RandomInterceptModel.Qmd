@@ -22,14 +22,14 @@ format:
 ```{r}
 #| message: false
 
-library(gt)
-library(broom)
-library(knitr)
-library(gtsummary)
-library(lattice)
-library(lme4)
-library(arm)
-library(tidyverse)
+library(gt)        # to make table outputs presentation/publication ready. 
+library(broom)     # clean output.
+library(knitr)     # to make tables. 
+library(gtsummary) # extension to gt
+library(lattice)   # It is a powerful data visualization for multivariate data
+library(lme4)      # Fit linear and generalized linear mixed-effects models
+library(arm)       # Data Analysis Using Regression and Multilevel models
+library(tidyverse) # for cleaning wrangling data
 
 ```
 
@@ -81,7 +81,7 @@ $$y_1 = \beta_0 + \beta_1x_i + e_i$$ where
 
 -   $\beta_0$ is your intercept and
 
--   $\beta_1x_1$ are your slope and $\beta_1$ parameters.
+-   $\beta_1$ is your slope parameter (which is also your slope treatment effect).
 
 When you have *clustered* data fitting this model causes problems. Clustered data is data where you observation or participants are related. Like exam results for students within a school, height of children within a family etc.
 
@@ -100,7 +100,7 @@ So what we can do is combine the variance component and single-level regression 
 -   a fixed part
 -   a random part
 
-$$ y_{ij} = \overbrace{\beta_0 + \beta_1X_{ij}}^{\text{fixed part}} + \underbrace{u_j + e_{ij}}_{\text{random part}}$$ where the fixed parts includes our parameters that we estimate as our coefficients, and the random part is the parameter we estimate as the variance $e_{ij} \sim N(0, \sigma_e^2)$ and the $N(0, \sigma_u^2)$ and these are allowed to vary.
+$$ y_{ij} = \overbrace{\beta_0 + \beta_1X_{ij}}^{\text{fixed part}} + \underbrace{u_j + e_{ij}}_{\text{random part}}$$ where the fixed parts includes our parameters that we estimate as our coefficients, and the random part is the parameter we estimate as the variance $e_{ij} \sim N(0, \sigma_e^2)$ and the $N(0, \sigma_u^2)$ and these are allowed to vary and $u_j$ and $e_{ij}$ are normally distributed. 
 
 where:
 
@@ -154,7 +154,8 @@ where
 
 hypothesis testing for a random effects model runs as follows:
 
-$$ H_0: \sigma^2_u = 0$$ $$H_1: \sigma^2_u \not = 0$$ the null hypothesis states that if $\sigma^2_u$ is true, then the random component is not needed in this model. so you can fit a single level regression model. to do this, you would can do a likelihood ratio test comparing the two model to see if sigma is significant.
+$$ H_0: \sigma^2_u = 0$$ $$H_1: \sigma^2_u \not = 0$$ the null hypothesis states that if $\sigma^2_u$ is true, then the random component is not needed in this model. so you can fit a single level regression model. to do this, you would can do a likelihood ratio test comparing the two model to see if sigma is significant. In other words, seeing if there is no difference in intercepts. If there is _NO_ difference in intercepts (or the slopes are similar), then a random intercept model or random component is not needed. 
+
 
 ## Example 2: Planktonic larval duration (PLD)
 
@@ -315,6 +316,7 @@ ggplot(data = PLD) +
   facet_wrap(~phylum) +
   theme_classic()
 ```
+
 
 ## Fitting a random intercept model (random intercept, same slope)
 

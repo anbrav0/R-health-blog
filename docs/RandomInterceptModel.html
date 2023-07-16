@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ana Bravo &amp; Tendai Gwanzura">
-<meta name="dcterms.date" content="2023-07-10">
+<meta name="dcterms.date" content="2023-07-16">
 
 <title>How to Health Science in R - Random Intercept Model</title>
 <style>
@@ -201,7 +201,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">July 10, 2023</p>
+        <p class="date">July 16, 2023</p>
       </div>
     </div>
     
@@ -279,14 +279,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lattice)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(arm)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)        <span class="co"># to make table outputs presentation/publication ready. </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)     <span class="co"># clean output.</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)     <span class="co"># to make tables. </span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary) <span class="co"># extension to gt</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lattice)   <span class="co"># It is a powerful data visualization for multivariate data</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)      <span class="co"># Fit linear and generalized linear mixed-effects models</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(arm)       <span class="co"># Data Analysis Using Regression and Multilevel models</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># for cleaning wrangling data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -365,7 +365,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li><p><span class="math inline">y_1</span> is your dependent variable</p></li>
 <li><p><span class="math inline">\beta_0</span> is your intercept and</p></li>
-<li><p><span class="math inline">\beta_1x_1</span> are your slope and <span class="math inline">\beta_1</span> parameters.</p></li>
+<li><p><span class="math inline">\beta_1</span> is your slope parameter (which is also your slope treatment effect).</p></li>
 </ul>
 <p>When you have <em>clustered</em> data fitting this model causes problems. Clustered data is data where you observation or participants are related. Like exam results for students within a school, height of children within a family etc.</p>
 <p>if we try to fit this clustered data:</p>
@@ -382,7 +382,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>a fixed part</li>
 <li>a random part</li>
 </ul>
-<p><span class="math display"> y_{ij} = \overbrace{\beta_0 + \beta_1X_{ij}}^{\text{fixed part}} + \underbrace{u_j + e_{ij}}_{\text{random part}}</span> where the fixed parts includes our parameters that we estimate as our coefficients, and the random part is the parameter we estimate as the variance <span class="math inline">e_{ij} \sim N(0, \sigma_e^2)</span> and the <span class="math inline">N(0, \sigma_u^2)</span> and these are allowed to vary.</p>
+<p><span class="math display"> y_{ij} = \overbrace{\beta_0 + \beta_1X_{ij}}^{\text{fixed part}} + \underbrace{u_j + e_{ij}}_{\text{random part}}</span> where the fixed parts includes our parameters that we estimate as our coefficients, and the random part is the parameter we estimate as the variance <span class="math inline">e_{ij} \sim N(0, \sigma_e^2)</span> and the <span class="math inline">N(0, \sigma_u^2)</span> and these are allowed to vary and <span class="math inline">u_j</span> and <span class="math inline">e_{ij}</span> are normally distributed.</p>
 <p>where:</p>
 <ul>
 <li><p><span class="math inline">y_{ij}</span> is your dependent variable at <span class="math inline">i</span> individual and <span class="math inline">j</span> level</p></li>
@@ -423,7 +423,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="hypothesis-of-a-random-effects-model" class="level2" data-number="7">
 <h2 data-number="7" class="anchored" data-anchor-id="hypothesis-of-a-random-effects-model"><span class="header-section-number">7</span> hypothesis of a random effects model:</h2>
 <p>hypothesis testing for a random effects model runs as follows:</p>
-<p><span class="math display"> H_0: \sigma^2_u = 0</span> <span class="math display">H_1: \sigma^2_u \not = 0</span> the null hypothesis states that if <span class="math inline">\sigma^2_u</span> is true, then the random component is not needed in this model. so you can fit a single level regression model. to do this, you would can do a likelihood ratio test comparing the two model to see if sigma is significant.</p>
+<p><span class="math display"> H_0: \sigma^2_u = 0</span> <span class="math display">H_1: \sigma^2_u \not = 0</span> the null hypothesis states that if <span class="math inline">\sigma^2_u</span> is true, then the random component is not needed in this model. so you can fit a single level regression model. to do this, you would can do a likelihood ratio test comparing the two model to see if sigma is significant. In other words, seeing if there is no difference in intercepts. If there is <em>NO</em> difference in intercepts (or the slopes are similar), then a random intercept model or random component is not needed.</p>
 </section>
 <section id="example-2-planktonic-larval-duration-pld" class="level2" data-number="8">
 <h2 data-number="8" class="anchored" data-anchor-id="example-2-planktonic-larval-duration-pld"><span class="header-section-number">8</span> Example 2: Planktonic larval duration (PLD)</h2>
@@ -570,23 +570,23 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
 </details>
 <div class="cell-output-display">
 
-<div id="rzkylhryjw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#rzkylhryjw table {
+<div id="powlokiigp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#powlokiigp table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#rzkylhryjw thead, #rzkylhryjw tbody, #rzkylhryjw tfoot, #rzkylhryjw tr, #rzkylhryjw td, #rzkylhryjw th {
+#powlokiigp thead, #powlokiigp tbody, #powlokiigp tfoot, #powlokiigp tr, #powlokiigp td, #powlokiigp th {
   border-style: none;
 }
 
-#rzkylhryjw p {
+#powlokiigp p {
   margin: 0;
   padding: 0;
 }
 
-#rzkylhryjw .gt_table {
+#powlokiigp .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -612,12 +612,12 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#rzkylhryjw .gt_caption {
+#powlokiigp .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#rzkylhryjw .gt_title {
+#powlokiigp .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -629,7 +629,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-bottom-width: 0;
 }
 
-#rzkylhryjw .gt_subtitle {
+#powlokiigp .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -641,7 +641,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-top-width: 0;
 }
 
-#rzkylhryjw .gt_heading {
+#powlokiigp .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -653,13 +653,13 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#rzkylhryjw .gt_bottom_border {
+#powlokiigp .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#rzkylhryjw .gt_col_headings {
+#powlokiigp .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -674,7 +674,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#rzkylhryjw .gt_col_heading {
+#powlokiigp .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -694,7 +694,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   overflow-x: hidden;
 }
 
-#rzkylhryjw .gt_column_spanner_outer {
+#powlokiigp .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -706,15 +706,15 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 4px;
 }
 
-#rzkylhryjw .gt_column_spanner_outer:first-child {
+#powlokiigp .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#rzkylhryjw .gt_column_spanner_outer:last-child {
+#powlokiigp .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#rzkylhryjw .gt_column_spanner {
+#powlokiigp .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -726,11 +726,11 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   width: 100%;
 }
 
-#rzkylhryjw .gt_spanner_row {
+#powlokiigp .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#rzkylhryjw .gt_group_heading {
+#powlokiigp .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -756,7 +756,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   text-align: left;
 }
 
-#rzkylhryjw .gt_empty_group_heading {
+#powlokiigp .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -771,15 +771,15 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   vertical-align: middle;
 }
 
-#rzkylhryjw .gt_from_md > :first-child {
+#powlokiigp .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#rzkylhryjw .gt_from_md > :last-child {
+#powlokiigp .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#rzkylhryjw .gt_row {
+#powlokiigp .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -798,7 +798,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   overflow-x: hidden;
 }
 
-#rzkylhryjw .gt_stub {
+#powlokiigp .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -811,7 +811,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 5px;
 }
 
-#rzkylhryjw .gt_stub_row_group {
+#powlokiigp .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -825,15 +825,15 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   vertical-align: top;
 }
 
-#rzkylhryjw .gt_row_group_first td {
+#powlokiigp .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#rzkylhryjw .gt_row_group_first th {
+#powlokiigp .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#rzkylhryjw .gt_summary_row {
+#powlokiigp .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -843,16 +843,16 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 5px;
 }
 
-#rzkylhryjw .gt_first_summary_row {
+#powlokiigp .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#rzkylhryjw .gt_first_summary_row.thick {
+#powlokiigp .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#rzkylhryjw .gt_last_summary_row {
+#powlokiigp .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -862,7 +862,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#rzkylhryjw .gt_grand_summary_row {
+#powlokiigp .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -872,7 +872,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 5px;
 }
 
-#rzkylhryjw .gt_first_grand_summary_row {
+#powlokiigp .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -882,7 +882,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#rzkylhryjw .gt_last_grand_summary_row_top {
+#powlokiigp .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -892,11 +892,11 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#rzkylhryjw .gt_striped {
+#powlokiigp .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#rzkylhryjw .gt_table_body {
+#powlokiigp .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -905,7 +905,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#rzkylhryjw .gt_footnotes {
+#powlokiigp .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -919,7 +919,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#rzkylhryjw .gt_footnote {
+#powlokiigp .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -928,7 +928,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 5px;
 }
 
-#rzkylhryjw .gt_sourcenotes {
+#powlokiigp .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -942,7 +942,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#rzkylhryjw .gt_sourcenote {
+#powlokiigp .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -950,63 +950,63 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 5px;
 }
 
-#rzkylhryjw .gt_left {
+#powlokiigp .gt_left {
   text-align: left;
 }
 
-#rzkylhryjw .gt_center {
+#powlokiigp .gt_center {
   text-align: center;
 }
 
-#rzkylhryjw .gt_right {
+#powlokiigp .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#rzkylhryjw .gt_font_normal {
+#powlokiigp .gt_font_normal {
   font-weight: normal;
 }
 
-#rzkylhryjw .gt_font_bold {
+#powlokiigp .gt_font_bold {
   font-weight: bold;
 }
 
-#rzkylhryjw .gt_font_italic {
+#powlokiigp .gt_font_italic {
   font-style: italic;
 }
 
-#rzkylhryjw .gt_super {
+#powlokiigp .gt_super {
   font-size: 65%;
 }
 
-#rzkylhryjw .gt_footnote_marks {
+#powlokiigp .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#rzkylhryjw .gt_asterisk {
+#powlokiigp .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#rzkylhryjw .gt_indent_1 {
+#powlokiigp .gt_indent_1 {
   text-indent: 5px;
 }
 
-#rzkylhryjw .gt_indent_2 {
+#powlokiigp .gt_indent_2 {
   text-indent: 10px;
 }
 
-#rzkylhryjw .gt_indent_3 {
+#powlokiigp .gt_indent_3 {
   text-indent: 15px;
 }
 
-#rzkylhryjw .gt_indent_4 {
+#powlokiigp .gt_indent_4 {
   text-indent: 20px;
 }
 
-#rzkylhryjw .gt_indent_5 {
+#powlokiigp .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
