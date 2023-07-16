@@ -23,14 +23,14 @@ format:
 #| message: false
 
 
-library(katex)
-library(gt)
-library(gtsummary)
-library(devtools)
-library(pscl)
-#library(MEPS)
-library(MASS)
-library(tidyverse)
+library(katex)     # renders math equations 
+library(gt)        # publication ready tables 
+library(gtsummary) # extension to publication ready tables 
+library(devtools)  # helps with package development
+library(pscl)      # maximum likelihood estimation of zero-inflated model for count
+# library(MEPS)    # library for MEPS data, outdated for R version 4.3.0 
+library(MASS)      # fits negative binomial models 
+library(tidyverse) # for wrangling data
 ```
 
 ## Introduction
@@ -54,6 +54,8 @@ where:
 -   $\beta_1$ is your slope coefficient
 
 -   and $X_i$ is your independent variable
+
+-   $\epsilon$ is your random error that cannot be explained.
 
 ```{r}
 #| message: false
@@ -113,7 +115,7 @@ Something to note, that in the simple explanation above we are assuming our Y va
 
 ### lets talk about the generalized linear model
 
-the term "generalized" is a big umbrella term used to describe a large class of models. Our response variable $y_i$ is following an exponential family distribution with a mean of $u_i$ which is sometimes non-linear! However [McCallagh and Nelder](link) considered them to be linear because our covariate affect the distribution of $y_i$ only through linear combination.
+the term "generalized" is a big umbrella term used to describe a large class of models. Our response variable $y_i$ is following an exponential family distribution with a mean of $u_i$ which is sometimes non-linear! However [McCallagh and Nelder](https://www.utstat.toronto.edu/~brunner/oldclass/2201s11/readings/glmbook.pdf) considered them to be linear because our covariate affect the distribution of $y_i$ only through linear combination.
 
 there are three major components of a GLM:
 
@@ -127,15 +129,17 @@ $$ log(\pmb{\mu}) = \alpha + \beta_1x_1 + ... B_nx_n + \epsilon$$ Generalized li
 
 -   the data points are $Y_1, Y_2, ..., Y_n$ are independently distributed (cases are independent)
 
--   GLM does not assume linear relationship between the response variable and explanatory variable but it does assume a linear relationship between the transformed expected response in terms of your link function
+- the dependent variable $Y_i$ does not need to be normally distributed. but it typically assumes a distribution from a family such as binomial, Poisson, multinomial, normal. 
 
--   Explanatory variables can be nonlinear transformation of some original variable
+-   GLM does not assume linear relationship between the response variable and explanatory variable but it does assume a linear relationship between the transformed expected response in terms of your link function. 
+
+- Homogeneity of variance does not need to be satisfied. 
+
+- Explanatory variables can be nonlinear transformation of some original variable
 
 -   Parameter estimation uses maximum likelihood estimates (MLE rather than ordinary least squares)
 
--   Homogeneity of variances (can check by calculating the variance at each level of your factor.)
 
--   Normality of residuals
 
 ### What is a Poisson Regression?
 
@@ -539,5 +543,5 @@ Today you learned of the important of linear regression, the benefits of a gener
 
 4.  Bruin, J. (2011). Negative Bonomial Regression, R Dad Analysis Examples. [https://stats.oarc.ucla.edu/stata/ado/analysis/](https://stats.oarc.ucla.edu/r/dae/negative-binomial-regression/)
 
-
+5. Introduction to GLMs, STAT 504 Analysis of Discrete Data. Pennsylvania State University <https://online.stat.psu.edu/stat504/lesson/6/6.1>
 
