@@ -289,10 +289,39 @@ HC2020_clean <- HC2020_clean |>
     Health_status == 5 ~ "Poor"
     )) 
 
-# i want to write CSV this data set for later use --------------------------------
+# clean HC2020_clean_2 --------------------------------------------------------
 
-write_csv(hc2020_subset,
-          file = "/Users/anbravo/GitHub/R-health-blog/HC2020_clean.csv")
+HC2020_clean_2 <- HC2020_clean_2 |>  
+  # change na values
+  mutate(Pain_Level = na_if(Pain_Level, -15)) |>
+  mutate(Health_status = na_if(Health_status, -8)) |>
+  mutate(Region = na_if(Region, -1)) |> 
+  mutate(Age_as_Dec2020 = na_if(Age_as_Dec2020, -1)) |>
+  mutate(Is_married = na_if(Is_married,-8 )) |> 
+  mutate(Is_employed = na_if(Is_employed, -15)) |> 
+  mutate(Education_lvl = na_if(Education_lvl, -15)) |> 
+  mutate(Covered_by_MediCar = na_if(Covered_by_MediCar, -1)) |> 
+  # change married status to binary 
+  mutate(Is_married = ifelse(Is_married == 1, 1, 0)) |> 
+  mutate(Is_employed = ifelse(Is_employed == 1, 1, 0)) |> 
+  mutate(Is_male = ifelse(Is_male == 1 , 1, 0 )) |> 
+  mutate(Covered_by_MediCar = ifelse(Covered_by_MediCar == 1, 1, 0)) |> 
+  #change healthoutcome categorical for ease of inerpretation
+  mutate(Health_status = case_when(
+    Health_status == 1 ~ "Good",
+    Health_status == 2 ~ "Good",
+    Health_status == 3 ~ "Fair",
+    Health_status == 4 ~ "Fair",
+    Health_status == 5 ~ "Poor"
+    ))
+
+# write this data set ---------------------------------------------------------
+
+write_csv(
+  HC2020_clean_2,
+  file = "/Users/anabravo/Documents/GitHub/R-health-blog/HC2020_clean_final.csv"
+)
+  
 
 ```
 
@@ -301,9 +330,9 @@ let's say i want to take a sneak peak at this data set. I will use the `gtsummar
 ```{r}
 #| message: false
 
-HC2020_clean <- read_csv("/Users/anabravo/Documents/GitHub/R-health-blog/HC2020_clean.csv")
+HC2020_clean_2 <- read_csv("/Users/anabravo/Documents/GitHub/R-health-blog/HC2020_clean_final.csv")
 
-HC2020_clean |> 
+HC2020_clean_2 |> 
   select(Person_ID, Nubr_office_visits, Health_status, Pain_Level, Region, Is_employed, Is_married, Is_employed, Is_male) |> 
   #head(10) |> 
   gt() |> 
@@ -337,15 +366,15 @@ Because we are looking at count data, we might find it important to check out th
 
 ```{r}
 
-mean(HC2020_clean$Nubr_office_visits, na.rm = TRUE)
+mean(HC2020_clean_2$Nubr_office_visits, na.rm = TRUE)
 
 ```
 
-the mean of this data set is about
+the mean of this data set is about 2.79
 
 ```{r}
 
-var(HC2020_clean$Nubr_office_visits, na.rm = TRUE)
+var(HC2020_clean_2$Nubr_office_visits, na.rm = TRUE)
 ```
 
 and the variance is about 34.59. We might need to do something with this particular data set but as an example, lets first run a Generalized Linear Model without doing any kind of transformation to the data.
@@ -356,7 +385,7 @@ and the variance is about 34.59. We might need to do something with this particu
 #| message: false
 
 hist(
-  x = HC2020_clean$Nubr_office_visits,
+  x = HC2020_clean_2$Nubr_office_visits,
   main = "Distrubtion of Number of Office visits",
   xlab = "Office visits within a year"
 )
@@ -370,7 +399,7 @@ I might also just be interested in the general responses of our y variable of in
 
 # I'm just interested in the frequency 
 
-HC2020_clean |> 
+HC2020_clean_2 |> 
   group_by(Nubr_office_visits) |> 
   summarise(n = n()) |> 
   mutate(Freq = n / sum(n), Freq = scales::percent(Freq)) |> 
@@ -406,7 +435,7 @@ The basic core functions of a GLM look something like this: `glm(counts ~ outcom
 
 # build first model 
 PossionModel1 <- glm(Nubr_office_visits ~ Health_status + Is_male + Is_married, 
-                     data = HC2020_clean, family = "poisson")
+                     data = HC2020_clean_2, family = "poisson")
 
 # check summary 
 summary(PossionModel1)
@@ -431,13 +460,10 @@ Additionally, this output is extremely ugly so we will feed this model into `gts
 ```{r}
 #| message: true
 
-
-
 PossionModel1 |> 
   tbl_regression(exponentiate = TRUE) |> 
-  bold_levels() |>
+  bold_levels() |> 
   bold_p(t = .1)
-
 
 
 
@@ -477,10 +503,10 @@ A negative binomial regression can be used for over-dispersed count data, like m
 #| message: false
 
 #this is prob a better fit the negative B   
-PoissonModel2_NB <- glm.nb(Nubr_office_visits ~ Health_status + Is_male + Is_married, data = HC2020_clean)
+PoissonModel2_NB <- glm.nb(Nubr_office_visits ~ Health_status + Is_male + Is_married, data = HC2020_clean_2)
 
 # fit model with log link
-PoissonModel3_ZI <- zeroinfl(Nubr_office_visits ~ Health_status + Is_male + Is_married, data = HC2020_clean, dist = "poisson")
+PoissonModel3_ZI <- zeroinfl(Nubr_office_visits ~ Health_status + Is_male + Is_married, data = HC2020_clean_2, dist = "poisson")
 
 #summary analysis
 summary(PoissonModel3_ZI)
@@ -496,7 +522,7 @@ Let's go with a negative binomial regression analysis. In this case we will need
 
 ```{r}
 
-PoissonModel2_NB <- glm.nb(Nubr_office_visits ~ Health_status + Is_male + Is_married, data = HC2020_clean)
+PoissonModel2_NB <- glm.nb(Nubr_office_visits ~ Health_status + Is_male + Is_married, data = HC2020_clean_2)
 
 summary(PoissonModel2_NB)
 
