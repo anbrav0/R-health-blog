@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ana Bravo &amp; Tendai Gwanzura">
-<meta name="dcterms.date" content="2023-07-17">
+<meta name="dcterms.date" content="2023-07-28">
 
 <title>How to Health Science in R - Random Intercept Model</title>
 <style>
@@ -201,7 +201,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">July 17, 2023</p>
+        <p class="date">July 28, 2023</p>
       </div>
     </div>
     
@@ -366,6 +366,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><span class="math inline">y_1</span> is your dependent variable</p></li>
 <li><p><span class="math inline">\beta_0</span> is your intercept and</p></li>
 <li><p><span class="math inline">\beta_1</span> is your slope parameter (which is also your slope treatment effect).</p></li>
+<li><p>and <span class="math inline">e_i</span> is your random error</p></li>
 </ul>
 <p>When you have <em>clustered</em> data fitting this model causes problems. Clustered data is data where you observation or participants are related. Like exam results for students within a school, height of children within a family etc.</p>
 <p>if we try to fit this clustered data:</p>
@@ -570,23 +571,23 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
 </details>
 <div class="cell-output-display">
 
-<div id="opqlrjwjci" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#opqlrjwjci table {
+<div id="oveaxqlndo" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#oveaxqlndo table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#opqlrjwjci thead, #opqlrjwjci tbody, #opqlrjwjci tfoot, #opqlrjwjci tr, #opqlrjwjci td, #opqlrjwjci th {
+#oveaxqlndo thead, #oveaxqlndo tbody, #oveaxqlndo tfoot, #oveaxqlndo tr, #oveaxqlndo td, #oveaxqlndo th {
   border-style: none;
 }
 
-#opqlrjwjci p {
+#oveaxqlndo p {
   margin: 0;
   padding: 0;
 }
 
-#opqlrjwjci .gt_table {
+#oveaxqlndo .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -612,12 +613,12 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#opqlrjwjci .gt_caption {
+#oveaxqlndo .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#opqlrjwjci .gt_title {
+#oveaxqlndo .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -629,7 +630,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-bottom-width: 0;
 }
 
-#opqlrjwjci .gt_subtitle {
+#oveaxqlndo .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -641,7 +642,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-top-width: 0;
 }
 
-#opqlrjwjci .gt_heading {
+#oveaxqlndo .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -653,13 +654,13 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#opqlrjwjci .gt_bottom_border {
+#oveaxqlndo .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#opqlrjwjci .gt_col_headings {
+#oveaxqlndo .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -674,7 +675,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#opqlrjwjci .gt_col_heading {
+#oveaxqlndo .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -694,7 +695,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   overflow-x: hidden;
 }
 
-#opqlrjwjci .gt_column_spanner_outer {
+#oveaxqlndo .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -706,15 +707,15 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 4px;
 }
 
-#opqlrjwjci .gt_column_spanner_outer:first-child {
+#oveaxqlndo .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#opqlrjwjci .gt_column_spanner_outer:last-child {
+#oveaxqlndo .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#opqlrjwjci .gt_column_spanner {
+#oveaxqlndo .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -726,11 +727,11 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   width: 100%;
 }
 
-#opqlrjwjci .gt_spanner_row {
+#oveaxqlndo .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#opqlrjwjci .gt_group_heading {
+#oveaxqlndo .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -756,7 +757,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   text-align: left;
 }
 
-#opqlrjwjci .gt_empty_group_heading {
+#oveaxqlndo .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -771,15 +772,15 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   vertical-align: middle;
 }
 
-#opqlrjwjci .gt_from_md > :first-child {
+#oveaxqlndo .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#opqlrjwjci .gt_from_md > :last-child {
+#oveaxqlndo .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#opqlrjwjci .gt_row {
+#oveaxqlndo .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -798,7 +799,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   overflow-x: hidden;
 }
 
-#opqlrjwjci .gt_stub {
+#oveaxqlndo .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -811,7 +812,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 5px;
 }
 
-#opqlrjwjci .gt_stub_row_group {
+#oveaxqlndo .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -825,15 +826,15 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   vertical-align: top;
 }
 
-#opqlrjwjci .gt_row_group_first td {
+#oveaxqlndo .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#opqlrjwjci .gt_row_group_first th {
+#oveaxqlndo .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#opqlrjwjci .gt_summary_row {
+#oveaxqlndo .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -843,16 +844,16 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 5px;
 }
 
-#opqlrjwjci .gt_first_summary_row {
+#oveaxqlndo .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#opqlrjwjci .gt_first_summary_row.thick {
+#oveaxqlndo .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#opqlrjwjci .gt_last_summary_row {
+#oveaxqlndo .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -862,7 +863,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#opqlrjwjci .gt_grand_summary_row {
+#oveaxqlndo .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -872,7 +873,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 5px;
 }
 
-#opqlrjwjci .gt_first_grand_summary_row {
+#oveaxqlndo .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -882,7 +883,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#opqlrjwjci .gt_last_grand_summary_row_top {
+#oveaxqlndo .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -892,11 +893,11 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#opqlrjwjci .gt_striped {
+#oveaxqlndo .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#opqlrjwjci .gt_table_body {
+#oveaxqlndo .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -905,7 +906,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#opqlrjwjci .gt_footnotes {
+#oveaxqlndo .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -919,7 +920,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#opqlrjwjci .gt_footnote {
+#oveaxqlndo .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -928,7 +929,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 5px;
 }
 
-#opqlrjwjci .gt_sourcenotes {
+#oveaxqlndo .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -942,7 +943,7 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#opqlrjwjci .gt_sourcenote {
+#oveaxqlndo .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -950,63 +951,63 @@ F-statistic:  65.4 on 1 and 212 DF,  p-value: 4.652e-14</code></pre>
   padding-right: 5px;
 }
 
-#opqlrjwjci .gt_left {
+#oveaxqlndo .gt_left {
   text-align: left;
 }
 
-#opqlrjwjci .gt_center {
+#oveaxqlndo .gt_center {
   text-align: center;
 }
 
-#opqlrjwjci .gt_right {
+#oveaxqlndo .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#opqlrjwjci .gt_font_normal {
+#oveaxqlndo .gt_font_normal {
   font-weight: normal;
 }
 
-#opqlrjwjci .gt_font_bold {
+#oveaxqlndo .gt_font_bold {
   font-weight: bold;
 }
 
-#opqlrjwjci .gt_font_italic {
+#oveaxqlndo .gt_font_italic {
   font-style: italic;
 }
 
-#opqlrjwjci .gt_super {
+#oveaxqlndo .gt_super {
   font-size: 65%;
 }
 
-#opqlrjwjci .gt_footnote_marks {
+#oveaxqlndo .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#opqlrjwjci .gt_asterisk {
+#oveaxqlndo .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#opqlrjwjci .gt_indent_1 {
+#oveaxqlndo .gt_indent_1 {
   text-indent: 5px;
 }
 
-#opqlrjwjci .gt_indent_2 {
+#oveaxqlndo .gt_indent_2 {
   text-indent: 10px;
 }
 
-#opqlrjwjci .gt_indent_3 {
+#oveaxqlndo .gt_indent_3 {
   text-indent: 15px;
 }
 
-#opqlrjwjci .gt_indent_4 {
+#oveaxqlndo .gt_indent_4 {
   text-indent: 20px;
 }
 
-#opqlrjwjci .gt_indent_5 {
+#oveaxqlndo .gt_indent_5 {
   text-indent: 25px;
 }
 </style>

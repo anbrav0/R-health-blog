@@ -83,6 +83,8 @@ $$y_1 = \beta_0 + \beta_1x_i + e_i$$ where
 
 -   $\beta_1$ is your slope parameter (which is also your slope treatment effect).
 
+-   and $e_i$ is your random error 
+
 When you have *clustered* data fitting this model causes problems. Clustered data is data where you observation or participants are related. Like exam results for students within a school, height of children within a family etc.
 
 if we try to fit this clustered data:
